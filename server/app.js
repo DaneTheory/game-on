@@ -29,13 +29,13 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-app.use(function(req, res, next){
-    if (_.contains(req.url, '/rest') && !req.session.user_id) {
-        res.send(401, 'You are not authorized to view this page');
-    } else {
-        next();
-    }
-});
+// app.use(function(req, res, next){
+//     if (_.contains(req.url, '/rest') && !req.session.user_id) {
+//         res.send(401, 'You are not authorized to view this page');
+//     } else {
+//         next();
+//     }
+// });
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -71,9 +71,11 @@ app.get('/logout', function (req, res) {
 });
 
 
+
+
 var mers = require('mers');
 app.use('/rest', mers({
-            uri: 'mongodb://localhost/rest_example_prod'
+            uri: 'mongodb://localhost/footballjs94'
         }).rest());
 
 var mongoose = require('mongoose'),
@@ -82,35 +84,17 @@ var mongoose = require('mongoose'),
 
 
 var Player = new Schema({
-        displayName: {
-            type: String,
-            required: true
-        },
-        realName: {
-            type: String,
-            required: true
-        },
-        email: {
-            type: String,
-            required: true
-        },
-        location: {
-            type: String
-        }
-    });
+    displayName: { type: String, required: true },
+    realName: { type: String, required: true },
+    email: { type: String, required: true },
+    location: { type: Array }
+});
 
 var Venue = new Schema({
-        name: {
-            type: String,
-            required: true
-        },
-        location: {
-            type: Array
-        }
-    });
-Venue.index({
-        location: '2d'
-    });
+    name: { type: String, required: true },
+    location: { type: Array }
+});
+Venue.index({ location: '2d' });
 
 // http://localhost:3000/rest/venue/finder/near?location=-37.648792,145.19104&maxDistance=100
 // coordinates = lat, lon
@@ -127,52 +111,25 @@ Venue.statics.near = function (q, term) {
 };
 
 var Match = new Schema({
-        venue: {
-            type: Schema.ObjectId,
-            ref: 'Venue'
-        },
-        players: [{
-                type: ObjectId,
-                ref: 'Player'
-            }
-        ],
-        when: {
-            type: Date,
-            default: Date.now
-        },
-        price: {
-            type: Number
-        },
-        organizer: {
-            type: ObjectId,
-            ref: 'Player'
-        },
+    venue: { type: Schema.ObjectId, ref: 'Venue'},
+    players: [{ type: ObjectId, ref: 'Player'} ],
+    when: { type: Date, default: Date.now },
+    price: { type: Number }, 
+    organizer: { type: ObjectId, ref: 'Player'},
 
-        meta: {
-            created: {
-                type: Date,
-                default: Date.now
-            },
-            modified: {
-                type: Date,
-                default: Date.now
-            }
-        }
-    });
+    meta: {
+        created: { type: Date, default: Date.now },
+        modified: { type: Date, default: Date.now }
+    }
+});
 Match.statics.organizer = function (q, term) {
-    return this.find({
-            'organizer': term
-        });
+    return this.find({ 'organizer': term });
 };
 Match.statics.player = function (q, term) {
-    return this.find({
-            'players': term
-        });
+    return this.find({ 'players': term });
 };
 Match.statics.venue = function (q, term) {
-    return this.find({
-            'venue': term
-        });
+    return this.find({ 'venue': term });
 };
 
 var PlayerModel = module.exports.PlayerModel = mongoose.model('Player', Player);
@@ -182,3 +139,69 @@ var MatchModel = module.exports.MatchModel = mongoose.model('Match', Match);
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+
+app.get('/pop_player', function(req, res){
+    PlayerModel.remove({}, function(err) { 
+       console.log('collection removed') 
+    });
+
+    var player = new PlayerModel({
+        displayName: 'Pabs',
+        realName: 'Pablo De Nadai',
+        email: 'pablodenadai@gmail.com',
+        location: [10,10]
+    });
+
+    player.save();
+
+    player = new PlayerModel({
+        displayName: 'Clarice',
+        realName: 'Clare Preston',
+        email: 'clarepreston@hotmail.com',
+        location: [20,20]
+    });
+
+    player.save();
+
+    res.send(200);
+});
+
+app.get('/pop_venue', function(req, res){
+    VenueModel.remove({}, function(err) { 
+       console.log('collection removed') 
+    });
+
+    var venue = new VenueModel({
+        name: 'Albert Park',
+        location: [10,10]
+    });
+
+    venue.save();
+
+    var venue = new VenueModel({
+        name: 'Maracana',
+        location: [90,90]
+    });
+
+    venue.save();
+
+    res.send(200);
+});
+
+app.get('/pop_match', function(req, res){
+    MatchModel.remove({}, function(err) { 
+       console.log('collection removed') 
+    });
+
+    var match = new MatchModel({
+        venue: '51b07b6803f893e32f000001',
+        players: ['51b07a6819108cf52d000002', '51b07a6819108cf52d000001' ],
+        price: 0, 
+        organizer: '51b07a6819108cf52d000002'
+    });
+
+    match.save();
+
+    res.send(200);
+});
+

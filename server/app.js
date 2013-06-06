@@ -24,18 +24,18 @@ app.use(express.session({
         }));
 app.use(express.methodOverride());
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://pablodenadai.github.io/");
+    res.header("Access-Control-Allow-Origin", "http://localhost:9000");
     res.header("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-// app.use(function(req, res, next){
-//     if (_.contains(req.url, '/rest') && !req.session.user_id) {
-//         res.send(401, 'You are not authorized to view this page');
-//     } else {
-//         next();
-//     }
-// });
+app.use(function(req, res, next){
+    if (_.contains(req.url, '/rest') && !req.session.user_id) {
+        res.send(401, 'You are not authorized to view this page');
+    } else {
+        next();
+    }
+});
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -44,15 +44,8 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.get('/users', function (req, res) {
-    res.json([{
-                'name': 'Pablo'
-            }, {
-                'name': 'De'
-            }, {
-                'name': 'Nadai'
-            }
-        ]);
+app.options('*', function(req, res){
+    res.send(200); 
 });
 
 app.post('/login', function (req, res) {

@@ -4,7 +4,7 @@ var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
 
-var modRewrite = require('connect-modrewrite');
+// var modRewrite = require('connect-modrewrite');
 
 module.exports = function (grunt) {
   // load all grunt tasks
@@ -55,9 +55,9 @@ module.exports = function (grunt) {
         options: {
           middleware: function (connect) {
             return [
-              modRewrite([
-                '!\\.html|\\.js|\\.css|\\.png$ /index.html [L]'
-              ]),
+              // modRewrite([
+              //   '!\\.html|\\.js|\\.css|\\.png$ /index.html [L]'
+              // ]),
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)

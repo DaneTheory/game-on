@@ -1,0 +1,22 @@
+<div ng-controller="MenuCtrl" class="navbar" bs-navbar>
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="#">CORS</a>
+      <div class="nav-collapse collapse navbar-responsive-collapse">
+        <ul class="nav">
+          <li data-match-route="/"><a href="/">Home</a></li>
+          <li data-match-route="/users"><a href="/users">Users</a></li>
+        </ul>
+
+        <ul class="nav pull-right">
+          <li><button class="btn btn-primary" ng-click="logout()">Logout</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

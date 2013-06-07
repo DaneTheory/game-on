@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('MainCtrl', function ($scope, $http, $location) {
+app.controller('LoginController', function ($scope, $http, $location) {
 
 	$scope.user = '123';
 	$scope.password = '123';

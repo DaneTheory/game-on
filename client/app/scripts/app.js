@@ -2,21 +2,24 @@
 
 var app = angular.module('clientApp', ['$strap.directives']);
 
-app.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider, $rootScope) {
   
-  $routeProvider
-    .when('/', {
-      templateUrl: 'views/main.html',
-      controller: 'MainCtrl'
-    })
-    .when('/users', {
-      templateUrl: 'views/users.html',
-      controller: 'UsersCtrl'
-    })
-    .otherwise({
-      redirectTo: '/'
-    });
+    $routeProvider
+        .when('/', {
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
+        })
+        .when('/users', {
+            templateUrl: 'views/users.html',
+            controller: 'UsersCtrl'
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
 
-  // $locationProvider.html5Mode(true);
+    // TODO add api url
+    //$rootScope.apiURL = '';
+
+    // $locationProvider.html5Mode(true);
 
 });

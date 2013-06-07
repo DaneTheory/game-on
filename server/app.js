@@ -29,13 +29,13 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-app.use(function(req, res, next){
-    if (_.contains(req.url, '/rest') && !req.session.user_id) {
-        res.send(401, 'You are not authorized to view this page');
-    } else {
-        next();
-    }
-});
+// app.use(function(req, res, next){
+//     if (_.contains(req.url, '/rest') && !req.session.user_id) {
+//         res.send(401, 'You are not authorized to view this page');
+//     } else {
+//         next();
+//     }
+// });
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -67,7 +67,7 @@ app.get('/logout', function (req, res) {
 
 
 var mers = require('mers');
-app.use('/rest', mers({
+app.use('/api/v1', mers({
             uri: 'mongodb://localhost/footballjs94'
         }).rest());
 
@@ -187,10 +187,10 @@ app.get('/pop_match', function(req, res){
     });
 
     var match = new MatchModel({
-        venue: '51b07b6803f893e32f000001',
-        players: ['51b07a6819108cf52d000002', '51b07a6819108cf52d000001' ],
+        venue: '51b1169222b1bd262f000003',
+        players: ['51b116b422b1bd262f000009', '51b116b422b1bd262f00000a' ],
         price: 0, 
-        organizer: '51b07a6819108cf52d000002'
+        organizer: '51b116b422b1bd262f000009'
     });
 
     match.save();

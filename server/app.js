@@ -29,13 +29,13 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-// app.use(function(req, res, next){
-//     if (_.contains(req.url, '/rest') && !req.session.user_id) {
-//         res.send(401, 'You are not authorized to view this page');
-//     } else {
-//         next();
-//     }
-// });
+app.use(function(req, res, next){
+    if (_.contains(req.url, '/api/') && !req.session.user_id) {
+        res.send(401, 'You are not authorized to view this page');
+    } else {
+        next();
+    }
+});
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 

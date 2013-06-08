@@ -1,0 +1,20 @@
+<h1 ng-init="init()">Players</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Real Name</th>
+			<th>Display Name</th>
+			<th>Email</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="player in players">
+			<td>
+				<a href="#/player/{{player._id}}">{{player.realName}}</a>
+			</td>
+			<td>{{player.displayName}}</td>
+			<td>{{player.email}}</td>
+		</tr>
+	</tbody>
+</table>

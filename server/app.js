@@ -89,7 +89,7 @@ var Venue = new Schema({
 });
 Venue.index({ location: '2d' });
 
-// http://localhost:3000/rest/venue/finder/near?location=-37.648792,145.19104&maxDistance=100
+// http://localhost:3000/api/v1/venue/finder/near?location=-37.648792,145.19104&maxDistance=100
 // coordinates = lat, lon
 // maxDistance = km
 Venue.statics.near = function (q, term) {
@@ -166,14 +166,14 @@ app.get('/pop_venue', function(req, res){
 
     var venue = new VenueModel({
         name: 'Albert Park',
-        location: [10,10]
+        location: [-37.8420,144.9500]
     });
 
     venue.save();
 
     var venue = new VenueModel({
         name: 'Maracana',
-        location: [90,90]
+        location: [-22.9122,-43.2302]
     });
 
     venue.save();

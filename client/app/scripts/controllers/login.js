@@ -17,7 +17,7 @@ app.controller('LoginController', function ($scope, $http, $location) {
 				'password': $scope.password
 			}
 		}).success(function(data, status, headers, config){
-			$location.path('/users');
+			$location.path('/player');
 		}).error(function(data, status, headers, config){
 			$scope.err = data;
 		});

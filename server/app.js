@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var express = require('express'),
+    mongoStore = require('connect-mongo')(express),
     http = require('http'),
     path = require('path'),
     _ = require('lodash');
@@ -9,6 +10,7 @@ var express = require('express'),
 var app = express();
 
 // all environments
+app.set('mongodb-uri', 'mongodb://localhost/footballjs94');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -20,7 +22,8 @@ app.use(express.session({
             secret: 'something',
             maxAge: new Date(Date.now() + 3600000), //1 Hour
             expires: new Date(Date.now() + 3600000), //1 Hour
-            store: new express.session.MemoryStore
+            store: new mongoStore({ url: app.get('mongodb-uri') })
+  
         }));
 app.use(express.methodOverride());
 app.use(function (req, res, next) {
@@ -67,9 +70,7 @@ app.get('/logout', function (req, res) {
 
 
 var mers = require('mers');
-app.use('/api/v1', mers({
-            uri: 'mongodb://localhost/footballjs94'
-        }).rest());
+app.use('/api/v1', mers({ uri: app.get('mongodb-uri') }).rest());
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
@@ -134,26 +135,24 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 app.get('/pop_player', function(req, res){
-    PlayerModel.remove({}, function(err) { 
-       console.log('collection removed') 
-    });
+    // PlayerModel.remove({}, function(err) { 
+    //    console.log('collection removed') 
+    // });
 
     var player = new PlayerModel({
-        displayName: 'Pabs',
-        realName: 'Pablo De Nadai',
-        email: 'pablodenadai@gmail.com',
-        location: [10,10]
+        displayName: 'Johnny',
+        realName: 'John Travolta',
+        email: 'johntravs@gmail.com',
+        location: [120,-30]
     });
-
     player.save();
 
     player = new PlayerModel({
-        displayName: 'Clarice',
-        realName: 'Clare Preston',
-        email: 'clarepreston@hotmail.com',
+        displayName: 'Ann',
+        realName: 'Ann Clark',
+        email: 'ann@hotmail.com',
         location: [20,20]
     });
-
     player.save();
 
     res.send(200);
@@ -187,10 +186,10 @@ app.get('/pop_match', function(req, res){
     });
 
     var match = new MatchModel({
-        venue: '51b1169222b1bd262f000003',
-        players: ['51b116b422b1bd262f000009', '51b116b422b1bd262f00000a' ],
+        venue: '51b33b7c0fc56ca397000001',
+        players: ['51b07a6819108cf52d000001', '51b07a6819108cf52d000002' ],
         price: 0, 
-        organizer: '51b116b422b1bd262f000009'
+        organizer: '51b07a6819108cf52d000001'
     });
 
     match.save();

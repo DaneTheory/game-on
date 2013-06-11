@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(function(req, res, next){
-    if (_.contains(req.url, '/api/') && !req.session.user_id) {
+    if (_.contains(req.url, '/api/') && !req.session.username) {
         res.send(401, 'You are not authorized to view this page');
     } else {
         next();
@@ -52,17 +52,22 @@ app.options('*', function(req, res){
 });
 
 app.post('/login', function (req, res) {
-    var post = req.body;
-    if (post.user == '123' && post.password == '123') {
-        req.session.user_id = post.user;
-        res.send(200);
-    } else {
-        res.send(401, 'Bad user/pass');
-    }
+    PlayerModel.findOne({ 
+        username: req.body.username, 
+        password: req.body.password
+    }, 
+    function (err, doc){
+        if (doc) {
+            req.session.username = req.body.username;
+            res.send(200);
+        } else {
+            res.send(401, 'Bad user/pass');
+        }
+    });
 });
 
 app.get('/logout', function (req, res) {
-    delete req.session.user_id;
+    delete req.session.username;
     res.send(200);
 });
 
@@ -78,8 +83,9 @@ var mongoose = require('mongoose'),
 
 
 var Player = new Schema({
-    displayName: { type: String, required: true },
-    realName: { type: String, required: true },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
     email: { type: String, required: true },
     location: { type: Array }
 });
@@ -135,21 +141,23 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 app.get('/pop_player', function(req, res){
-    // PlayerModel.remove({}, function(err) { 
-    //    console.log('collection removed') 
-    // });
+    PlayerModel.remove({}, function(err) { 
+        console.log('collection removed') 
+    });
 
     var player = new PlayerModel({
-        displayName: 'Johnny',
-        realName: 'John Travolta',
+        username: 'johnny',
+        password: 'johnny',
+        name: 'John Travolta',
         email: 'johntravs@gmail.com',
         location: [120,-30]
     });
     player.save();
 
     player = new PlayerModel({
-        displayName: 'Ann',
-        realName: 'Ann Clark',
+        username: 'ann',
+        password: 'ann',
+        name: 'Ann Clark',
         email: 'ann@hotmail.com',
         location: [20,20]
     });

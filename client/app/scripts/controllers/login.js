@@ -2,8 +2,8 @@
 
 app.controller('LoginController', function ($scope, $http, $location) {
 
-	$scope.user = '123';
-	$scope.password = '123';
+	$scope.username = 'johnny';
+	$scope.password = 'johnny';
 	$scope.err = '';
 
 	$scope.login = function(){
@@ -13,7 +13,7 @@ app.controller('LoginController', function ($scope, $http, $location) {
 			url: 'http://localhost:3000/login', 
 			withCredentials: true,
 			data: {
-				'user': $scope.user,
+				'username': $scope.username,
 				'password': $scope.password
 			}
 		}).success(function(data, status, headers, config){

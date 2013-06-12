@@ -1,3 +1,7 @@
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    ObjectId = mongoose.Schema.ObjectId;
+
 var Venue = new Schema({
     name: { type: String, required: true },
     location: { type: Array }
@@ -18,4 +22,4 @@ Venue.statics.near = function (q, term) {
         });
 };
 
-var VenueModel = module.exports.VenueModel = mongoose.model('Venue', Venue);
+module.exports.VenueModel = mongoose.model('Venue', Venue);

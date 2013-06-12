@@ -25,4 +25,4 @@ Player.statics.near = function (q, term) {
         });
 };
 
-var PlayerModel = module.exports.PlayerModel = mongoose.model('Player', Player);
+module.exports.PlayerModel = mongoose.model('Player', Player);

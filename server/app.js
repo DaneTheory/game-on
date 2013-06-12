@@ -4,6 +4,8 @@ var express = require('express'),
     path = require('path'),
     _ = require('lodash');
 
+var models = require('./schemas');
+
 var app = express();
 
 // all environments
@@ -36,7 +38,6 @@ app.use(function(req, res, next){
         next();
     }
 });
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only

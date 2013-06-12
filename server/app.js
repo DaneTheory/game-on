@@ -9,11 +9,8 @@ var models = require('./schemas');
 var app = express();
 
 // all environments
-app.set('mongodb-uri', 'mongodb://localhost/footballjs94');
+app.set('mongodb-uri', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/footballjs94');
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());

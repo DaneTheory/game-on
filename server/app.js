@@ -1,13 +1,23 @@
 var express = require('express'),
+    mongoose = require('mongoose'),
     mongoStore = require('connect-mongo')(express),
     http = require('http'),
     path = require('path'),
+    mers = require('mers');
     _ = require('lodash');
 
 var app = express();
 
-// all environments
+//setup mongoose
 app.set('mongodb-uri', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/footballjs94');
+
+app.db = mongoose.createConnection(app.get('mongodb-uri'));
+app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
+app.db.once('open', function () {
+  console.log('mongoose open for business');
+});
+
+// find better way to add this
 app.set('port', process.env.PORT || 3000);
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -20,14 +30,18 @@ app.use(express.session({
 
 }));
 app.use(express.methodOverride());
+
+// find better way to add this
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:9000");
     res.header("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
+
+// find better way to add this
 app.use(function(req, res, next){
-    if (_.contains(req.url, '/api/') && !req.session.username) {
+    if (_.contains(req.url, '/api/') && !req.session.username && req.method !== 'OPTIONS') {
         res.send(401, 'You are not authorized to view this page');
     } else {
         next();
@@ -38,15 +52,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
-    require('./fixtures')(app);
 }
 
+var models = require('./models')(app, mongoose);
+var routes = require('./routes')(app);
+
+
+// Find a better place to put this
 app.options('*', function(req, res){
     res.send(200); 
 });
 
-var mers = require('mers');
-var models = require('./schemas');
+
 app.use('/api/v1', mers({ uri: app.get('mongodb-uri') }).rest());
 
 http.createServer(app).listen(app.get('port'), function () {

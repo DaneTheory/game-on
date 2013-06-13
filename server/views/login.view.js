@@ -1,5 +1,5 @@
-app.post('/login', function (req, res) {
-    PlayerModel.findOne({ 
+exports.init = function (req, res) {
+    req.app.db.models.Player.findOne({ 
         username: req.body.username, 
         password: req.body.password
     }, 
@@ -11,4 +11,4 @@ app.post('/login', function (req, res) {
             res.send(401, 'Bad user/pass');
         }
     });
-});
+};

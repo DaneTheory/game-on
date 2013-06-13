@@ -22,4 +22,4 @@ Venue.statics.near = function (q, term) {
         });
 };
 
-module.exports.VenueModel = mongoose.model('Venue', Venue);
+module.exports = mongoose.model('Venue', Venue);

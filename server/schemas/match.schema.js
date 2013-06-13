@@ -24,4 +24,4 @@ Match.statics.venue = function (q, term) {
     return this.find({ 'venue': term });
 };
 
-module.exports.MatchModel = mongoose.model('Match', Match);
+module.exports = mongoose.model('Match', Match);

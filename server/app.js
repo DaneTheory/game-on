@@ -4,8 +4,6 @@ var express = require('express'),
     path = require('path'),
     _ = require('lodash');
 
-var models = require('./schemas');
-
 var app = express();
 
 // all environments
@@ -40,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
+    require('./fixtures')(app);
 }
 
 app.options('*', function(req, res){
@@ -47,11 +46,9 @@ app.options('*', function(req, res){
 });
 
 var mers = require('mers');
+var models = require('./schemas');
 app.use('/api/v1', mers({ uri: app.get('mongodb-uri') }).rest());
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
-
-
-

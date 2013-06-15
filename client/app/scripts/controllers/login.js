@@ -1,27 +1,15 @@
 'use strict';
 
-app.controller('LoginController', function ($scope, $http, $location) {
+app.controller('LoginController', function ($scope, AuthService) {
 
 	$scope.username = 'johnny';
 	$scope.password = 'johnny';
 	$scope.err = '';
 
-	$scope.login = function(){
+	$scope.AuthService = AuthService;
 
-		$http({
-			method: 'POST', 
-			url: 'http://localhost:3000/login', 
-			withCredentials: true,
-			data: {
-				'username': $scope.username,
-				'password': $scope.password
-			}
-		}).success(function(data, status, headers, config){
-			$location.path('/player');
-		}).error(function(data, status, headers, config){
-			$scope.err = data;
-		});
-
+	$scope.login = function(username, password){
+		AuthService.login(username, password);
 	};
 
 });

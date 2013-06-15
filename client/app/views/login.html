@@ -1,4 +1,4 @@
-<form class="form-horizontal" ng-submit="login()">
+<form class="form-horizontal" ng-submit="login(username, password)">
 
   <h2>Login</h2>
 
@@ -21,8 +21,8 @@
     <div class="controls">
       <button type="submit" class="btn btn-primary">Login</button>
       <p></p>
-      <div ng-show="err" class="alert alert-error">
-        {{err}}
+      <div ng-show="AuthService.err" class="alert alert-error">
+        {{AuthService.err}}
       </div>
     </div>
   </div>

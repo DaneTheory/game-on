@@ -12,7 +12,7 @@
 		<tr ng-repeat="match in model.matches">
 			<td>{{match.venue.name}}</td>
 			<td>
-				<p ng-repeat="player in match.players">{{player.displayName}}</p>
+				<p ng-repeat="player in match.players">{{player.name}}</p>
 			</td>
 			<td>
 				<input class="btn btn-success" value="Join">

@@ -45,9 +45,7 @@ app.configure(function () {
 
         if ('OPTIONS' === req.method) {
             next();
-        }
-
-        if (_.contains(req.url, '/api/') && !req.session.username) {
+        } else if (_.contains(req.url, '/api/') && !req.session.username) {
             res.send(401, 'You are not authorized to view this page');
         } else {
             next();

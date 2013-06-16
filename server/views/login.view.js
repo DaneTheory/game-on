@@ -1,5 +1,6 @@
 exports.init = function (req, res) {
-    req.app.db.models.Player.findOne({ 
+
+    req.app.db.base.models.Player.findOne({ 
         username: req.body.username, 
         password: req.body.password
     }, 

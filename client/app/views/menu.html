@@ -9,11 +9,11 @@
       <a class="brand" href="#">FootballJS</a>
       <div class="nav-collapse collapse navbar-responsive-collapse">
         <ul class="nav">
-          <li data-match-route="/"><a href="#/">Home</a></li>
-          <li data-match-route="/signup"><a href="#/signup">Sign-up</a></li>
-          <li data-match-route="/player"><a href="#/player">Players</a></li>
-          <li data-match-route="/venue"><a href="#/venue">Venues</a></li>
-          <li data-match-route="/match"><a href="#/match">Matches</a></li>
+          <li ng-if="!AuthService.username" data-match-route="/"><a href="#/">Home</a></li>
+          <li ng-if="!AuthService.username" data-match-route="/signup"><a href="#/signup">Sign-up</a></li>
+          <li ng-if="AuthService.username" data-match-route="/player"><a href="#/player">Players</a></li>
+          <li ng-if="AuthService.username" data-match-route="/venue"><a href="#/venue">Venues</a></li>
+          <li ng-if="AuthService.username" data-match-route="/match"><a href="#/match">Matches</a></li>
         </ul>
 
         <ul ng-if="AuthService.username" class="nav pull-right">

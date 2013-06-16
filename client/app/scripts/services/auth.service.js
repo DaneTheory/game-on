@@ -41,6 +41,10 @@ app.factory('AuthService', function($http, $location, ConfigService){
 		});	
 	};
 
+	Auth.prototype.signup = function(username, email, password){
+			
+	};
+
 	return new Auth();
 
 });

@@ -22,5 +22,5 @@ exports = module.exports = function(app, mongoose) {
         return this.find({ 'venue': term });
     };
 
-    app.db.model('Match', MatchSchema);
+    mongoose.model('Match', MatchSchema);
 }

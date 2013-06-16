@@ -3,7 +3,7 @@ var express = require('express'),
     mongoStore = require('connect-mongo')(express),
     http = require('http'),
     path = require('path'),
-    mers = require('mers');
+    mers = require('mers'),
     _ = require('lodash');
 
 var app = express();

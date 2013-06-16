@@ -10,13 +10,13 @@
       <div class="nav-collapse collapse navbar-responsive-collapse">
         <ul class="nav">
           <li data-match-route="/"><a href="#/">Home</a></li>
+          <li data-match-route="/signup"><a href="#/signup">Sign-up</a></li>
           <li data-match-route="/player"><a href="#/player">Players</a></li>
           <li data-match-route="/venue"><a href="#/venue">Venues</a></li>
           <li data-match-route="/match"><a href="#/match">Matches</a></li>
         </ul>
 
-        <!-- Use ng-if here -->
-        <ul ng-show="AuthService.username" class="nav pull-right">
+        <ul ng-if="AuthService.username" class="nav pull-right">
           <li><button class="btn btn-primary" ng-click="logout()">Logout</button></li>
         </ul>
       </div>

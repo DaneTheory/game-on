@@ -1,6 +1,8 @@
 app.controller('PlayerController', function ($scope, $http, $location, $routeParams) {
 
-	$scope.player;
+	'use strict';
+
+	$scope.player = null;
 
 	$scope.init = function(){
 
@@ -8,7 +10,7 @@ app.controller('PlayerController', function ($scope, $http, $location, $routePar
 
 		$http.get('http://localhost:3000/api/v1/player/' + playerId, { withCredentials: true })
 			.success(function(data){
-				$scope.player = data.payload[0]; 
+				$scope.player = data.payload[0];
 			});
 
 	};

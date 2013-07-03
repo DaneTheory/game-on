@@ -1,5 +1,7 @@
 app.controller('VenuesController', function ($scope, $http, $location, $routeParams) {
 
+	'use strict';
+
 	$scope.model = {};
 
 	$scope.init = function(){
@@ -14,26 +16,26 @@ app.controller('VenuesController', function ($scope, $http, $location, $routePar
 
 		$http.get('http://localhost:3000/api/v1/venue' + location, { withCredentials: true })
 			.success(function(data){
-				$scope.model.venues = data.payload; 
+				$scope.model.venues = data.payload;
 			});
 
 	};
 
 	$scope.getGeoLocation = function(){
 		navigator.geolocation.getCurrentPosition(
-			getGeoLocation_success,
-			getGeoLocation_error
+			getGeoLocationSuccess,
+			getGeoLocationError
 		);
 	};
 
-	var getGeoLocation_success = function(location) {
+	var getGeoLocationSuccess = function(location) {
 		// See https://groups.google.com/forum/?fromgroups#!topic/angular/nFbtADyEHg8
 		$scope.$apply(function() {
-			$location.path('/venue/l/' + location.coords.latitude + '/' + location.coords.longitude)
+			$location.path('/venue/l/' + location.coords.latitude + '/' + location.coords.longitude);
 		});
 	};
 
-	var getGeoLocation_error = function(err) {
+	var getGeoLocationError = function(err) {
 		console.log('location err', err);
 	};
 

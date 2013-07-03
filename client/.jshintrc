@@ -6,20 +6,36 @@
   "bitwise": true,
   "camelcase": true,
   "curly": true,
-  "eqeqeq": true,
+  "eqeqeq": false,
   "immed": true,
-  "indent": 2,
-  "latedef": true,
+  "indent": 4,
+  "latedef": false,
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
   "regexp": true,
   "undef": true,
-  "unused": true,
+  "unused": false,
   "strict": true,
   "trailing": true,
   "smarttabs": true,
-  "globals": {
-    "angular": false
-  }
+  "laxcomma"      : true,
+  "laxbreak"      : true,
+  "browser"       : true,
+  "maxlen"        : 120,
+  "predef"        : [
+      "app",
+      "window",
+      "document",
+      "console",
+      "MOVIDEO",
+      "ActiveXObject",
+      "angular",
+      "module",
+      "describe",
+      "beforeEach",
+      "it",
+      "chai",
+      "inject"
+  ]
 }

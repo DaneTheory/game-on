@@ -1,6 +1,6 @@
-'use strict';
-
 app.controller('LoginController', function ($scope, AuthService) {
+
+	'use strict';
 
 	$scope.username = 'johnny';
 	$scope.password = 'johnny';

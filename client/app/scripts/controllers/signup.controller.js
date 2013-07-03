@@ -1,10 +1,10 @@
-'use strict';
-
 app.controller('SignupController', function ($scope, AuthService) {
 
-	$scope.username;
-	$scope.email;
-	$scope.password;
+	'use strict';
+
+	$scope.username = null;
+	$scope.email = null;
+	$scope.password = null;
 
 	$scope.err = '';
 

@@ -1,6 +1,8 @@
 app.controller('PlayersController', function ($scope, $http, $location) {
-	
-	$scope.players;
+
+	'use strict';
+
+	$scope.players = null;
 
 	//http://secret-gorge-4002.herokuapp.com/
 

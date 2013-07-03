@@ -1,6 +1,6 @@
-'use strict';
+app.factory('AuthService', function ($http, $location, ConfigService) {
 
-app.factory('AuthService', function($http, $location, ConfigService){
+	'use strict';
 
 	var Auth = function(){
 		// Use cookies instead...
@@ -9,40 +9,40 @@ app.factory('AuthService', function($http, $location, ConfigService){
 		this.err = '';
 	};
 
-	Auth.prototype.logout = function(){
+	Auth.prototype.logout = function () {
 		var self = this;
 
 		// Create $http abstraction to handle CORS and console logs..
-		$http.get(ConfigService.API_URL + '/logout', {withCredentials: true})
-			.success(function(data, status, headers, config){
-				// Use cookies instead...	
+		$http.get(ConfigService.API_URL + '/logout', { withCredentials: true })
+			.success(function (data, status, headers, config) {
+				// Use cookies instead...
 				self.username = null;
 				$location.path('/');
 			});
 	};
 
-	Auth.prototype.login = function(username, password){
+	Auth.prototype.login = function (username, password) {
 		var self = this;
 
 		$http({
-			method: 'POST', 
-			url: ConfigService.API_URL + '/login', 
+			method: 'POST',
+			url: ConfigService.API_URL + '/login',
 			withCredentials: true,
 			data: {
 				'username': username,
 				'password': password
 			}
-		}).success(function(data, status, headers, config){
+		}).success(function (data, status, headers, config) {
 			// Use cookies instead...	
 			self.username = 'blah';
 			$location.path('/player');
-		}).error(function(data, status, headers, config){
+		}).error(function (data, status, headers, config) {
 			self.err = data;
-		});	
+		});
 	};
 
-	Auth.prototype.signup = function(username, email, password){
-			
+	Auth.prototype.signup = function (username, email, password){
+
 	};
 
 	return new Auth();

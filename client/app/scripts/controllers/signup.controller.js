@@ -1,4 +1,4 @@
-app.controller('SignupController', function ($scope, AuthService) {
+app.controller('SignupController', function ($scope, AuthenticationService) {
 
 	'use strict';
 
@@ -10,8 +10,8 @@ app.controller('SignupController', function ($scope, AuthService) {
 
 	$scope.AuthService = AuthService;
 
-	$scope.signup = function(username, email, password){
-		AuthService.signup(username, email, password);
+	$scope.signUp = function(username, email, password){
+		AuthenticationService.signUp(username, email, password);
 	};
 
 });

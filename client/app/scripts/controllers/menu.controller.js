@@ -1,11 +1,11 @@
-app.controller('MenuController', function ($scope, AuthService) {
+app.controller('MenuController', function ($scope, AuthenticationService) {
 
 	'use strict';
 
-	$scope.AuthService = AuthService;
+	$scope.AuthenticationService = AuthenticationService;
 
-	$scope.logout = function(){
-		AuthService.logout();
+	$scope.signOut = function(){
+		AuthenticationService.signOut();
 	};
 
 });

@@ -7,7 +7,9 @@ exports.init = function (req, res) {
     function (err, doc){
         if (doc) {
             req.session.username = req.body.username;
-            res.send(200);
+            res.send(200, {
+                username: req.body.username
+            });
         } else {
             res.send(401, 'Bad user/pass');
         }

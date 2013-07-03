@@ -24,7 +24,7 @@ app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.cookieParser());
     app.use(express.session({
-        secret: 'something',
+        secret: 'f00tb4ll9$',
         maxAge: new Date(Date.now() + 3600000), //1 Hour
         expires: new Date(Date.now() + 3600000), //1 Hour
         store: new mongoStore({ url: app.get('mongodb-uri') })

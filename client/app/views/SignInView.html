@@ -1,9 +1,6 @@
-<form class="form-horizontal" ng-submit="login(username, password)">
+<form class="form-horizontal" ng-submit="signIn(username, password)">
 
-  <h2>Login</h2>
-
-  <p>User: {{username}}</p>
-  <p>Password: {{password}}</p>
+  <h2>Sign in</h2>
 
   <div class="control-group">
     <label class="control-label" for="inputUsername">Username</label>
@@ -19,10 +16,10 @@
   </div>
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn btn-primary">Login</button>
-      <p></p>
-      <div ng-show="AuthService.err" class="alert alert-error">
-        {{AuthService.err}}
+      <button type="submit" class="btn">Sign in</button>
+
+      <div ng-show="AuthenticationService.err" class="alert alert-error">
+        {{AuthenticationService.err}}
       </div>
     </div>
   </div>

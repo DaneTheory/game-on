@@ -2,9 +2,13 @@
 
 var app = angular.module('football94', ['ngCookies', '$strap.directives']);
 
+app.constant('API_URL', '//localhost:3000/api/1');
+app.constant('DEFAULT_ROUTE', '/match');
+
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
 	$httpProvider.interceptors.push('AuthenticationInterceptor');
+	$httpProvider.defaults.withCredentials = true;
 
 	$routeProvider
 		.when('/signin', {
@@ -13,61 +17,44 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			requireAuthentication: false
 		})
 		.when('/signup', {
-			templateUrl: 'views/signup.html',
+			templateUrl: 'views/SignUpView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})
 		.when('/player', {
-			templateUrl: 'views/players.html',
-			controller: 'PlayersController'
+			templateUrl: 'views/PlayerCollectionView.html',
+			controller: 'PlayerCollectionCtrl'
 		})
 		.when('/player/:playerId', {
-			templateUrl: 'views/player.html',
-			controller: 'PlayerController'
+			templateUrl: 'views/PlayerView.html',
+			controller: 'PlayerCtrl'
 		})
 		.when('/venue', {
-			templateUrl: 'views/venues.html',
-			controller: 'VenuesController'
-		})
-		.when('/venue/l/:lat/:lon', {
-			templateUrl: 'views/venues.html',
-			controller: 'VenuesController'
+			templateUrl: 'views/VenueCollectionView.html',
+			controller: 'VenueCollectionCtrl'
 		})
 		.when('/match', {
-			templateUrl: 'views/matches.html',
-			controller: 'MatchesController'
+			templateUrl: 'views/MatchCollectionView.html',
+			controller: 'MatchCollectionCtrl'
 		})
 		.when('/match/:matchId', {
-			templateUrl: 'views/matche.html',
-			controller: 'MatchController'
+			templateUrl: 'views/MatchView.html',
+			controller: 'MatchCtrl'
 		})
-		.otherwise({ redirectTo: '/' });
+		.otherwise({
+			redirectTo: '/',
+			requireAuthentication: false
+		});
 
 });
 
-app.factory('AuthenticationInterceptor', function ($q) {
-    return {
-        response: function (response) {
-            // do something on success
-            return response;
-        },
-        responseError: function (response) {
-            // do something on error
-            if (response.status == 401) {
-            	// /AuthenticationService.signOut();
-            }
-            return $q.reject(response);
-        }
-    };
-});
-
-app.run(function ($rootScope, $location, $cookieStore) {
+app.run(function ($rootScope, $location, AuthenticationModel, DEFAULT_ROUTE) {
 
 	// Register listener to watch route changes.
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
-		if (!$cookieStore.get('username')) {
-			if (!(next.$$route.requireAuthentication === false)) {
-				$location.path('/');
+		if (!AuthenticationModel.isSignedIn) {
+			if (next.redirectTo === undefined && next.requireAuthentication === undefined) {
+				$location.path('/signin');
 			}
 		}
 	});

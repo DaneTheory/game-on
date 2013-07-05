@@ -24,7 +24,7 @@
 
 	<!-- Application content -->
 	<div>
-		<div ng-include="'views/menu.html'" ng-controller="AuthenticationCtrl"></div>
+		<div ng-include="'views/MenuView.html'" ng-controller="MenuCtrl"></div>
 
 		<div class="container" ng-view></div>
 	</div>
@@ -45,19 +45,26 @@
 	<!-- build:js scripts/scripts.js -->
 	<script src="scripts/app.js"></script>
 
-	<script src="scripts/controllers/AuthenticationController.js"></script>
-	<script src="scripts/services/AuthenticationService.js"></script>
-	<script src="scripts/services/AuthenticationModel.js"></script>
+	<script src="scripts/authentication/AuthenticationController.js"></script>
+	<script src="scripts/authentication/AuthenticationService.js"></script>
+	<script src="scripts/authentication/AuthenticationModel.js"></script>
 
-	<script src="scripts/controllers/menu.controller.js"></script>
-
-	<script src="scripts/controllers/player.controller.js"></script>
-	<script src="scripts/controllers/players.controller.js"></script>
+	<script src="scripts/player/PlayerCollectionController.js"></script>
+	<script src="scripts/player/PlayerController.js"></script>
+	<script src="scripts/player/PlayerModel.js"></script>
+	<script src="scripts/player/PlayerService.js"></script>
 	
-	<script src="scripts/controllers/matches.controller.js"></script>
-	<script src="scripts/controllers/venues.controller.js"></script>
+	<script src="scripts/match/MatchCollectionController.js"></script>
+	<script src="scripts/match/MatchModel.js"></script>
+	<script src="scripts/match/MatchService.js"></script>
 
-	<script src="scripts/services/config.service.js"></script>
+	<script src="scripts/venue/VenueCollectionController.js"></script>
+	<script src="scripts/venue/VenueModel.js"></script>
+	<script src="scripts/venue/VenueService.js"></script>
+
+	<script src="scripts/menu/MenuController.js"></script>
+
+	<script src="scripts/common/interceptor/AuthenticationInterceptor.js"></script>
 	<!-- endbuild -->
 </body>
 </html>

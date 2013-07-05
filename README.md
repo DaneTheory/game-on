@@ -1,25 +1,8 @@
-CORS
-====
+# Football94
+------------
 
-> CORS authentication sample app built with Yeoman, AngularJS and NodeJS.
+### Find games in your city
 
-> http://pablodenadai.github.io/CORS/
-  
-##Install:
+> Football94 connects you with the players in your city and allows you to find, organize and share games effortlessly.
 
-###Front-end: 
-
-#### Requirements:
-  + Yeoman
-  + Grunt
-  + Bower
-  
-```$ grunt server```
-  
-  
-###Back-end:
-
-#### Requirements:
-  + Node
-  
-```$ node app.js```
+Work in progress.

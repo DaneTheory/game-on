@@ -1,0 +1,22 @@
+<h1 ng-init="getCollection()">Match listing</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Venue</th>
+			<th>Players</th>
+			<th>Join</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="match in MatchModel.collection">
+			<td>{{match.venue.name}}</td>
+			<td>
+				<p ng-repeat="player in match.players">{{player.name}}</p>
+			</td>
+			<td>
+				<input class="btn btn-success" value="Join">
+			</td>
+		</tr>
+	</tbody>
+</table>

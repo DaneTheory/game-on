@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AuthenticationCtrl', function ($scope, AuthenticationService, AuthenticationModel) {
+app.controller('AuthenticationCtrl', function ($scope, AuthenticationModel) {
 
 	$scope.username = 'johnny';
 	$scope.password = 'johnny';
@@ -8,12 +8,16 @@ app.controller('AuthenticationCtrl', function ($scope, AuthenticationService, Au
 	$scope.AuthenticationModel = AuthenticationModel;
 
 	$scope.signIn = function(username, password){
-		AuthenticationService.signIn(username, password);
+		AuthenticationModel.signIn(username, password);
+	};
+
+	$scope.signOut = function(){
+		AuthenticationModel.signOut();
 	};
 
 	$scope.signUp = function(username, email, password){
 		/* TODO */
-		AuthenticationService.signUp(username, email, password);
+		AuthenticationModel.signUp(username, email, password);
 	};
 
 });

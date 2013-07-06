@@ -1,11 +1,11 @@
 'use strict';
 
-app.controller('MatchCollectionCtrl', function ($scope, MatchModel, MatchService) {
+app.controller('MatchCollectionCtrl', function ($scope, MatchModel) {
 
 	$scope.MatchModel = MatchModel;
 
 	$scope.getCollection = function() {
-		MatchService.getCollection();
+		MatchModel.getCollection();
 	};
 
 });

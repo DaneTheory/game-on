@@ -11,6 +11,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$httpProvider.defaults.withCredentials = true;
 
 	$routeProvider
+		.when('/', {
+			templateUrl: 'views/MainView.html',
+			requireAuthentication: false
+		})
 		.when('/signin', {
 			templateUrl: 'views/SignInView.html',
 			controller: 'AuthenticationCtrl',
@@ -32,6 +36,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		.when('/venue', {
 			templateUrl: 'views/VenueCollectionView.html',
 			controller: 'VenueCollectionCtrl'
+		})
+		.when('/venue/:venueId', {
+			templateUrl: 'views/VenueView.html',
+			controller: 'VenueCtrl'
 		})
 		.when('/match', {
 			templateUrl: 'views/MatchCollectionView.html',

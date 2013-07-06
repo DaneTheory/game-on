@@ -10,7 +10,9 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="match in MatchModel.collection">
-			<td>{{match.venue.name}}</td>
+			<td>
+				<a href="#/match/{{match._id}}">{{match.venue.name}}</a>
+			</td>
 			<td>
 				<p ng-repeat="player in match.players">{{player.name}}</p>
 			</td>

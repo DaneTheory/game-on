@@ -16,6 +16,11 @@
           <li ng-if="AuthenticationModel.isSignedIn" data-match-route="/match.*"><a href="#/match">Matches</a></li>
         </ul>
 
+        <form ng-if="AuthenticationModel.isSignedIn" class="navbar-search pull-left" action="">
+          <input type="text" class="search-query span2" placeholder="Search">
+        </form>
+
+
         <div ng-if="!AuthenticationModel.isSignedIn" class="nav pull-right">
           <a href="#/signin" class="btn" ng-click="signIn()">Sign in</a>
           <a href="#/signup" class="btn btn-success" ng-click="signUp()">Sign up</a>

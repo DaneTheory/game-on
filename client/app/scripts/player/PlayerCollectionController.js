@@ -1,11 +1,11 @@
 'use strict';
 
-app.controller('PlayerCollectionCtrl', function ($scope, PlayerModel, PlayerService) {
+app.controller('PlayerCollectionCtrl', function ($scope, PlayerModel) {
 
 	$scope.PlayerModel = PlayerModel;
 
 	$scope.getCollection = function() {
-		PlayerService.getCollection();
+		PlayerModel.getCollection();
 	};
 
 });

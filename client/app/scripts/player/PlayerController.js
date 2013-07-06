@@ -1,13 +1,13 @@
 'use strict';
 
-app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerService, PlayerModel) {
+app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel) {
 
 	$scope.PlayerModel = PlayerModel;
 
 	$scope.playerId = $routeParams.playerId;
 
 	$scope.getById = function () {
-		PlayerService.getById($scope.playerId);
+		PlayerModel.getById($scope.playerId);
 	};
 
 });

@@ -1,16 +1,15 @@
 'use strict';
 
-app.controller('VenueCollectionCtrl', function ($scope, $location, $routeParams, VenueService, VenueModel) {
+app.controller('VenueCollectionCtrl', function ($scope, $location, $routeParams, VenueModel) {
 
 	$scope.VenueModel = VenueModel;
-	$scope.VenueService = VenueService;
 
 	$scope.latitude = $routeParams.latitude;
 	$scope.longitude = $routeParams.longitude;
 	$scope.maxDistance = 100; // Km
 
 	$scope.getCollection = function () {
-		VenueService.getCollection({
+		VenueModel.getCollection({
 			latitude: $scope.latitude,
 			longitude: $scope.longitude,
 			maxDistance: $scope.maxDistance

@@ -3,9 +3,13 @@ exports = module.exports = function(app, mongoose) {
     var PlayerSchema = new mongoose.Schema({
         username: { type: String, required: true },
         password: { type: String, required: true },
-        name: { type: String, required: true },
         email: { type: String, required: true },
-        location: { type: Array }
+        name: { type: String, required: true },
+        dateOfBirth: { type: Date },
+        position: { type: String },
+        location: { type: Array },
+        rate: { type: Number },
+        bio: { type: String }
     });
     PlayerSchema.index({ location: '2d' });
 

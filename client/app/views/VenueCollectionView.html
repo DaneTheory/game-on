@@ -11,7 +11,9 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="venue in VenueModel.collection">
-			<td>{{venue.name}}</td>
+			<td>
+				<a href="#/venue/{{venue._id}}">{{venue.name}}</a>
+			</td>
 			<td>{{venue.location}}</td>
 		</tr>
 	</tbody>

@@ -2,8 +2,11 @@
 
 app.controller('AuthenticationCtrl', function ($scope, AuthenticationModel) {
 
+	// Placeholder data.
 	$scope.username = 'johnny';
 	$scope.password = 'johnny';
+	$scope.name = 'John Smith';
+	$scope.email = 'johnny@gmail.com';
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
@@ -15,9 +18,8 @@ app.controller('AuthenticationCtrl', function ($scope, AuthenticationModel) {
 		AuthenticationModel.signOut();
 	};
 
-	$scope.signUp = function(username, email, password){
-		/* TODO */
-		AuthenticationModel.signUp(username, email, password);
+	$scope.signUp = function(username, password, name, email){
+		AuthenticationModel.signUp(username, password, name, email);
 	};
 
 });

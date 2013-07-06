@@ -37,8 +37,20 @@ app.factory('AuthenticationModel', function ($http, $location, $cookieStore, API
 		return $http.get(API_URL + '/auth/signout');
 	};
 
-	this.signUp = function (username, email, password) {
+	this.signUp = function (username, password, name, email) {
+		this.setIsSignedIn(false);
 
+		return $http.post(API_URL + '/auth/signup', {
+			username: username,
+			password: password,
+			name: name,
+			email: email
+		}).success(angular.bind(this, function() {
+			this.setIsSignedIn(true);
+			$location.path(DEFAULT_ROUTE);
+		})).error(angular.bind(this, function (data, status) {
+			this.errorStatus = status;
+		}));
 	};
 
 	return this;

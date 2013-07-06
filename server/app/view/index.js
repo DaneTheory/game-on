@@ -8,6 +8,7 @@ exports = module.exports = function(app) {
 		mongoDbURI = app.get('mongodb_uri');
 
 	app.post(authPath + '/signin', require('./SignInView').init);
+	app.post(authPath + '/signup', require('./SignUpView').init);
 	app.get(authPath + '/signout', require('./SignOutView').init);
 
 	if ('development' == app.get('env')) {

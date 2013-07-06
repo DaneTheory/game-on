@@ -1,32 +1,49 @@
-<form class="form-horizontal" ng-submit="signup()">
+<form class="form-horizontal" ng-submit="signUp(username, password, name, email)">
 
   <h2>Sign up</h2>
 
   <div class="control-group">
     <label class="control-label" for="inputUsername">Username</label>
     <div class="controls">
-      <input type="text" id="inputUsername" placeholder="Username" ng-model="username">
+      <input type="text" id="inputUsername" placeholder="Username" ng-model="username" required>
     </div>
   </div>
-  <div class="control-group">
-    <label class="control-label" for="inputEmail">Email</label>
-    <div class="controls">
-      <input type="email" id="inputEmail" placeholder="Email" ng-model="email">
-    </div>
-  </div>
+
   <div class="control-group">
     <label class="control-label" for="inputPassword">Password</label>
     <div class="controls">
-      <input type="password" id="inputPassword" placeholder="Password" ng-model="password">
+      <input type="password" id="inputPassword" placeholder="Password" ng-model="password" required>
     </div>
   </div>
+
+  <hr/>
+
+  <div class="control-group">
+    <label class="control-label" for="inputName">Name</label>
+    <div class="controls">
+      <input type="text" id="inputName" placeholder="Name" ng-model="name" required>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Email</label>
+    <div class="controls">
+      <input type="email" id="inputEmail" placeholder="Email" ng-model="email" required>
+    </div>
+  </div>
+
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn btn-primary">Login</button>
-      <p></p>
-      <div ng-show="err" class="alert alert-error">
-        {{err}}
+      <button type="submit" class="btn">Sign up</button>
+    </div>
+  </div>  
+
+  <div class="control-group">
+    <div class="controls">
+      <div ng-if="AuthenticationModel.errorStatus" ng-switch="AuthenticationModel.errorStatus" class="alert alert-error">
+        <span ng-switch-when="400">User or email address already taken.</span>
       </div>
     </div>
   </div>
+
 </form>

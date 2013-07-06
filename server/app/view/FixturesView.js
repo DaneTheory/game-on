@@ -1,6 +1,6 @@
 exports.init = function(req, res){
 
-    var models = req.app.db.models;
+    var models = req.app.db.base.models;
 
     // Drop all
     models.Player.remove({}, function(err){});

@@ -6,8 +6,8 @@ exports.init = function (req, res) {
 	}, 
 	function (err, doc){
 		if (doc) {
-			req.session.username = req.body.username;
-			res.send(200);
+			req.session.playerId = doc._id;
+			res.send(200, { player: doc });
 		} else {
 			res.send(400, 'Incorrect username or password.');
 		}

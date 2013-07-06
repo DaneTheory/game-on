@@ -60,7 +60,7 @@ app.run(function ($rootScope, $location, AuthenticationModel, DEFAULT_ROUTE) {
 
 	// Register listener to watch route changes.
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
-		if (!AuthenticationModel.isSignedIn) {
+		if (!AuthenticationModel.isSignedIn()) {
 			if (next.redirectTo === undefined && next.requireAuthentication === undefined) {
 				$location.path('/signin');
 			}

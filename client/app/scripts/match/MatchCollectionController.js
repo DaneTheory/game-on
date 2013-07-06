@@ -8,4 +8,8 @@ app.controller('MatchCollectionCtrl', function ($scope, MatchModel) {
 		MatchModel.getCollection();
 	};
 
+	$scope.join = function (matchId) {
+		MatchModel.join(matchId);
+	};
+
 });

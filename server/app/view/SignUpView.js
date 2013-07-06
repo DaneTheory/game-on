@@ -25,8 +25,8 @@ exports.init = function (req, res) {
 
 			player.save(function (err, doc) {
 				if (doc) {
-					req.session.username = req.body.username;
-					res.send(200);
+					req.session.playerId = doc._id;
+					res.send(200, { player: doc });
 				} else {
 					res.send(500, 'Sorry, something went wrong, please try again later.' + '\n' + err);
 				}

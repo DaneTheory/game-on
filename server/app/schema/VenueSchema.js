@@ -1,3 +1,5 @@
+// http://localhost:3000/api/1/venue/
+
 exports = module.exports = function(app, mongoose) {
 
     var VenueSchema = new mongoose.Schema({
@@ -6,7 +8,7 @@ exports = module.exports = function(app, mongoose) {
     });
     VenueSchema.index({ location: '2d' });
 
-    // http://localhost:3000/api/v1/venue/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
+    // http://localhost:3000/api/1/venue/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
     // maxDistance = km
     VenueSchema.statics.near = function (q, term) {
         var coordinates = [ Number(q.latitude), Number(q.longitude) ];

@@ -1,3 +1,5 @@
+// http://localhost:3000/api/1/player/
+
 exports = module.exports = function(app, mongoose) {
 
     var PlayerSchema = new mongoose.Schema({
@@ -13,7 +15,7 @@ exports = module.exports = function(app, mongoose) {
     });
     PlayerSchema.index({ location: '2d' });
 
-    // http://localhost:3000/api/v1/player/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
+    // http://localhost:3000/api/1/player/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
     // maxDistance = km
     PlayerSchema.statics.near = function (q, term) {
         var coordinates = [ Number(q.latitude), Number(q.longitude) ];

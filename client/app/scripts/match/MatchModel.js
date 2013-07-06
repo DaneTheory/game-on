@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('MatchModel', function ($http, API_URL) {
+app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 
 	this.collection = null;
 	this.match = {
@@ -29,7 +29,7 @@ app.factory('MatchModel', function ($http, API_URL) {
 			.success(angular.bind(this, function (data) {
 				this.match = data.payload[0];
 			}))
-			.error(angular.data(this, function () {
+			.error(angular.bind(this, function () {
 				this.match = null;
 			}));
 	};
@@ -43,6 +43,16 @@ app.factory('MatchModel', function ($http, API_URL) {
 			}))
 			.error(angular.bind(this, function(){
 				this.collection = null;
+			}));
+	};
+
+	this.join = function (match) {
+		return $http.post(API_URL + '/match/' + match._id + '/join')
+			.success(angular.bind(this, function (data){
+				match.players.push(AuthenticationModel.player)
+			}))
+			.error(angular.bind(this, function(){
+				console.log('MatchModel join error');
 			}));
 	};
 

@@ -17,7 +17,8 @@
 				<p ng-repeat="player in match.players">{{player.name}}</p>
 			</td>
 			<td>
-				<input type="button" class="btn btn-success" value="Join" ng-click="join(match)">
+				<input ng-if="!hasJoint(match.players)" type="button" class="btn btn-success" value="Join" ng-click="join(match)">
+				<input ng-if="hasJoint(match.players)" type="button" class="btn btn-danger" value="Leave" ng-click="leave(match)">
 			</td>
 		</tr>
 	</tbody>

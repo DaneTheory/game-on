@@ -56,6 +56,24 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 			}));
 	};
 
+	this.leave = function (match) {
+		return $http.post(API_URL + '/match/' + match._id + '/leave')
+			.success(angular.bind(this, function (){
+
+				var playerIndex = _.findIndex(match.players, function (player) {
+					return player._id == AuthenticationModel.player._id;
+				});
+				
+				if (playerIndex > -1) {
+					match.players.splice(playerIndex, 1);
+				}
+
+			}))
+			.error(angular.bind(this, function(){
+				console.log('MatchModel leave error');
+			}));
+	};
+
 	return this;
 
 });

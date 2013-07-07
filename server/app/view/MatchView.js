@@ -36,3 +36,32 @@ exports.join = function (req, res) {
 	});
 
 };
+
+exports.leave = function (req, res) {
+
+	var matchId = req.route.params.matchId,
+		playerId = req.session.playerId,
+		models = req.app.db.base.models,
+		Match = models.Match;
+
+	var leavePlayer = function (match) {
+		match.players.remove(playerId);
+		match.save(function(err, doc){
+			if (doc) {
+				res.send(200);
+			} else {
+				res.send(500, 'Sorry, something went wrong, please try again later.' + '\n' + err);
+			}
+			
+		});
+	};
+
+	Match.findById(matchId, function (err, doc){
+		if (doc) {
+			leavePlayer(doc);
+		} else {
+			res.send(400, 'Couln\'t find match with ID ' + matchId + '.');
+		}
+	});
+
+};

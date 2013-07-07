@@ -22,6 +22,6 @@ exports = module.exports = function(app) {
 
 	// Methods
 	app.post(apiPath + '/match/:matchId/join', require('./MatchView').join);
-	//app.post(apiPath + '/match/:matchId/unjoin', require('./MatchView').unjoin);
+	app.post(apiPath + '/match/:matchId/leave', require('./MatchView').leave);
 
 };

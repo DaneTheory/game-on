@@ -41,13 +41,21 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/VenueView.html',
 			controller: 'VenueCtrl'
 		})
-		.when('/match', {
-			templateUrl: 'views/MatchCollectionView.html',
-			controller: 'MatchCollectionCtrl'
-		})
+		// .when('/match', {
+		// 	templateUrl: 'views/MatchCollectionView.html',
+		// 	controller: 'MatchCollectionCtrl'
+		// })
 		.when('/match/:matchId', {
 			templateUrl: 'views/MatchView.html',
 			controller: 'MatchCtrl'
+		})
+		.when('/discover', {
+			templateUrl: 'views/DiscoverView.html'
+			// controller: 'DiscoverCtrl'
+		})
+		.when('/:playerId', {
+			templateUrl: 'views/ProfileView.html',
+			controller: 'PlayerCtrl'
 		})
 		.otherwise({
 			redirectTo: '/',

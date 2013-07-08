@@ -2,24 +2,32 @@
 
 app.controller('AuthenticationCtrl', function ($scope, AuthenticationModel) {
 
-	// Placeholder data.
-	$scope.username = 'johnny';
-	$scope.password = 'johnny';
-	$scope.name = 'John Smith';
-	$scope.email = 'johnny@gmail.com';
+	$scope.username = null;
+	$scope.password = null;
+	$scope.name = null;
+	$scope.email = null;
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
-	$scope.signIn = function(username, password){
+	$scope.signIn = function (username, password) {
 		AuthenticationModel.signIn(username, password);
 	};
 
-	$scope.signOut = function(){
+	$scope.signOut = function () {
 		AuthenticationModel.signOut();
 	};
 
-	$scope.signUp = function(username, password, name, email){
+	$scope.signUp = function (username, password, name, email) {
 		AuthenticationModel.signUp(username, password, name, email);
+	};
+
+	$scope.clear = function () {
+		// Development placeholders.
+		$scope.username = 'pablodenadai';
+		$scope.password = '1234567';
+		$scope.name = 'Pablo De Nadai';
+		$scope.email = 'pablodenadai@gmail.com';
+		AuthenticationModel.errorStatus = null;
 	};
 
 });

@@ -49,7 +49,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 	this.join = function (match) {
 		return $http.post(API_URL + '/match/' + match._id + '/join')
 			.success(angular.bind(this, function (data){
-				match.players.push(AuthenticationModel.player)
+				match.players.push(AuthenticationModel.player);
 			}))
 			.error(angular.bind(this, function(){
 				console.log('MatchModel join error');
@@ -63,7 +63,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 				var playerIndex = _.findIndex(match.players, function (player) {
 					return player._id == AuthenticationModel.player._id;
 				});
-				
+
 				if (playerIndex > -1) {
 					match.players.splice(playerIndex, 1);
 				}

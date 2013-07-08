@@ -5,8 +5,8 @@ app.factory('PlayerModel', function ($http, API_URL) {
 	this.collection = null;
 	this.player = {
 		username: null,
-        password: null,
-        email: null,
+        password: null, // TODO: Remove this field from response.
+        email: null, // TODO: Remove this field from response.
         name: null,
         dateOfBirth: null,
         position: null,

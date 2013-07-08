@@ -21,7 +21,7 @@ app.factory('VenueModel', function ($http, API_URL) {
 	this.getCollection = function (params) {
 
 		var defaultParams = {};
-		
+
 		var url = API_URL + '/venue';
 
 		if (params.latitude && params.longitude && params.maxDistance) {

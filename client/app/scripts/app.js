@@ -3,7 +3,7 @@
 var app = angular.module('football94', ['ngCookies', '$strap.directives']);
 
 app.constant('API_URL', '//localhost:3000/api/1');
-app.constant('DEFAULT_ROUTE', '/match');
+app.constant('DEFAULT_ROUTE', '/discover');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -41,10 +41,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/VenueView.html',
 			controller: 'VenueCtrl'
 		})
-		// .when('/match', {
-		// 	templateUrl: 'views/MatchCollectionView.html',
-		// 	controller: 'MatchCollectionCtrl'
-		// })
+		.when('/match', {
+			templateUrl: 'views/Match/MatchCollectionView.html',
+			controller: 'MatchCollectionCtrl'
+		})
 		.when('/match/:matchId', {
 			templateUrl: 'views/MatchView.html',
 			controller: 'MatchCtrl'

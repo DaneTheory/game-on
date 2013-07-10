@@ -1,2 +1,20 @@
 @import "compass_twitter_bootstrap";
+@import "font_awesome/font-awesome.scss";
 @import "compass_twitter_bootstrap_responsive";
+
+.navbar {
+	.navbar-inner {
+		.nav {
+			a {
+				padding: 10px;
+			}
+		}
+	}
+}
+
+.img-circle {
+	border-radius: 100px;
+	box-shadow: 0px 0px 0px 1px #fff;
+}
+
+@import "profile.scss";

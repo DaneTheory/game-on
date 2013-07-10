@@ -1,39 +1,26 @@
-<div class="navbar navbar-static-top navbar-inverse" bs-navbar>
-  <div class="navbar-inner">
-    <div class="container">
+<div ng-if="AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inverse" bs-navbar>
+	<div class="navbar-inner">
+		<ul class="nav pull-left">
+			<li data-match-route="/"><a href="#/" class="brand">Football94</a></li>
+			
+		</ul>
 
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      
-      <a class="brand" href="#">Football94</a>
-      
-      <div ng-if="!AuthenticationModel.isSignedIn()" class="nav-collapse collapse navbar-responsive-collapse">
-        <ul class="nav">
-          <li data-match-route="/"><a href="#/">Home</a></li>
-        </ul>
-        <div class="nav pull-right">
-          <li class="divider-vertical"></li>
-          <a href="#/signin" class="btn" ng-click="signIn()">Sign in</a>
-          <a href="#/signup" class="btn btn-success" ng-click="signUp()">Sign up</a>
-        </div>
-      </div>
+		<ul class="nav pull-right">
+			<li><a><i class="icon-search icon-large"></i></a></li>
+			<li><a><i class="icon-star icon-large"></i></a></li>
+			<li><a ng-click="signOut()"><i class="icon-ellipsis-vertical icon-large"></i></a></li>
+		</ul>
+	</div>
 
-      <div ng-if="AuthenticationModel.isSignedIn()" class="nav-collapse collapse navbar-responsive-collapse">
-        <ul class="nav">
-          <li data-match-route="/"><a href="#/">Home</a></li>
-          <li data-match-route="/discover"><a href="#/discover">Discover</a></li>
-          <li data-match-route="/{{AuthenticationModel.player._id}}">
-            <a href="#/{{AuthenticationModel.player._id}}">Me</a>
-          </li>
-        </ul>
-        <div class="nav pull-right">
-          <button class="btn btn-primary" ng-click="signOut()">Sign out</button>
-        </div>
-      </div>
+	<div class="navbar-inner">
+		<ul class="nav">
+			<li data-match-route="/{{AuthenticationModel.player._id}}">
+				<a href="#/{{AuthenticationModel.player._id}}">Profile</a>
+			</li>
 
-    </div>
-  </div>
+			<li data-match-route="/match.*"><a href="#/match">Matches</a></li>
+			<li><a>Venues</a></li>
+			<li><a>Players</a></li>
+		</ul>
+	</div>
 </div>

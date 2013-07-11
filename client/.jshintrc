@@ -32,6 +32,7 @@
       "ActiveXObject",
       "angular",
       "_",
+      "md5",
       "module",
       "describe",
       "beforeEach",

@@ -27,7 +27,7 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, Authen
 		var email = $scope.PlayerModel.player.email,
 			hash = email ? md5(email.trim().toLowerCase()) : '';
 
-		return 'http://www.gravatar.com/avatar/' + hash + '?s=100';
+		return 'http://www.gravatar.com/avatar/' + hash + '?s=100&d=mm';
 	};
 
 });

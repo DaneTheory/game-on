@@ -24,7 +24,7 @@ app.controller('AuthenticationCtrl', function ($scope, AuthenticationModel) {
 	$scope.clear = function () {
 		// Development placeholders.
 		$scope.username = 'pablodenadai';
-		$scope.password = '1234567';
+		$scope.password = '123';
 		$scope.name = 'Pablo De Nadai';
 		$scope.email = 'pablodenadai@gmail.com';
 		AuthenticationModel.errorStatus = null;

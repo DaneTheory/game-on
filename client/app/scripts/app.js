@@ -3,7 +3,7 @@
 var app = angular.module('football94', ['ngCookies', '$strap.directives']);
 
 app.constant('API_URL', '//localhost:3000/api/1');
-app.constant('DEFAULT_ROUTE', '/discover');
+app.constant('DEFAULT_ROUTE', '/match');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -11,10 +11,6 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$httpProvider.defaults.withCredentials = true;
 
 	$routeProvider
-		// .when('/', {
-		// 	templateUrl: 'views/MainView.html',
-		// 	requireAuthentication: false
-		// })
 		.when('/signin', {
 			templateUrl: 'views/SignInView.html',
 			controller: 'AuthenticationCtrl',
@@ -27,15 +23,11 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		})
 		.when('/player', {
 			templateUrl: 'views/player/PlayerCollectionView.html',
-			controller: 'PlayerCollectionCtrl'
+			controller: 'PlayerCtrl'
 		})
-		// .when('/player/:playerId', {
-		// 	templateUrl: 'views/PlayerView.html',
-		// 	controller: 'PlayerCtrl'
-		// })
 		.when('/venue', {
 			templateUrl: 'views/venue/VenueCollectionView.html',
-			controller: 'VenueCollectionCtrl'
+			controller: 'VenueCtrl'
 		})
 		.when('/venue/:venueId', {
 			templateUrl: 'views/venue/VenueDetailView.html',
@@ -43,16 +35,12 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		})
 		.when('/match', {
 			templateUrl: 'views/match/MatchCollectionView.html',
-			controller: 'MatchCollectionCtrl'
+			controller: 'MatchCtrl'
 		})
 		.when('/match/:matchId', {
 			templateUrl: 'views/match/MatchDetailView.html',
 			controller: 'MatchCtrl'
 		})
-		// .when('/discover', {
-		// 	templateUrl: 'views/DiscoverView.html'
-		// 	controller: 'DiscoverCtrl'
-		// })
 		.when('/:playerId', {
 			templateUrl: 'views/player/PlayerDetailView.html',
 			controller: 'PlayerCtrl'

@@ -19,14 +19,16 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, Authen
 		return $scope.AuthenticationModel.player._id === $scope.playerId;
 	};
 
+	$scope.getCollection = function() {
+		PlayerModel.getCollection();
+	};
+
 	$scope.getById = function () {
 		PlayerModel.getById($scope.playerId);
 	};
 
-	$scope.getImageURL = function () {
-		var email = $scope.PlayerModel.player.email,
-			hash = email ? md5(email.trim().toLowerCase()) : '';
-
+	$scope.imageUrl = function (player) {
+		var hash = player.email ? md5(player.email.trim().toLowerCase()) : '';
 		return 'http://www.gravatar.com/avatar/' + hash + '?s=100&d=mm';
 	};
 

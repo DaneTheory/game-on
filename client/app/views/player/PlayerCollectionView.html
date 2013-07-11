@@ -1,35 +1,5 @@
-<div class="container" ng-init="getCollection()">
-	<h3>Players</h3>
-
-	<div class="row-fluid">
-		<ul class="thumbnails">
-			<li class="span4" ng-repeat="player in PlayerModel.collection | limitTo: 3">
-				<div class="thumbnail">
-					<img data-src="holder.js/100%x200" placeholderjs/>
-					<div class="caption">
-						<h3><a href="#/{{player._id}}">{{player.name}}</a></h3>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-						<p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
-					</div>
-				</div>
-			</li>
-		</ul>
+<div ng-init="getCollection()">
+	<div ng-repeat="player in PlayerModel.collection">
+		<div ng-include="'/views/player/_PlayerItemView.html'"></div>
 	</div>
-
-<table class="table">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Email</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="player in PlayerModel.collection">
-			<td>
-				<a href="#/{{player._id}}">{{player.name}}</a>
-			</td>
-			<td>{{player.email}}</td>
-		</tr>
-	</tbody>
-</table>
 </div>

@@ -1,13 +1,14 @@
 <div class="media">
-	<a class="pull-left" href="#/match/{{match._id}}">
-		<img class="img-circle" data-src="holder.js/social/70x70" width="70" height="70" placeholderjs/>
+	<a class="pull-left" href="#/{{player._id}}">
+		<img class="img-circle" ng-src="{{imageUrl(player)}}" width="70" height="70">
 	</a>
 
 	<div class="media-body">
-		<h4 class="media-heading">{{match.venue.name}}</h4>
-		<span ng-repeat="player in match.players">{{player.name}}</span>
-		Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-		<input ng-if="!hasJoint(match.players)" type="button" class="btn btn-success" value="Join" ng-click="join(match)">
-			<input ng-if="hasJoint(match.players)" type="button" class="btn btn-danger" value="Leave" ng-click="leave(match)">
+		<p>{{player.name}}</p>
+		<h5 class="media-heading">@{{player.username}}</h5>
+		<p>25, M - Melbourne, Australia</p>
+
+		<input type="button" class="btn btn-primary" value="Message">
 	</div>
 </div>
+<hr/>

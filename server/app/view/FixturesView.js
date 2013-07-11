@@ -21,7 +21,8 @@ exports.init = function(req, res){
 			gender: 'M',
 			birthday: new Date('04/16/1988'),
 			city: 'Melbourne, Australia',
-			location: [-37.7992, 144.9467]
+			location: [-37.7992, 144.9467],
+			rate: 4
 		},
 		{
 			username: 'tamatimikaere',
@@ -31,7 +32,8 @@ exports.init = function(req, res){
 			birthday: new Date('02/16/1992'),
 			gender: 'M',
 			city: 'Wellington, New Zealand',
-			location: [-41.2889, 174.7772]
+			location: [-41.2889, 174.7772],
+			rate: 2
 		},
 		{
 			username: 'anaherahine',
@@ -41,27 +43,30 @@ exports.init = function(req, res){
 			birthday: new Date('02/16/1992'),
 			gender: 'F',
 			city: 'Wellington, New Zealand',
-			location: [-41.2889, 174.7772]
+			location: [-41.2889, 174.7772],
+			rate: 4
 		},
 		{
+			username: 'ibrahimmalik',
 			name: 'Ibrahim Malik',
 			password: '123',
-			username: '@ibrahimmalik',
 			email: 'ibrahim.malik@gmail.com',
 			birthday: new Date('02/20/1982'),
 			gender: 'M',
 			city: 'Cairo, Egypt',
-			location: [30.0566, -31.2262]
+			location: [30.0566, -31.2262],
+			rate: 3
 		},
 		{
+			username: 'farahfawziya',
 			name: 'Farah Fawziya',
 			password: '123',
-			username: '@farahfawziya',
 			email: 'farah.fawziya@gmail.com',
 			birthday: new Date('02/20/1985'),
 			gender: 'F',
 			city: 'Cairo, Egypt',
-			location: [30.0566, -31.2262]
+			location: [30.0566, -31.2262],
+			rate: 5
 		}
 	];
 

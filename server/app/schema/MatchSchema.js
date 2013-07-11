@@ -3,10 +3,11 @@
 exports = module.exports = function(app, mongoose) {
 
     var MatchSchema = new mongoose.Schema({
+        title: { type: String },
         venue: { type: mongoose.Schema.ObjectId, ref: 'Venue'},
-        players: [{ type: mongoose.Schema.ObjectId, ref: 'Player'} ],
         when: { type: Date, default: Date.now },
-        price: { type: Number }, 
+        players: [{ type: mongoose.Schema.ObjectId, ref: 'Player'} ],
+        price: { type: Number },
         organizer: { type: mongoose.Schema.ObjectId, ref: 'Player'},
 
         meta: {

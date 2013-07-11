@@ -66,46 +66,85 @@ exports.init = function(req, res){
 	];
 
 	var ps = [];
-
 	_.each(players, function (player) {
 		var p = new models.Player(player);
 		p.save();
-
 		ps.push(p);
 	});
-	http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm
 
 	/** 
 	 * Venue
 	 */
-	var venue1 = new models.Venue({
-		name: 'Albert Park',
-		location: [-37.8420, 144.9500]
-	});
-	venue1.save();
+	var venues = [
+		{
+			name: 'Albert Park',
+			location: [-37.8420, 144.9500]
+		},
+		{
+			name: 'Maracana',
+			location: [-22.9122, -43.2302]
+		},
+		{
+			name: 'Camp Nou',
+			location: [41.3809, -2.1228]
+		}
+	];
 
-	var venue2 = new models.Venue({
-		name: 'Maracana',
-		location: [-22.9122, -43.2302]
+	var vs = [];
+	_.each(venues, function (venue) {
+		var v = new models.Venue(venue);
+		v.save();
+		vs.push(v);
 	});
-	venue2.save();
 
 	/** 
 	 * Match
 	 */
-	var match = new models.Match({
-		venue: venue1.id,
-		players: [
-			ps[0].id,
-			ps[1].id,
-			ps[2].id,
-			ps[3].id
-		],
-		price: 0, 
-		organizer: ps[0].id
-	});
-	match.save();
+	var matches = [
+		{
+			title: 'South-Americans Friendly',
+	        venue: vs[0].id,
+			players: [
+				ps[0].id,
+				ps[1].id,
+				ps[2].id,
+				ps[3].id
+			],
+			price: 0, 
+			organizer: ps[0].id
+		},
+		{
+			title: 'Maori Football Club',
+	        venue: vs[1].id,
+			players: [
+				ps[4].id,
+				ps[1].id,
+				ps[2].id,
+				ps[3].id
+			],
+			price: 5, 
+			organizer: ps[4].id
+		},
+		{
+			title: 'North Melbourne Neighbours',
+	        venue: vs[2].id,
+			players: [
+				ps[0].id,
+				ps[4].id,
+				ps[2].id,
+				ps[3].id
+			],
+			price: 2.99, 
+			organizer: ps[2].id
+		}
+	];
 
+	var ms = [];
+	_.each(matches, function (match) {
+		var m = new models.Match(match);
+		m.save();
+		ms.push(m);
+	});
 
 	res.send(200);
 };

@@ -10,23 +10,39 @@ exports.init = function(req, res){
     /** 
      * Player
      */
-    var player1 = new models.Player({
-        username: 'johnny',
-        password: 'johnny',
-        name: 'John Travolta',
-        email: 'johntravs@gmail.com',
-        location: [-37.7992, 144.9467]
-    });
-    player1.save();
+    var players = [
+        {
+            username: 'pablodenadai',
+            password: '123',
+            name: 'Pablo De Nadai',
+            email: 'pablodenadai@gmail.com',
+            gender: 'M',
+            city: 'Melbourne, Australia'
+            location: [-37.7992, 144.9467]
+        },
+        {
+            username: 'tamatimikaere',
+            password: '123',
+            name: 'Tamati Mikaere',
+            email: 'tamati.mikaere@gmail.com',
+            gender: 'M',
+            city: 'Wellington, New Zealand'
+            location: [-41.2889, 174.7772]
+        },
+        {
+            username: 'anaherahine',
+            password: '123',
+            name: 'Anahera Hine',
+            email: 'anahera.hine@gmail.com',
+            gender: 'F',
+            city: 'Wellington, New Zealand'
+            location: [-41.2889, 174.7772]
+        }
+    ];
 
-    var player2 = new models.Player({
-        username: 'ann',
-        password: 'ann',
-        name: 'Ann Clark',
-        email: 'ann@hotmail.com',
-        location: [20,20]
-    });
-    player2.save();
+    http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm
+    player = new models.Player();
+    player.save();
 
     /** 
      * Venue

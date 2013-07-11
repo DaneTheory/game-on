@@ -1,26 +1,22 @@
-<div ng-if="AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inverse" bs-navbar>
+<div ng-if="AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inverse">
 	<div class="navbar-inner">
 		<ul class="nav pull-left">
-			<li data-match-route="/"><a href="#/" class="brand">Football94</a></li>
-			
+			<li><a href="#/" class="brand">Football94</a></li>
 		</ul>
 
 		<ul class="nav pull-right">
 			<li><a><i class="icon-search icon-large"></i></a></li>
 			<li><a><i class="icon-star icon-large"></i></a></li>
-			<li><a ng-click="signOut()"><i class="icon-ellipsis-vertical icon-large"></i></a></li>
+			<li><a ng-click="signOut()"><i class="icon-cog icon-large"></i></a></li>
 		</ul>
 	</div>
 
 	<div class="navbar-inner">
 		<ul class="nav">
-			<li data-match-route="/{{AuthenticationModel.player._id}}">
-				<a href="#/{{AuthenticationModel.player._id}}">Profile</a>
-			</li>
-
-			<li data-match-route="/match.*"><a href="#/match">Matches</a></li>
-			<li data-match-route="/venue.*"><a href="#/venue">Venues</a></li>
-			<li data-match-route="/player.*"><a href="#/player">Players</a></li>
+			<li><a href="#/{{AuthenticationModel.player._id}}">Profile</a></li>
+			<li><a href="#/match">Matches</a></li>
+			<li><a href="#/venue">Venues</a></li>
+			<li><a href="#/player">Players</a></li>
 		</ul>
 	</div>
 </div>

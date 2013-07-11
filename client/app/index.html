@@ -16,52 +16,36 @@
 </head>
 
 <body ng-app="football94">
-	<!--[if lt IE 9]>
-	  <script src="components/es5-shim/es5-shim.js"></script>
-	  <script src="components/json3/lib/json3.min.js"></script>
-	<![endif]-->
-
 
 	<!-- Application content -->
 	<div>
 		<div ng-include="'/views/MenuView.html'" ng-controller="MenuCtrl"></div>
-
 		<div ng-view></div>
 	</div>
 	<!-- Application content -->
-
 
 	<script src="components/angular-unstable/angular.js"></script>
 	<script src="components/angular-resource/angular-resource.js"></script>
 	<script src="components/angular-cookies/angular-cookies.js"></script>
 	<script src="components/angular-sanitize/angular-sanitize.js"></script>
 	<script src="components/lodash/lodash.js"></script>
-	<script src="components/holderjs/holder.js"></script>
 	<script src="components/js-md5/js/md5.js"></script>
-
-	<!-- Fix me -->
-	<script src="components/jquery/jquery.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-	<script src="components/angular-strap/dist/angular-strap.js"></script>
 
 	<!-- build:js scripts/scripts.js -->
 	<script src="scripts/app.js"></script>
 
+	<script src="scripts/menu/MenuController.js"></script>
 	<script src="scripts/authentication/AuthenticationController.js"></script>
 	<script src="scripts/authentication/AuthenticationModel.js"></script>
-
 	<script src="scripts/player/PlayerController.js"></script>
 	<script src="scripts/player/PlayerModel.js"></script>
-	
 	<script src="scripts/match/MatchController.js"></script>
 	<script src="scripts/match/MatchModel.js"></script>
-
 	<script src="scripts/venue/VenueController.js"></script>
 	<script src="scripts/venue/VenueModel.js"></script>
-
-	<script src="scripts/menu/MenuController.js"></script>
-
+	
 	<script src="scripts/common/interceptor/AuthenticationInterceptor.js"></script>
 	<!-- endbuild -->
+
 </body>
 </html>

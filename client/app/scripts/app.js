@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('football94', ['ngCookies', '$strap.directives']);
+var app = angular.module('football94', ['ngCookies']);
 
 app.constant('API_URL', '//localhost:3000/api/1');
 app.constant('DEFAULT_ROUTE', '/match');

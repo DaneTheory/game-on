@@ -42,7 +42,7 @@ module.exports = function (grunt) {
 
 		connect: {
 			options: {
-				port: 9123,
+				port: 9000,
 				// Change this to '0.0.0.0' to access the server from outside.
 				hostname: '0.0.0.0'
 			},
@@ -116,7 +116,10 @@ module.exports = function (grunt) {
 				imagesDir: '<%= yeoman.app %>/images',
 				javascriptsDir: '<%= yeoman.app %>/scripts',
 				fontsDir: './styles/font',
-				importPath: '<%= yeoman.app %>/components',
+				importPath: [
+					'<%= yeoman.app %>/components',
+					'<%= yeoman.app %>/components/compass-twitter-bootstrap/stylesheets'
+				],
 				relativeAssets: true
 			},
 			dist: {},
@@ -248,7 +251,7 @@ module.exports = function (grunt) {
 	grunt.renameTask('regarde', 'watch');
 
 	grunt.registerTask('server', [
-		'clean:server',
+		'clean',
 		'compass:server',
 		'livereload-start',
 		'connect:livereload',
@@ -281,5 +284,5 @@ module.exports = function (grunt) {
 		'usemin'
 	]);
 
-	grunt.registerTask('default', ['build']);
+	grunt.registerTask('default', ['server']);
 };

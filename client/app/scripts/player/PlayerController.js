@@ -16,7 +16,11 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, Authen
 	};
 
 	$scope.isMe = function () {
-		return $scope.AuthenticationModel.player._id === $scope.playerId;
+		try {
+			return $scope.AuthenticationModel.player._id === $scope.playerId;
+		} catch (err) {
+			return false;
+		}
 	};
 
 	$scope.getCollection = function() {

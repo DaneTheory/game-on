@@ -11,10 +11,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$httpProvider.defaults.withCredentials = true;
 
 	$routeProvider
-		.when('/', {
-			templateUrl: 'views/MainView.html',
-			requireAuthentication: false
-		})
+		// .when('/', {
+		// 	templateUrl: 'views/MainView.html',
+		// 	requireAuthentication: false
+		// })
 		.when('/signin', {
 			templateUrl: 'views/SignInView.html',
 			controller: 'AuthenticationCtrl',
@@ -26,35 +26,35 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			requireAuthentication: false
 		})
 		.when('/player', {
-			templateUrl: 'views/PlayerCollectionView.html',
+			templateUrl: 'views/player/PlayerCollectionView.html',
 			controller: 'PlayerCollectionCtrl'
 		})
-		.when('/player/:playerId', {
-			templateUrl: 'views/PlayerView.html',
-			controller: 'PlayerCtrl'
-		})
+		// .when('/player/:playerId', {
+		// 	templateUrl: 'views/PlayerView.html',
+		// 	controller: 'PlayerCtrl'
+		// })
 		.when('/venue', {
-			templateUrl: 'views/VenueCollectionView.html',
+			templateUrl: 'views/venue/VenueCollectionView.html',
 			controller: 'VenueCollectionCtrl'
 		})
 		.when('/venue/:venueId', {
-			templateUrl: 'views/VenueView.html',
+			templateUrl: 'views/venue/VenueDetailView.html',
 			controller: 'VenueCtrl'
 		})
 		.when('/match', {
-			templateUrl: 'views/Match/MatchCollectionView.html',
+			templateUrl: 'views/match/MatchCollectionView.html',
 			controller: 'MatchCollectionCtrl'
 		})
 		.when('/match/:matchId', {
-			templateUrl: 'views/MatchView.html',
+			templateUrl: 'views/match/MatchDetailView.html',
 			controller: 'MatchCtrl'
 		})
-		.when('/discover', {
-			templateUrl: 'views/DiscoverView.html'
-			// controller: 'DiscoverCtrl'
-		})
+		// .when('/discover', {
+		// 	templateUrl: 'views/DiscoverView.html'
+		// 	controller: 'DiscoverCtrl'
+		// })
 		.when('/:playerId', {
-			templateUrl: 'views/ProfileView.html',
+			templateUrl: 'views/player/PlayerDetailView.html',
 			controller: 'PlayerCtrl'
 		})
 		.otherwise({

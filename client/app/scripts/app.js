@@ -10,6 +10,8 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$httpProvider.interceptors.push('AuthenticationInterceptor');
 	$httpProvider.defaults.withCredentials = true;
 
+	google.maps.visualRefresh = true;
+
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/MainView.html',

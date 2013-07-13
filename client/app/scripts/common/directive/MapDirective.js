@@ -16,13 +16,11 @@ app.directive('map', function () {
 				if (!coordinates) {
 					return;
 				}
-				console.log('map', elem[0]);
 
 				var position = new google.maps.LatLng(coordinates[0], coordinates[1]);
 
 				var mapOptions = {
 					zoom: 14,
-					disableDefaultUI: true,
 		    		center: position,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};

@@ -1,21 +1,26 @@
 <div class="media">
-	<a class="pull-left" href="#/match/{{match._id}}"><h3>2.5k</h3></a>
+	<div class="pull-left">
+		<h3>2.5km</h3>
 
-	<div class="media-body">
-		<h5 class="media-heading">{{match.title}}</h5>
-		<p>at {{match.venue.name}} on {{match.when | date}}</p>
-		
 		<p ng-show="match.price">{{match.price | currency }}</p>
 		<p ng-show="!match.price">Free</p>
 
-		<p>
-			<span ng-repeat="player in match.players | limitTo: 3">
-				<a href="#/{{player._id}}">{{player.name}}</a>
-			</span>
-		</p>
-
 		<input ng-if="!hasJoint(match.players)" type="button" class="btn btn-success" value="Join" ng-click="join(match)">
 		<input ng-if="hasJoint(match.players)" type="button" class="btn btn-danger" value="Leave" ng-click="leave(match)">
+	</div>
+
+	<div class="media-body">
+		<a href="#/match/{{match._id}}"><h5 class="media-heading">{{match.title}}</h5></a>
+		<p><a href="#/venue/{{match.venue._id">{{match.venue.name}}</a> on {{match.when | date}}</p>
+		<p>Create by <a href="#/{{match.organizer._id">{{match.organizer.name}}</a></p>
+		<p>
+			Going ({{match.players.length}})
+			<span ng-if="hasJoint(match.players)">You</span>
+			<span ng-repeat="player in match.playersDisplay">
+				<a href="#/{{player._id}}">{{player.name}}</a>
+			</span>
+			<span ng-if="match.playersExtra">and others.</span>
+		</p>
 	</div>
 </div>
 

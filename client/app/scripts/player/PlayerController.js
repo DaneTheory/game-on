@@ -15,6 +15,7 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, Authen
 		}
 	};
 
+	/* Move it to a helper */
 	$scope.isMe = function () {
 		try {
 			return $scope.AuthenticationModel.player._id === $scope.playerId;

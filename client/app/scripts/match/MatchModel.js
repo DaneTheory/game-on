@@ -18,8 +18,23 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 	var getParams = {
 		populate: [
 			'venue',
-			'players'
+			'players',
+			'organizer'
 		].join(',')
+	};
+
+	var processCollection = function (collection) {
+		_.each(collection, function (match) {
+			var players = match.players;
+			var otherPlayers = _.where(players, function (player) {
+				return player._id !== AuthenticationModel.player._id;
+			});
+
+			match.playersDisplay = otherPlayers.splice(0, 3);
+			match.playersExtra = otherPlayers.splice(0);
+		});
+
+		return collection;
 	};
 
 	this.getById = function (matchId) {
@@ -39,7 +54,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 				params: getParams
 			})
 			.success(angular.bind(this, function(data){
-				this.collection = data.payload;
+				this.collection = processCollection(data.payload);
 			}))
 			.error(angular.bind(this, function(){
 				this.collection = null;

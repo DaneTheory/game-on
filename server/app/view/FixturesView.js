@@ -21,7 +21,7 @@ exports.init = function(req, res){
 			gender: 'M',
 			birthday: new Date('04/16/1988'),
 			city: 'Melbourne, Australia',
-			location: [-37.7992, 144.9467],
+			location: [-37.7886711, 144.9390435],
 			rate: 4
 		},
 		{

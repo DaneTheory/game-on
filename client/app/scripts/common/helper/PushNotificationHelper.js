@@ -1,8 +1,8 @@
 'use strict';
 
-app.factory('PushNotificationHelper', function (PUSH_NOTIFICATION_URL) {
+app.factory('PushNotificationHelper', function (ServerUrl) {
 
-	var socket = io.connect(PUSH_NOTIFICATION_URL);
+	var socket = io.connect(ServerUrl);
 	
 	return {
 		socket: socket

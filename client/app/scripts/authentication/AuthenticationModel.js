@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('AuthenticationModel', function ($http, $location, $cookieStore, API_URL, DEFAULT_ROUTE) {
+app.factory('AuthenticationModel', function ($http, $location, $cookieStore, ApiUrl, DefaultRoute) {
 
 	this.player = $cookieStore.get('player');
 	this.errorStatus = null;
@@ -21,12 +21,12 @@ app.factory('AuthenticationModel', function ($http, $location, $cookieStore, API
 	};
 
 	this.signIn = function (username, password) {
-		return $http.post(API_URL + '/auth/signin', {
+		return $http.post(ApiUrl + '/auth/signin', {
 			username: username,
 			password: password
 		}).success(angular.bind(this, function(data) {
 			this.setPlayer(data.player);
-			$location.path(DEFAULT_ROUTE);
+			$location.path(DefaultRoute);
 		})).error(angular.bind(this, function (data, status) {
 			this.removePlayer();
 			this.errorStatus = status;
@@ -37,18 +37,18 @@ app.factory('AuthenticationModel', function ($http, $location, $cookieStore, API
 		this.removePlayer();
 		$location.path('/');
 
-		return $http.get(API_URL + '/auth/signout');
+		return $http.get(ApiUrl + '/auth/signout');
 	};
 
 	this.signUp = function (username, password, name, email) {
-		return $http.post(API_URL + '/auth/signup', {
+		return $http.post(ApiUrl + '/auth/signup', {
 			username: username,
 			password: password,
 			name: name,
 			email: email
 		}).success(angular.bind(this, function(data) {
 			this.setPlayer(data.player);
-			$location.path(DEFAULT_ROUTE);
+			$location.path(DefaultRoute);
 		})).error(angular.bind(this, function (data, status) {
 			this.removePlayer();
 			this.errorStatus = status;

@@ -2,9 +2,11 @@
 
 var app = angular.module('football94', ['ngCookies']);
 
-app.constant('API_URL', '//localhost:3000/api/1');
-app.constant('PUSH_NOTIFICATION_URL', '//localhost:3000');
-app.constant('DEFAULT_ROUTE', '/feed');
+var serverUrl = '//localhost:3000';
+
+app.constant('ServerUrl', serverUrl);
+app.constant('ApiUrl', serverUrl + '/api/1');
+app.constant('DefaultRoute', '/feed');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -63,7 +65,7 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
 });
 
-app.run(function ($rootScope, $location, AuthenticationModel, DEFAULT_ROUTE) {
+app.run(function ($rootScope, $location, DefaultRoute, AuthenticationModel) {
 
 	// Register listener to watch route changes.
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
@@ -73,7 +75,7 @@ app.run(function ($rootScope, $location, AuthenticationModel, DEFAULT_ROUTE) {
 			}
 		} else {
 			if (next.requireAuthentication === false) {
-				$location.path(DEFAULT_ROUTE);
+				$location.path(DefaultRoute);
 			}
 		}
 	});

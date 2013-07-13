@@ -1,7 +1,6 @@
 'use strict';
 
-app.controller('PlayerCtrl', function ($scope, $routeParams, TokenMatcherHelper,
-	PlayerModel, AuthenticationModel) {
+app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel) {
 
 	$scope.PlayerModel = PlayerModel;
 	$scope.playerId = $routeParams.playerId;

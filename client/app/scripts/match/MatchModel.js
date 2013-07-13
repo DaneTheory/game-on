@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
+app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 
 	this.collection = null;
 	this.match = {
@@ -38,7 +38,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 	};
 
 	this.getById = function (matchId) {
-		return $http.get(API_URL + '/match/' + matchId, {
+		return $http.get(ApiUrl + '/match/' + matchId, {
 				params: getParams
 			})
 			.success(angular.bind(this, function (data) {
@@ -50,7 +50,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 	};
 
 	this.getCollection = function () {
-		return $http.get(API_URL + '/match', {
+		return $http.get(ApiUrl + '/match', {
 				params: getParams
 			})
 			.success(angular.bind(this, function(data){
@@ -62,7 +62,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 	};
 
 	this.join = function (match) {
-		return $http.post(API_URL + '/match/' + match._id + '/join')
+		return $http.post(ApiUrl + '/match/' + match._id + '/join')
 			.success(angular.bind(this, function (data){
 				match.players.push(AuthenticationModel.player);
 			}))
@@ -72,7 +72,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 	};
 
 	this.leave = function (match) {
-		return $http.post(API_URL + '/match/' + match._id + '/leave')
+		return $http.post(ApiUrl + '/match/' + match._id + '/leave')
 			.success(angular.bind(this, function (){
 
 				var playerIndex = _.findIndex(match.players, function (player) {

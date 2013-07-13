@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('PlayerModel', function ($http, API_URL, DateHelper, TokenMatcherHelper) {
+app.factory('PlayerModel', function ($http, ApiUrl, DateHelper, TokenMatcherHelper) {
 
 	this.collection = null;
 	this.player = {
@@ -35,7 +35,7 @@ app.factory('PlayerModel', function ($http, API_URL, DateHelper, TokenMatcherHel
 	};
 
 	this.getById = function (playerId) {
-		return $http.get(API_URL + '/player/' + playerId)
+		return $http.get(ApiUrl + '/player/' + playerId)
 			.success(angular.bind(this, function (data) {
 				this.player = _.first(processPlayers(data.payload));
 			}))
@@ -45,7 +45,7 @@ app.factory('PlayerModel', function ($http, API_URL, DateHelper, TokenMatcherHel
 	};
 
 	this.getCollection = function () {
-		return $http.get(API_URL + '/player')
+		return $http.get(ApiUrl + '/player')
 			.success(angular.bind(this, function (data){
 				this.collection = processPlayers(data.payload);
 			}))

@@ -10,7 +10,9 @@ app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueMode
 	$scope.maxDistance = 100; // Km
 
 	$scope.getById = function () {
-		VenueModel.getById($scope.venueId);
+		VenueModel.getById($scope.venueId).success(function(){
+			map();
+		});
 	};
 
 	$scope.getCollection = function () {
@@ -27,6 +29,29 @@ app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueMode
 			getGeoLocationError
 		);
 	};
+
+	var map = function () {
+		var position = new google.maps.LatLng(
+			VenueModel.venue.location[0], 
+			VenueModel.venue.location[1]);
+
+		var mapOptions = {
+			zoom: 14,
+			disableDefaultUI: true,
+    		center: position,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		
+		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+		var marker = new google.maps.Marker({
+			position: position,
+			map: map,
+			title: VenueModel.venue.name
+		});
+
+		return true;
+	}
 
 	var getGeoLocationSuccess = function(location) {
 		// See https://groups.google.com/forum/?fromgroups#!topic/angular/nFbtADyEHg8

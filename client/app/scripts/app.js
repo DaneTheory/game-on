@@ -3,7 +3,7 @@
 var app = angular.module('football94', ['ngCookies']);
 
 app.constant('API_URL', '//localhost:3000/api/1');
-app.constant('DEFAULT_ROUTE', '/match');
+app.constant('DEFAULT_ROUTE', '/');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -11,15 +11,8 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$httpProvider.defaults.withCredentials = true;
 
 	$routeProvider
-		.when('/signin', {
-			templateUrl: 'views/SignInView.html',
-			controller: 'AuthenticationCtrl',
-			requireAuthentication: false
-		})
-		.when('/signup', {
-			templateUrl: 'views/SignUpView.html',
-			controller: 'AuthenticationCtrl',
-			requireAuthentication: false
+		.when('/', {
+			templateUrl: 'views/FeedView.html'
 		})
 		.when('/player', {
 			templateUrl: 'views/player/PlayerCollectionView.html',
@@ -40,6 +33,16 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		.when('/match/:matchId', {
 			templateUrl: 'views/match/MatchDetailView.html',
 			controller: 'MatchCtrl'
+		})
+		.when('/signin', {
+			templateUrl: 'views/SignInView.html',
+			controller: 'AuthenticationCtrl',
+			requireAuthentication: false
+		})
+		.when('/signup', {
+			templateUrl: 'views/SignUpView.html',
+			controller: 'AuthenticationCtrl',
+			requireAuthentication: false
 		})
 		.when('/:playerId', {
 			templateUrl: 'views/player/PlayerDetailView.html',

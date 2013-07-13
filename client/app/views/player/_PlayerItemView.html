@@ -1,12 +1,12 @@
 <div class="media">
-	<a class="pull-left" href="#/{{player._id}}">
-		<img class="img-circle" ng-src="{{imageUrl(player)}}" width="70" height="70">
-	</a>
+	<div class="pull-left">
+		<img class="img-circle" ng-src="{{player.imageUrl}}" width="70" height="70">
+	</div>
 
 	<div class="media-body">
-		<p>{{player.name}}</p>
-		<p><strong>@{{player.username}}</strong></p>
-		<p>25, {{player.gender}} - {{player.city}}</p>
+		<a class="media-heading" href="#/{{player._id}}">{{player.name}}</a>
+		<p>@{{player.username}}</p>
+		<p>{{player.age}}, {{player.gender}} - {{player.city}}</p>
 	</div>
 </div>
 <hr/>

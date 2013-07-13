@@ -1,12 +1,12 @@
-<div class="profile-view" ng-init="selectPlayer()">
+<div class="profile-view" ng-init="getById()">
 	<div class="header">
 		
-		<img class="img-circle" ng-src="{{imageUrl(PlayerModel.player)}}" width="70" height="70">
+		<img class="img-circle" ng-src="{{PlayerModel.player.imageUrl}}" width="70" height="70">
 
 		<div class="details">
 			<p>{{PlayerModel.player.name}}</p>
 			<p><strong>@{{PlayerModel.player.username}}</strong></p>
-			<p>25, {{PlayerModel.player.gender}} - {{PlayerModel.player.city}}</p>
+			<p>{{PlayerModel.player.age}}, {{PlayerModel.player.gender}} - {{PlayerModel.player.city}}</p>
 		</div>
 	</div>
 	

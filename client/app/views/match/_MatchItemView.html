@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="media-body">
-		<a href="#/match/{{match._id}}"><h5 class="media-heading">{{match.title}}</h5></a>
+		<a class="media-heading" href="#/match/{{match._id}}">{{match.title}}</a>
 		<p><a href="#/venue/{{match.venue._id}}">{{match.venue.name}}</a> on {{match.when | date}}</p>
 		<p>Create by <a href="#/{{match.organizer._id}}">{{match.organizer.name}}</a></p>
 		<p>

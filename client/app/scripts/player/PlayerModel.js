@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('PlayerModel', function ($http, API_URL) {
+app.factory('PlayerModel', function ($http, API_URL, DateHelper, TokenMatcherHelper) {
 
 	this.collection = null;
 	this.player = {
@@ -8,17 +8,36 @@ app.factory('PlayerModel', function ($http, API_URL) {
         password: null, // TODO: Remove this field from response.
         email: null, // TODO: Remove this field from response.
         name: null,
-        dateOfBirth: null,
-        position: null,
         location: null,
         rate: null,
-        bio: null
+        gender: null,
+        birthday: null,
+        city: null,
+
+        // Calculated properties
+        age: null,
+        imageUrl: null
+	};
+
+	var processPlayers = function (players) {
+		_.each(players, function (player) {
+			// Age
+			var birthday = new Date(player.birthday);
+			player.age = DateHelper.getAgeFromBirthday(birthday);
+
+			// Imager Url
+			var template = 'http://www.gravatar.com/avatar/{0}?s=100&d=mm',
+				hash = player.email ? md5(player.email.trim().toLowerCase()) : '';
+			player.imageUrl = TokenMatcherHelper.replaceNumberedTokens(template, [hash]);
+		});
+
+		return players;
 	};
 
 	this.getById = function (playerId) {
 		return $http.get(API_URL + '/player/' + playerId)
 			.success(angular.bind(this, function (data) {
-				this.player = data.payload[0];
+				this.player = _.first(processPlayers(data.payload));
 			}))
 			.error(angular.bind(this, function() {
 				this.player = null;
@@ -28,7 +47,7 @@ app.factory('PlayerModel', function ($http, API_URL) {
 	this.getCollection = function () {
 		return $http.get(API_URL + '/player')
 			.success(angular.bind(this, function (data){
-				this.collection = data.payload;
+				this.collection = processPlayers(data.payload);
 			}))
 			.error(angular.bind(this, function(){
 				this.collection = null;

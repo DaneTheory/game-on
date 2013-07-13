@@ -23,8 +23,8 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 		].join(',')
 	};
 
-	var processCollection = function (collection) {
-		_.each(collection, function (match) {
+	var processMatches = function (matches) {
+		_.each(matches, function (match) {
 			var players = match.players;
 			var otherPlayers = _.where(players, function (player) {
 				return player._id !== AuthenticationModel.player._id;
@@ -34,7 +34,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 			match.playersExtra = otherPlayers.splice(0);
 		});
 
-		return collection;
+		return matches;
 	};
 
 	this.getById = function (matchId) {
@@ -42,7 +42,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 				params: getParams
 			})
 			.success(angular.bind(this, function (data) {
-				this.match = data.payload[0];
+				this.match = _.first(processMatches(data.payload));
 			}))
 			.error(angular.bind(this, function () {
 				this.match = null;
@@ -54,7 +54,7 @@ app.factory('MatchModel', function ($http, API_URL, AuthenticationModel) {
 				params: getParams
 			})
 			.success(angular.bind(this, function(data){
-				this.collection = processCollection(data.payload);
+				this.collection = processMatches(data.payload);
 			}))
 			.error(angular.bind(this, function(){
 				this.collection = null;

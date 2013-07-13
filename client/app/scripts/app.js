@@ -3,7 +3,7 @@
 var app = angular.module('football94', ['ngCookies']);
 
 app.constant('API_URL', '//localhost:3000/api/1');
-app.constant('DEFAULT_ROUTE', '/');
+app.constant('DEFAULT_ROUTE', '/feed');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -12,6 +12,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
 	$routeProvider
 		.when('/', {
+			templateUrl: 'views/MainView.html',
+			requireAuthentication: false
+		})
+		.when('/feed', {
 			templateUrl: 'views/FeedView.html'
 		})
 		.when('/player', {
@@ -62,6 +66,10 @@ app.run(function ($rootScope, $location, AuthenticationModel, DEFAULT_ROUTE) {
 		if (!AuthenticationModel.isSignedIn()) {
 			if (next.redirectTo === undefined && next.requireAuthentication === undefined) {
 				$location.path('/signin');
+			}
+		} else {
+			if (next.requireAuthentication === false) {
+				$location.path(DEFAULT_ROUTE);
 			}
 		}
 	});

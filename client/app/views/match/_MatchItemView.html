@@ -2,13 +2,6 @@
 	<div class="pull-left">
 		<div class="img-circle img-venue"></div>
 
-		<p>
-			<span>2.5km</span>
-			<span> - </span>
-			<span ng-show="match.price">{{match.price | currency }}</span>
-			<span ng-show="!match.price">Free</span>
-		</p>
-
 		<input ng-if="!hasJoint(match.players)" type="button" class="btn btn-success" value="Join" ng-click="join(match)">
 		<input ng-if="hasJoint(match.players)" type="button" class="btn btn-danger" value="Leave" ng-click="leave(match)">
 	</div>
@@ -16,7 +9,12 @@
 	<div class="media-body">
 		<a class="media-heading" href="#/match/{{match._id}}">{{match.title}}</a>
 		<p><a href="#/venue/{{match.venue._id}}">{{match.venue.name}}</a> on {{match.when | date}}</p>
-		<p>Create by <a href="#/{{match.organizer._id}}">{{match.organizer.name}}</a></p>
+		<p>
+			<span>2.5km</span>
+			<span> - </span>
+			<span ng-show="match.price">{{match.price | currency }}</span>
+			<span ng-show="!match.price">Free</span>
+		</p>
 		<p>
 			Going ({{match.players.length}})
 			<span ng-if="hasJoint(match.players)">You</span>

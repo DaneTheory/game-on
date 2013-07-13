@@ -51,6 +51,16 @@ var cors = require('./middleware/CORSMiddleware')(app),
 	schemas = require('./schema/index')(app, mongoose);
 
 // Start it all up
-http.createServer(app).listen(app.get('port'), function () {
+var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
+});
+
+// Sockets
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', function (socket) {
+	socket.emit('feed', { message: 'Hello world!' });
+	
+	// socket.on('otherEvent', function (data) {
+	// 	console.log(data);
+	// });
 });

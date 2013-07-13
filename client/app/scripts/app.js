@@ -3,6 +3,7 @@
 var app = angular.module('football94', ['ngCookies']);
 
 app.constant('API_URL', '//localhost:3000/api/1');
+app.constant('PUSH_NOTIFICATION_URL', '//localhost:3000');
 app.constant('DEFAULT_ROUTE', '/feed');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
@@ -10,6 +11,7 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$httpProvider.interceptors.push('AuthenticationInterceptor');
 	$httpProvider.defaults.withCredentials = true;
 
+	// Google Maps Style
 	google.maps.visualRefresh = true;
 
 	$routeProvider

@@ -1,11 +1,16 @@
 'use strict';
 
-app.controller('MenuCtrl', function ($scope, AuthenticationModel) {
+app.controller('MenuCtrl', function ($scope, PushNotificationHelper, AuthenticationModel) {
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
 	$scope.search = null;
 	$scope.isSearching = false;
+	$scope.notifications = 0;
+
+	PushNotificationHelper.socket.on('feed', function (data) {
+		$scope.$apply($scope.notifications++);
+	});
 
 	$scope.signOut = function () {
 		AuthenticationModel.signOut();

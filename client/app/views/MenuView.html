@@ -1,16 +1,40 @@
-<div ng-if="AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inverse">
+<div ng-if="AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inversex">
 	<div class="navbar-inner">
+		<!-- Brand -->
 		<ul class="nav pull-left">
-			<li><a href="#/feed" class="brand">Football94</a></li>
+			<li><a href="#/feed" class="brand" ng-show="!isSearching">Football94</a></li>
 		</ul>
 
 		<ul class="nav pull-right">
-			<li><a><i class="icon-search icon-large"></i></a></li>
-			<li><a><i class="icon-plus icon-large"></i></a></li>
-			<li><a ng-click="signOut()"><i class="icon-cog icon-large"></i></a></li>
+			<!-- Search -->
+			<li>
+				<form class="navbar-search pull-left">
+					<input ng-show="isSearching" type="text" class="search-query span2" placeholder="Search" ng-model="search" escape="stopSearching()" blur="stopSearching()" focus="isSearching">
+				</form>
+				<a ng-show="!isSearching" ng-click="startSearching()"><i class="icon-search icon-large"></i></a>
+			</li>
+
+			<!-- New Match/Venue -->
+			<li class="dropdown">
+				<a href="" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus icon-large"></i></a>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">New match</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">New venue</a></li>
+				</ul>
+			</li>
+
+			<!-- Settings -->
+			<li class="dropdown">
+				<a href="" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-large"></i></a>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Settings</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-click="signOut()">Sign out</a></li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 
+	<!-- Sub Menu -->
 	<div class="navbar-inner">
 		<ul class="nav">
 			<li><a href="#/feed">Feeds</a></li>

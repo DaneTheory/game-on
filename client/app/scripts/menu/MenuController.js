@@ -8,8 +8,9 @@ app.controller('MenuCtrl', function ($scope, PushNotificationHelper, Authenticat
 	$scope.isSearching = false;
 	$scope.notifications = 0;
 
-	PushNotificationHelper.socket.on('feed', function (data) {
-		$scope.$apply($scope.notifications++);
+	PushNotificationHelper.on('feed', function (data) {
+		console.log(data);
+		$scope.notifications++;
 	});
 
 	$scope.signOut = function () {

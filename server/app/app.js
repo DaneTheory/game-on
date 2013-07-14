@@ -57,7 +57,8 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 
 // Sockets
 var io = require('socket.io').listen(server);
-io.sockets.on('connection', function (socket) {
+io.sockets.on('connection', function (socket, a, b, c) {
+	console.log(socket, a,b, c);
 	socket.emit('feed', { message: 'Hello world!' });
 	
 	// socket.on('otherEvent', function (data) {

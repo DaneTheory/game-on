@@ -1,4 +1,4 @@
 exports.init = function (req, res) {
-    delete req.session.playerId;
+    req.logout();
     res.send(200);
 };

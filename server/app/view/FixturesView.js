@@ -12,10 +12,13 @@ exports.init = function(req, res){
 	/** 
 	 * Player
 	 */
+
+	var encryptPassword = models.Player.encryptPassword;
+
 	var players = [
 		{
 			username: 'pablodenadai',
-			password: '123',
+			password: encryptPassword('123'),
 			name: 'Pablo De Nadai',
 			email: 'pablodenadai@gmail.com',
 			gender: 'M',
@@ -26,7 +29,7 @@ exports.init = function(req, res){
 		},
 		{
 			username: 'tamatimikaere',
-			password: '123',
+			password: encryptPassword('123'),
 			name: 'Tamati Mikaere',
 			email: 'tamati.mikaere@gmail.com',
 			birthday: new Date('02/16/1992'),
@@ -37,7 +40,7 @@ exports.init = function(req, res){
 		},
 		{
 			username: 'anaherahine',
-			password: '123',
+			password: encryptPassword('123'),
 			name: 'Anahera Hine',
 			email: 'anahera.hine@gmail.com',
 			birthday: new Date('02/16/1992'),
@@ -48,8 +51,8 @@ exports.init = function(req, res){
 		},
 		{
 			username: 'ibrahimmalik',
+			password: encryptPassword('123'),
 			name: 'Ibrahim Malik',
-			password: '123',
 			email: 'ibrahim.malik@gmail.com',
 			birthday: new Date('02/20/1982'),
 			gender: 'M',
@@ -59,8 +62,8 @@ exports.init = function(req, res){
 		},
 		{
 			username: 'farahfawziya',
+			password: encryptPassword('123'),
 			name: 'Farah Fawziya',
-			password: '123',
 			email: 'farah.fawziya@gmail.com',
 			birthday: new Date('02/20/1985'),
 			gender: 'F',

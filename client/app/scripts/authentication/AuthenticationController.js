@@ -21,6 +21,14 @@ app.controller('AuthenticationCtrl', function ($scope, AuthenticationModel) {
 		AuthenticationModel.signUp(username, password, name, email);
 	};
 
+	$scope.facebookRequestToken = function () {
+		AuthenticationModel.facebookRequestToken();
+	};
+
+	$scope.facebookSignUp = function () {
+		AuthenticationModel.facebookSignUp();
+	};
+
 	$scope.clear = function () {
 		// Development placeholders.
 		$scope.username = 'pablodenadai';

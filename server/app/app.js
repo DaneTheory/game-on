@@ -22,16 +22,16 @@ app.configure(function () {
 	app.set('crypto_key', 'k3yb0ardc4t');
 
 	// Twitter settings
-	app.set('twitter-oauth-key', '');
-	app.set('twitter-oauth-secret', '');
+	app.set('twitter-oauth-key', 'VfE0QYaKm2OcxXC1hXI7hg');
+	app.set('twitter-oauth-secret', 'DsJfG1339jeiFCR5fKHvdezRlWYiWl7JaqJKaZGqe8');
 
 	// Github settings
 	app.set('github-oauth-key', '');
 	app.set('github-oauth-secret', '');
 
 	// Facebook settings
-	app.set('facebook-oauth-key', '');
-	app.set('facebook-oauth-secret', '');
+	app.set('facebook-oauth-key', '359014320866601');
+	app.set('facebook-oauth-secret', 'dbd46c18e7cf3b71099d43ad4b08a3e4');
 
 	// Setup mongoose
 	app.set('mongodb_uri', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/footballjs94');
@@ -63,11 +63,10 @@ app.configure(function () {
 });
 
 // Internal includes
-var cors = require('./middleware/CORSMiddleware')(app),
-	auth = require('./middleware/AuthenticationMiddleware')(app),
+var middlewares = require('./middleware/index')(app),
 	views = require('./view/index')(app),
 	schemas = require('./schema/index')(app, mongoose),
-	passportStrategies = require('./passport')(app, passport);
+	strategies = require('./passport/index')(app, passport);
 
 // Start it all up
 var server = http.createServer(app).listen(app.get('port'), function () {
@@ -75,13 +74,13 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 // Socket IO (Push Notification)
-var io = require('socket.io').listen(server);
-io.sockets.on('connection', function (socket) {
+// var io = require('socket.io').listen(server);
+// io.sockets.on('connection', function (socket) {
 
-	// TODO: Trigger notification by user (See Passport and Socket IO)
-	socket.emit('feed', { message: 'Hello world!' });
+// 	// TODO: Trigger notification by user (See Passport and Socket IO)
+// 	socket.emit('feed', { message: 'Hello world!' });
 	
-	// socket.on('otherEvent', function (data) {
-	// 	console.log(data);
-	// });
-});
+// 	// socket.on('otherEvent', function (data) {
+// 	// 	console.log(data);
+// 	// });
+// });

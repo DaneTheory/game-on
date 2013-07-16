@@ -1,6 +1,6 @@
 <div ng-if="!AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inverse" bs-navbar>
   <div class="navbar-inner">
-    <a href="#" class="brand pull-left"><i class="icon-angle-left"></i> Sign up</a>
+    <a href="" class="brand pull-left"><i class="icon-angle-left"></i> Sign up</a>
   </div>
 </div>
 
@@ -48,4 +48,7 @@
     </div>
   </div>
 
+
 </form>
+
+<button class="btn btn-primary" ng-click="facebookRequestToken()">Sign up with Facebook</button>

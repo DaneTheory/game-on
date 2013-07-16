@@ -3,9 +3,9 @@ exports.init = function (req, res) {
 	delete req.session.username;
 
 	var username = req.body.username,
-    	password = req.body.password,
-    	name = req.body.name,
-    	email = req.body.email;
+		password = req.body.password,
+		name = req.body.name,
+		email = req.body.email;
 
 	var validate = function() {
 		if (!username) {
@@ -33,56 +33,33 @@ exports.init = function (req, res) {
 		req.app.db.base.models.Player.findOne({ $or: [
 			{ username: username },
 			{ email: email }
-	 	]}, function (err, doc) { 
-	 		if (err) return res.send(500, err);
-	 		
-	 		if (doc) {
-	 			if (doc.username === username) {
-	 				return res.send(400, 'Username already taken.');
-	 			} else {
-	 				return res.send(400, 'Email already taken.');
-	 			}
-	 		}
+		]}, function (err, doc) { 
+			if (err) return res.send(500, err);
+			
+			if (doc) {
+				if (doc.username === username) {
+					return res.send(400, 'Username already taken.');
+				} else {
+					return res.send(400, 'Email already taken.');
+				}
+			}
 
-	 		createUser();
-	 	});
+			createUser();
+		});
 	};
 	
 	var createUser = function() {
 		req.app.db.base.models.Player.create({
 			username: username,
-        	password: req.app.db.base.models.Player.encryptPassword(password),
+			password: req.app.db.base.models.Player.encryptPassword(password),
 			name: name,
 			email: email
 		}, function(err, doc) {
 			if (err) return res.send(500, err);
-	 		
+			
 			logUserIn();
 		});
 	};
-	
-	// var sendWelcomeEmail = function() {
-	// 	req.app.utility.email(req, res, {
-	// 		from: req.app.get('email-from-name') +' <'+ req.app.get('email-from-address') +'>',
-	// 		to: req.body.email,
-	// 		subject: 'Your '+ req.app.get('project-name') +' Account',
-	// 		textPath: 'signup/email-text',
-	// 		htmlPath: 'signup/email-html',
-	// 		locals: {
-	// 			username: req.body.username,
-	// 			email: req.body.email,
-	// 			loginURL: 'http://'+ req.headers.host +'/login/',
-	// 			projectName: req.app.get('project-name')
-	// 		},
-	// 		success: function(message) {
-	// 			workflow.emit('logUserIn');
-	// 		},
-	// 		error: function(err) {
-	// 			console.log('Error Sending Welcome Email: '+ err);
-	// 			workflow.emit('logUserIn');
-	// 		}
-	// 	});
-	// });
 	
 	var logUserIn = function() {
 		req._passport.instance.authenticate('local', function(err, player, info) {
@@ -93,7 +70,7 @@ exports.init = function (req, res) {
 			} else {
 				req.login(player, function(err) {
 					if (err) return res.send(500, err);
-	 		
+			
 					req.session.playerId = player._id;
 					player.password = undefined;
 					player.email = undefined;
@@ -144,3 +121,22 @@ exports.init = function (req, res) {
 //  });
 
 // };
+
+exports.facebookSignUp = function(req, res, next) {
+	req._passport.instance.authenticate('facebook', { callbackURL: 'http://localhost:9000/facebook' }, function(err, user, info) {
+		if (!info || !info.profile) return res.send(400, 'Profile not available.');
+
+		req.app.db.base.models.Player.findOne({ 'facebook.id': info.profile.id }, function(err, player) {
+			if (err) return next(err);
+
+			if (!player) {
+				// Create player
+				//req.session.playerId = player._id;
+
+				res.send(200, { player: info.profile });
+			} else {
+				res.send(400, 'We found a player linked to your Facebook account.');
+			}
+		});
+	})(req, res, next);
+};

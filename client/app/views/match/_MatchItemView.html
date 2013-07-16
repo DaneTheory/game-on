@@ -7,8 +7,8 @@
 	</div>
 
 	<div class="media-body">
-		<a class="media-heading" href="#/match/{{match._id}}">{{match.title}}</a>
-		<p><a href="#/venue/{{match.venue._id}}">{{match.venue.name}}</a> on {{match.when | date}}</p>
+		<a class="media-heading" href="/match/{{match._id}}">{{match.title}}</a>
+		<p><a href="/venue/{{match.venue._id}}">{{match.venue.name}}</a> on {{match.when | date}}</p>
 		<p>
 			<span>2.5km</span>
 			<span> - </span>
@@ -19,7 +19,7 @@
 			Going ({{match.players.length}})
 			<span ng-if="hasJoint(match.players)">You</span>
 			<span ng-repeat="player in match.playersDisplay">
-				<a href="#/{{player._id}}">{{player.name}}</a>
+				<a href="/{{player._id}}">{{player.name}}</a>
 			</span>
 			<span ng-if="match.playersExtra">and others.</span>
 		</p>

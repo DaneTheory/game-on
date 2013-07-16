@@ -10,6 +10,8 @@ app.constant('DefaultRoute', '/feed');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
+	$locationProvider.html5Mode(true);
+
 	$httpProvider.interceptors.push('AuthenticationInterceptor');
 	$httpProvider.defaults.withCredentials = true;
 
@@ -51,6 +53,11 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		})
 		.when('/signup', {
 			templateUrl: 'views/SignUpView.html',
+			controller: 'AuthenticationCtrl',
+			requireAuthentication: false
+		})
+		.when('/facebook', {
+			templateUrl: 'views/SignUpFacebookView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})

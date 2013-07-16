@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('AuthenticationModel', function ($http, $location, $cookieStore, ApiUrl, DefaultRoute) {
+app.factory('AuthenticationModel', function ($http, $window, $location, $cookieStore, ApiUrl, DefaultRoute) {
 
 	this.player = $cookieStore.get('player');
 	this.errorStatus = null;
@@ -53,6 +53,30 @@ app.factory('AuthenticationModel', function ($http, $location, $cookieStore, Api
 			this.removePlayer();
 			this.errorStatus = status;
 		}));
+	};
+
+	this.facebookRequestToken = function () {
+		return $http.get(ApiUrl + '/auth/signup/facebook')
+			.success(function(data) {
+				$window.location.href = data + '&display=touch';
+			})
+			.error(function(data) {
+				console.log('error', data);
+			});
+	};
+
+	this.facebookSignUp = function() {
+		return $http.get(ApiUrl + '/auth/signup/facebook/callback', {
+				params: $location.search()
+			}).success(angular.bind(this, function(data) {
+				this.setPlayer(data.player);
+				$location.search('code', null); // Remove token.
+				$location.hash(null); // Remove Facebook's `#_=_` buggy hash.
+				$location.path(DefaultRoute);
+			})).error(function() {
+				$location.search('code', null);
+				$location.path('/signup')
+			});
 	};
 
 	return this;

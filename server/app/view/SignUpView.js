@@ -1,6 +1,8 @@
+// Local
 exports.init = function (req, res) {
 
-	delete req.session.username;
+	var Player = req.app.db.base.models.Player,
+		passport = req._passport.instance;
 
 	var username = req.body.username,
 		password = req.body.password,
@@ -8,29 +10,24 @@ exports.init = function (req, res) {
 		email = req.body.email;
 
 	var validate = function() {
-		if (!username) {
-			return res.send(400, 'Username required');
-		}
-		else if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
+		if (!username) return res.send(400, 'Username required');
+		if (!name) return res.send(400, 'Name required');
+		if (!email) return res.send(400, 'Email required');
+		if (!password) return res.send(400, 'Password required');
+
+		if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
 			return res.send(400, 'Username only use letters, numbers, \'-\', \'_\'');
 		}
 
-		if (!email) {
-			return res.send(400, 'Email required');
-		}
-		else if (!/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(email)) {
+		if (!/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(email)) {
 			return res.send(400, 'Email invalid format');
-		}
-
-		if (!password) {
-			return res.send(400, 'Password required');
 		}
 
 		duplicateUserCheck();
 	};
 	
 	var duplicateUserCheck = function() {
-		req.app.db.base.models.Player.findOne({ $or: [
+		Player.findOne({ $or: [
 			{ username: username },
 			{ email: email }
 		]}, function (err, doc) { 
@@ -49,94 +46,108 @@ exports.init = function (req, res) {
 	};
 	
 	var createUser = function() {
-		req.app.db.base.models.Player.create({
+		Player.create({
 			username: username,
-			password: req.app.db.base.models.Player.encryptPassword(password),
+			password: Player.encryptPassword(password),
 			name: name,
 			email: email
 		}, function(err, doc) {
 			if (err) return res.send(500, err);
 			
-			logUserIn();
+			signIn();
 		});
 	};
 	
-	var logUserIn = function() {
-		req._passport.instance.authenticate('local', function(err, player, info) {
+	var signIn = function() {
+		passport.authenticate('local', function(err, player, info) {
 			if (err) return res.send(500, err);
-			
-			if (!player) {
-				return res.send(500, 'Sign in failed. That\'s strange.');
-			} else {
-				req.login(player, function(err) {
-					if (err) return res.send(500, err);
-			
-					req.session.playerId = player._id;
-					player.password = undefined;
-					player.email = undefined;
-					res.send(200, { player: player });
-				});
-			}
+			if (!player) return res.send(500, 'Sign in failed. That\'s strange.');
+
+			req.login(player, function(err) {
+				if (err) return res.send(500, err);
+		
+				player.password = undefined;
+				player.email = undefined;
+				res.send(200, { player: player });
+			});
 		})(req, res);
 	};
 	
 	validate();
 };
 
+// Social
+var signUpSocial = function (req, res, username, profile) {
 
-// exports.init = function (req, res) {
+	var Player = req.app.db.base.models.Player,
+		passport = req._passport.instance;
 
-//  delete req.session.username;
-
-//  var username = req.body.username,
-//      password = req.body.password,
-//      name = req.body.name,
-//      email = req.body.email;
+	var validate = function() {
+		if (!username) return res.send(400, 'Username required');
 		
-//     req.app.db.base.models.Player.findOne({ 
-//      $or: [
-//          { username: username },
-//          { email: email }
-//      ]
-//  }, function (err, doc){
-//      if (doc) {
-//          res.send(400, 'User or email address already taken.')
-//      } else {
-//          var player = new req.app.db.base.models.Player();
+		if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
+			return res.send(400, 'Username only use letters, numbers, \'-\', \'_\'');
+		}
 
-//          player.username = username;
-//          player.password = password;
-//          player.name = name;
-//          player.email = email;
+		duplicateUserCheck();
+	};
+	
+	var duplicateUserCheck = function() {
+		Player.findOne({ username: username }, function (err, doc) {
+			if (err) return res.send(500, err);
+			if (doc) return res.send(400, 'Username already taken.');
 
-//          player.save(function (err, doc) {
-//              if (doc) {
-//                  req.session.playerId = doc._id;
-//                  res.send(200, { player: doc });
-//              } else {
-//                  res.send(500, 'Sorry, something went wrong, please try again later.' + '\n' + err);
-//              }
-//          });
-//      }
-//  });
+			createUser();
+		});
+	};
+	
+	var createUser = function() {
+		Player.create({
+			username: username,
+			profile: profile,
+		}, function(err, doc) {
+			if (err) return res.send(500, err);
+			
+			signIn(doc);
+		});
+	};
+	
+	var signIn = function(player) {
+		req.login(player, function(err) {
+			if (err) return res.send(500, err);
 
-// };
+			res.send(200, { player: player });
+		});
+	};
+	
+	validate();
+};
 
 exports.facebookSignUp = function(req, res, next) {
-	req._passport.instance.authenticate('facebook', { callbackURL: 'http://localhost:9000/facebook' }, function(err, user, info) {
+	var passport = req._passport.instance,
+		origin = req.headers.origin,
+		clientFacebookSignupPath = req.app.get('client-facebook-signup-path');
+
+	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSignupPath })(req, res, next);
+};
+
+exports.facebookSignUpCallback = function(req, res, next) {
+	var Player = req.app.db.base.models.Player,
+		passport = req._passport.instance,
+		origin = req.headers.origin,
+		clientFacebookSignupPath = req.app.get('client-facebook-signup-path');
+
+	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSignupPath }, function(err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
 
-		req.app.db.base.models.Player.findOne({ 'facebook.id': info.profile.id }, function(err, player) {
+		var profile = info.profile;
+
+		Player.findOne({ 'profile.id': profile.id }, function(err, player) {
 			if (err) return next(err);
+			if (player) return res.send(400, 'We found a player linked to your Facebook account. Please try signing in.');
 
-			if (!player) {
-				// Create player
-				//req.session.playerId = player._id;
-
-				res.send(200, { player: info.profile });
-			} else {
-				res.send(400, 'We found a player linked to your Facebook account.');
-			}
+			var username = profile.provider + profile.id;
+			signUpSocial(req, res, username, profile);
 		});
 	})(req, res, next);
 };

@@ -1,28 +1,28 @@
+// Local
 exports.init = function (req, res) {
 
-	var validate = function() {
-		if (!req.body.username) {
-			return res.send(400, 'Username required');
-		}
+	var passport = req._passport.instance;
 
-		if (!req.body.password) {
-			return res.send(400, 'Password required');
-		};
+	var username = req.body.username,
+		password = req.body.password;
+
+	var validate = function() {
+		if (!username) return res.send(400, 'Playername required');
+		if (!password) return res.send(400, 'Password required');
 
 		attemptLogin();
 	};
 	
 	attemptLogin = function() {
-		req._passport.instance.authenticate('local', function(err, player, info) {
+		passport.authenticate('local', function(err, player, info) {
 			if (err) return res.send(500, err);
 			
 			if (!player) {
-				return res.send(400, 'Username and password combination not found.');
+				return res.send(400, 'Playername and password combination not found.');
 			} else {
 				req.login(player, function(err) {
 					if (err) return res.send(500, err);
 					
-					req.session.playerId = player._id;
 					player.password = undefined;
 					player.email = undefined;
 					res.send(200, { player: player });
@@ -34,19 +34,36 @@ exports.init = function (req, res) {
 	validate();
 };
 
-// exports.init = function (req, res) {
-
-// 	req.app.db.base.models.Player.findOne({ 
-// 		username: req.body.username, 
-// 		password: req.body.password
-// 	}, 
-// 	function (err, doc){
-// 		if (doc) {
-// 			req.session.playerId = doc._id;
-// 			res.send(200, { player: doc });
-// 		} else {
-// 			res.send(400, 'Incorrect username or password.');
-// 		}
-// 	});
+// Social
+exports.facebookSignIn = function(req, res, next){
+	var passport = req._passport.instance,
+		origin = req.headers.origin,
+		clientFacebookSigninPath = req.app.get('client-facebook-signin-path');
 	
-// };
+	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSigninPath })(req, res, next);
+};
+
+exports.facebookSignInCallback = function(req, res, next){
+	var Player = req.app.db.base.models.Player,
+		passport = req._passport.instance,
+		origin = req.headers.origin,
+		clientFacebookSigninPath = req.app.get('client-facebook-signin-path');
+	
+	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSigninPath }, function(err, player, info) {
+		if (!info || !info.profile) return res.send(400, 'Profile not available.');
+		
+		var profile = info.profile;
+
+		Player.findOne({ 'profile.id': profile.id }, function(err, player) {
+			if (err) return next(err);
+			if (!player) return res.send(400, 'No players found linked to your Facebook account. You may need to create an account first.');
+
+			req.login(player, function(err) {
+				if (err) return res.send(500, err);
+				
+				player.password = undefined;
+				res.send(200, { player: player });
+			});
+		});
+	})(req, res, next);
+};

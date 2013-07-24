@@ -18,11 +18,13 @@ exports = module.exports = function(app) {
 	app.post(authPath + '/signup', require('./SignUpView').init);
 	app.get(authPath + '/signout', require('./SignOutView').init);
 
-	// Fix hardcoded host origin
-	app.get(authPath + '/signup/facebook', passport.authenticate('facebook', { callbackURL: 'http://localhost:9000/facebook' }));
-	app.get(authPath + '/signup/facebook/callback', require('./SignUpView').facebookSignUp);
+	app.get(authPath + '/signup/facebook', require('./SignUpView').facebookSignUp);
+	app.get(authPath + '/signup/facebook/callback', require('./SignUpView').facebookSignUpCallback);
+	
+	app.get(authPath + '/signin/facebook', require('./SignInView').facebookSignIn);
+	app.get(authPath + '/signin/facebook/callback', require('./SignInView').facebookSignInCallback);
 
-	// Listings
+	// Listings (mers)
 	app.use(apiPath, mers({ uri: mongoDbURI }).rest());
 
 	// Methods

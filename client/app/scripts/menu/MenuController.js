@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('MenuCtrl', function ($scope, PushNotificationHelper, AuthenticationModel) {
+app.controller('MenuCtrl', function ($scope, $location, $http, PushNotificationHelper, AuthenticationModel) {
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
@@ -14,7 +14,9 @@ app.controller('MenuCtrl', function ($scope, PushNotificationHelper, Authenticat
 	// });
 
 	$scope.signOut = function () {
-		AuthenticationModel.signOut();
+		AuthenticationModel.removePlayer();
+		$location.path('/');
+		return $http.get(ApiUrl + '/auth/signout');
 	};
 
 	$scope.stopSearching = function () {

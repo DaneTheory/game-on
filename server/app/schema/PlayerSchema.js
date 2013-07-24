@@ -4,14 +4,18 @@ exports = module.exports = function(app, mongoose) {
 
     var PlayerSchema = new mongoose.Schema({
         username: { type: String, required: true },
-        password: { type: String, required: true },
-        name: { type: String, required: true },
-        email: { type: String, required: true },
+        password: { type: String },
+        name: { type: String },
+        email: { type: String },
         gender: { type: String },
         birthday: { type: Date },
         city: { type: String },
         location: { type: Array },
-        rate: { type: Number }
+        rate: { type: Number },
+        profile: {
+            id: { type: Number }
+            // TODO: Merge profile and player data.
+        }
     });
     PlayerSchema.index({ location: '2d' });
 

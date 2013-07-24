@@ -57,9 +57,9 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			requireAuthentication: false
 		})
 		.when('/facebook', {
-			templateUrl: 'views/SignUpFacebookView.html',
+			templateUrl: 'views/AuthFacebookView.html',
 			controller: 'AuthenticationCtrl',
-			requireAuthentication: false
+			requireAuthentication: false			
 		})
 		.when('/:playerId', {
 			templateUrl: 'views/player/PlayerDetailView.html',

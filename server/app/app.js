@@ -18,16 +18,14 @@ app.configure(function () {
 	app.set('auth_path', app.get('api_path') + '/auth');
 	app.set('dev_path', app.get('api_path') + '/dev');
 
+  	// TODO: Env variables?
+	// app.set('client-url', 'http://corsnection-client.herokuapp.com');
+	app.set('client-url', 'http://localhost:9000');
+	app.set('client-facebook-signup-path', '/facebook?action=signup');
+	app.set('client-facebook-signin-path', '/facebook?action=signin');
+
 	// Password encryption
 	app.set('crypto_key', 'k3yb0ardc4t');
-
-	// Twitter settings
-	app.set('twitter-oauth-key', 'VfE0QYaKm2OcxXC1hXI7hg');
-	app.set('twitter-oauth-secret', 'DsJfG1339jeiFCR5fKHvdezRlWYiWl7JaqJKaZGqe8');
-
-	// Github settings
-	app.set('github-oauth-key', '');
-	app.set('github-oauth-secret', '');
 
 	// Facebook settings
 	app.set('facebook-oauth-key', '359014320866601');

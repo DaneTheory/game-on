@@ -1,38 +1,46 @@
-<div ng-if="!AuthenticationModel.isSignedIn()" class="navbar navbar-static-top navbar-inverse" bs-navbar>
-  <div class="navbar-inner">
-    <a href="" class="brand pull-left"><i class="icon-angle-left"></i> Sign in</a>
-    <a href="/signup" class="btn pull-right">Sign up</a>
+<div ng-if="!AuthenticationModel.isSignedIn()" class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="">Sign in</a>
   </div>
 </div>
 
-<form class="form-horizontal" ng-submit="signIn(username, password)" ng-init="clear()">
+<hr/>
 
-  <div class="control-group">
-    <label class="control-label" for="inputUsername">Username</label>
-    <div class="controls">
+<form class="form-horizontal col-lg-10" ng-submit="signIn(username, password)" ng-init="clear()">
+  <div class="row">
+    <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+    <div class="col-lg-10">
       <input type="text" id="inputUsername" placeholder="Username" ng-model="username">
     </div>
   </div>
-
-  <div class="control-group">
-    <label class="control-label" for="inputPassword">Password</label>
-    <div class="controls">
+  
+  <div class="row">
+    <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+    <div class="col-lg-10">
       <input type="password" id="inputPassword" placeholder="Password" ng-model="password">
     </div>
   </div>
-
-  <div class="control-group">
-    <div class="controls">
-      <button type="submit" class="btn btn-success btn-block">Sign in</button>
-    </div>
-  </div>  
-
-  <div class="control-group">
-    <div class="controls">
-      <div ng-if="AuthenticationModel.errorStatus" ng-switch="AuthenticationModel.errorStatus" class="alert alert-error">
-        <span ng-switch-when="400">Incorrect username or password.</span>
-      </div>
+  
+  <div class="row">
+    <div class="col-lg-10 col-offset-2">
+      <button type="submit" class="btn btn-default">Sign in</button>
     </div>
   </div>
-
+    
+  <div ng-if="AuthenticationModel.errorStatus" ng-switch="AuthenticationModel.errorStatus" class="col-lg-10 col-offset-2 alert alert-danger">
+    <span ng-switch-when="400">Incorrect username or password.</span>
+  </div>
 </form>
+
+
+<div class="clearfix"></div>
+<hr/>
+<div class="well">
+  <p>Or sign in with</p>
+  
+  <div class="btn-group">
+    <button class="btn btn-primary" ng-click="facebookRequestToken()">Facebook</button>
+    <button class="btn btn-primary" ng-click="">Twitter</button>
+    <button class="btn btn-primary" ng-click="">Google+</button>
+  </div>
+</div>

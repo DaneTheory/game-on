@@ -1,10 +1,8 @@
-@import "compass-twitter-bootstrap/stylesheets/compass_twitter_bootstrap_awesome";
-@import "compass-twitter-bootstrap/stylesheets/compass_twitter_bootstrap_responsive";
+// Bootstrap
+@import "bootstrap.css";
 
 // Bootstrap overrides
 @import "bsImage";
-@import "bsMedia";
-@import "bsNavbar";
 
 // Custom components
 @import "map";
@@ -12,3 +10,5 @@
 // Views
 @import "venueView.scss";
 @import "profileView.scss";
+
+body { padding-top: 50px; }

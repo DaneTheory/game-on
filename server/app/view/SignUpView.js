@@ -128,7 +128,10 @@ exports.facebookSignUp = function(req, res, next) {
 		origin = req.headers.origin,
 		clientFacebookSignupPath = req.app.get('client-facebook-signup-path');
 
-	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSignupPath })(req, res, next);
+	passport.authenticate('facebook', {
+		display: 'touch', 
+		callbackURL: origin + clientFacebookSignupPath
+	})(req, res, next);
 };
 
 exports.facebookSignUpCallback = function(req, res, next) {

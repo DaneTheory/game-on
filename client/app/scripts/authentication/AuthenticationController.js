@@ -23,7 +23,7 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 	};
 
 	$scope.signUp = function (username, password, name, email) {
-		return $http.post(ApiUrl + '/auth/signin', {
+		return $http.post(ApiUrl + '/auth/signup', {
 			username: username,
 			password: password,
 			name: name,

@@ -7,7 +7,7 @@ exports.init = function (req, res) {
 		password = req.body.password;
 
 	var validate = function() {
-		if (!username) return res.send(400, 'Playername required');
+		if (!username) return res.send(400, 'Username required');
 		if (!password) return res.send(400, 'Password required');
 
 		attemptLogin();
@@ -18,7 +18,7 @@ exports.init = function (req, res) {
 			if (err) return res.send(500, err);
 			
 			if (!player) {
-				return res.send(400, 'Playername and password combination not found.');
+				return res.send(400, 'Username and password combination not found.');
 			} else {
 				req.login(player, function(err) {
 					if (err) return res.send(500, err);
@@ -40,7 +40,10 @@ exports.facebookSignIn = function(req, res, next){
 		origin = req.headers.origin,
 		clientFacebookSigninPath = req.app.get('client-facebook-signin-path');
 	
-	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSigninPath })(req, res, next);
+	passport.authenticate('facebook', {
+		display: 'touch', 
+		callbackURL: origin + clientFacebookSigninPath
+	})(req, res, next);
 };
 
 exports.facebookSignInCallback = function(req, res, next){
@@ -49,7 +52,9 @@ exports.facebookSignInCallback = function(req, res, next){
 		origin = req.headers.origin,
 		clientFacebookSigninPath = req.app.get('client-facebook-signin-path');
 	
-	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSigninPath }, function(err, player, info) {
+	passport.authenticate('facebook', {
+		callbackURL: origin + clientFacebookSigninPath 
+	}, function(err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
 		
 		var profile = info.profile;

@@ -6,8 +6,7 @@
 
 <hr/>
 
-<form class="form-horizontal col-lg-10" ng-submit="signUp(username, password, name, email)" ng-init="clear()">
-
+<form class="form-horizontal col-lg-10" novalidation ng-submit="signUp(username, password, name, email)" ng-init="clear()">
   <div class="row">
     <label for="inputName" class="col-lg-2 control-label">Name</label>
     <div class="col-lg-10">
@@ -25,14 +24,14 @@
   <div class="row">
     <label for="inputUsername" class="col-lg-2 control-label">Username</label>
     <div class="col-lg-10">
-      <input type="text" id="inputUsername" placeholder="Username" ng-model="username">
+      <input type="text" id="inputUsername" placeholder="Username" ng-model="username" required>
     </div>
   </div>
   
   <div class="row">
     <label for="inputPassword" class="col-lg-2 control-label">Password</label>
     <div class="col-lg-10">
-      <input type="password" id="inputPassword" placeholder="Password" ng-model="password">
+      <input type="password" id="inputPassword" placeholder="Password" ng-model="password" required>
     </div>
   </div>
   
@@ -42,9 +41,10 @@
     </div>
   </div>
   
-  <div ng-if="AuthenticationModel.errorStatus" ng-switch="AuthenticationModel.errorStatus" class="row col-lg-10 col-offset-2 alert alert-danger">
-    <span ng-switch-when="400">User or email address already taken.</span>
+  <div ng-show="AuthenticationModel.errorMessage" class="col-lg-10 col-offset-2 alert alert-danger">
+    {{AuthenticationModel.errorMessage}}
   </div>
+
 </form>
 
 <div class="clearfix"></div>

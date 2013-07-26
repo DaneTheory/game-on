@@ -29,7 +29,7 @@ exports = module.exports = function(app, passport) {
 	}));
 	
 	// Facebook
-	if (app.get('facebook-oauth-key')) {
+	if (env['facebook-oauth-key']) {
 		passport.use(new FacebookStrategy({
 			clientID: env['facebook-oauth-key'],
 			clientSecret: env['facebook-oauth-secret']

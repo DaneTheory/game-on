@@ -2,10 +2,11 @@
 
 var app = angular.module('football94', ['ngCookies']);
 
-var serverUrl = '//localhost:3000';
+var serverUrl = '//localhost:3000',
+	apiVersion = 1;
 
 app.constant('ServerUrl', serverUrl);
-app.constant('ApiUrl', serverUrl + '/api/1');
+app.constant('ApiUrl', serverUrl + '/api/' + apiVersion);
 app.constant('DefaultRoute', '/feed');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {

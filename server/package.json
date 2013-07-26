@@ -12,6 +12,7 @@
     "mongoose": "*",
     "connect-mongo": "*",
     "socket.io": "*",
+    "passport.socketio": "1.2.1",
 
     "emailjs": "~0.3.4",
     "passport": "~0.1.16",

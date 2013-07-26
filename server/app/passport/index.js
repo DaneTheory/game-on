@@ -1,7 +1,6 @@
 exports = module.exports = function(app, passport) {
-	var LocalStrategy = require('passport-local').Strategy,
-		GitHubStrategy = require('passport-github').Strategy,
-		TwitterStrategy = require('passport-twitter').Strategy,
+	var env = require('./../env')(),
+		LocalStrategy = require('passport-local').Strategy,
 		FacebookStrategy = require('passport-facebook').Strategy;
 	
 	// Local
@@ -29,44 +28,11 @@ exports = module.exports = function(app, passport) {
 		});
 	}));
 	
-	// Twitter
-	if (app.get('twitter-oauth-key')) {
-		passport.use(new TwitterStrategy({
-			consumerKey: app.get('twitter-oauth-key'),
-			consumerSecret: app.get('twitter-oauth-secret')
-		},
-		function(token, tokenSecret, profile, done) {
-			// Hand off to caller
-			done(null, false, {
-				token: token,
-				tokenSecret: tokenSecret,
-				profile: profile
-			});
-		}));
-	}
-	
-	// Github
-	if (app.get('github-oauth-key')) {
-		passport.use(new GitHubStrategy({
-			clientID: app.get('github-oauth-key'),
-			clientSecret: app.get('github-oauth-secret'),
-			customHeaders: { "User-Agent": app.get('project-name') }
-		},
-		function(accessToken, refreshToken, profile, done) {
-			// Hand off to caller
-			done(null, false, {
-				accessToken: accessToken,
-				refreshToken: refreshToken,
-				profile: profile
-			});
-		}));
-	}
-	
 	// Facebook
 	if (app.get('facebook-oauth-key')) {
 		passport.use(new FacebookStrategy({
-			clientID: app.get('facebook-oauth-key'),
-			clientSecret: app.get('facebook-oauth-secret')
+			clientID: env['facebook-oauth-key'],
+			clientSecret: env['facebook-oauth-secret']
 		},
 		function(accessToken, refreshToken, profile, done) {
 			// Hand off to caller

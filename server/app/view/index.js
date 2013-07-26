@@ -3,10 +3,10 @@ var mers = require('mers'),
 
 exports = module.exports = function(app) {
 
-	var apiPath = app.get('api_path'),
-		devPath = app.get('dev_path'),
-		authPath = app.get('auth_path'),
-		mongoDbURI = app.get('mongodb_uri');
+	var apiPath = app.get('api-path'),
+		devPath = app.get('dev-path'),
+		authPath = app.get('auth-path'),
+		mongoDbURI = app.get('mongodb-uri');
 
 	// Dev fixtures
 	if ('development' == app.get('env')) {

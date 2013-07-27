@@ -43,6 +43,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/match/MatchCollectionView.html',
 			controller: 'MatchCtrl'
 		})
+		.when('/match/create', {
+			templateUrl: '../views/match/MatchCreateView.html',
+			controller: 'MatchCtrl'
+		})
 		.when('/match/:matchId', {
 			templateUrl: 'views/match/MatchDetailView.html',
 			controller: 'MatchCtrl'
@@ -60,7 +64,7 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		.when('/facebook', {
 			templateUrl: 'views/AuthFacebookView.html',
 			controller: 'AuthenticationCtrl',
-			requireAuthentication: false			
+			requireAuthentication: false
 		})
 		.when('/:playerId', {
 			templateUrl: 'views/player/PlayerDetailView.html',

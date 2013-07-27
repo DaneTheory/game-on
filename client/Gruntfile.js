@@ -1,10 +1,10 @@
 'use strict';
+
+var modRewrite = require('connect-modrewrite');
 var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 var mountFolder = function (connect, dir) {
 	return connect.static(require('path').resolve(dir));
 };
-
-var modRewrite = require('connect-modrewrite');
 
 module.exports = function (grunt) {
 	// load all grunt tasks
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 			options: {
 				port: 9000,
 				// Change this to '0.0.0.0' to access the server from outside.
-				hostname: '0.0.0.0'
+				hostname: 'localhost'
 			},
 
 			livereload: {
@@ -52,8 +52,9 @@ module.exports = function (grunt) {
 					middleware: function (connect, options) {
 						return [
 							modRewrite([
-							  '!\\.\\w+$ /'
-							  // '!\\.\\w+($|\\?) /index.html'
+								'!\\.\\w+$ /'
+								// '!\\.\\w+($|\\?) /index.html'
+								//'!\\.html|\\images|\\.js|\\.css|\\.png|\\.jpg|\\.woff|\\.ttf|\\.svg /index.html [L]'
 							]),
 							lrSnippet,
 							mountFolder(connect, '.tmp'),

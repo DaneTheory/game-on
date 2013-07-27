@@ -1,6 +1,7 @@
 'use strict';
 
-app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window, AuthenticationModel, DefaultRoute, ApiUrl) {
+app.controller('AuthenticationCtrl',
+	function ($scope, $http, $location, $window, AuthenticationModel, DefaultRoute, ApiUrl) {
 
 	$scope.username = null;
 	$scope.password = null;

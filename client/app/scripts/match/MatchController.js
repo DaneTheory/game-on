@@ -6,6 +6,14 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 
 	$scope.matchId = $routeParams.matchId;
 
+	$scope.createNew = function (match) {
+		match = {};
+	};
+
+	$scope.isNew = function (match) {
+		return !match._id;
+	};
+
 	$scope.getById = function () {
 		MatchModel.getById($scope.matchId);
 	};

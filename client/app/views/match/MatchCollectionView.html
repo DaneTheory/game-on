@@ -1,4 +1,6 @@
-<div ng-init="getCollection()">
+<div class="container" ng-init="getCollection()">
+	<a href="/match/create" class="btn btn-primary">Create new match</a>
+
 	<div ng-repeat="match in MatchModel.collection">
 		<div ng-include="'/views/match/_MatchItemView.html'"></div>
 	</div>

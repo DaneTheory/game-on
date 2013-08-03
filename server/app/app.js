@@ -84,7 +84,7 @@ sio.set('authorization', passportSocketIo.authorize({
 	secret: app.get('session-secret'),  		// The session secret to parse the cookie
 	store: sessionStore     					// The session store that express uses
 	// fail: function(data, accept) {      		// *optional* callbacks on success or fail
-	// 		accept(null, false);              		// Second param takes boolean on whether or not to allow handshake
+	// 		accept(null, false);              	// Second param takes boolean on whether or not to allow handshake
 	// },
 	// success: function(data, accept) {
 	// 		accept(null, true);
@@ -94,13 +94,13 @@ sio.set('authorization', passportSocketIo.authorize({
 sio.sockets.on('connection', function(socket){
 	console.log('user connected: ', socket.handshake.user.name);
 
-	var username = socket.handshake.user.username; 
+	// var currentUser = socket.handshake.user; 
 
-	// Filter sockets by user
-	passportSocketIo.filterSocketsByUser(sio, function (user) {
-	  return user.username === username;
-	}).forEach(function(s){
-		s.emit('feed', { message: 'Hello world!' });
-	});
+	// // Filter sockets by user
+	// passportSocketIo.filterSocketsByUser(sio, function (user) {
+	//   return user._id === user._id;
+	// }).forEach(function(s){
+	// 	s.emit('feed', { message: 'Hello world!' });
+	// });
 
 });

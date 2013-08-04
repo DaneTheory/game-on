@@ -62,11 +62,11 @@ app.controller('AuthenticationCtrl',
 			}).success(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.setPlayer(data.player);
-				$location.path('/private'); // Redirect to the private page.
+				$location.path(DefaultRoute); // Redirect to the private page.
 			}).error(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.errorMessage = data;
-				$location.path('/signup'); // Redirect to sign up page.
+				$location.path('/auth/signup'); // Redirect to sign up page.
 			});
 	};
 
@@ -87,7 +87,7 @@ app.controller('AuthenticationCtrl',
 			}).error(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.errorMessage = data;
-				$location.path('/signin'); // Redirect to the sign in page.
+				$location.path('/auth/signin'); // Redirect to the sign in page.
 			});
 	};
 

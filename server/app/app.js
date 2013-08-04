@@ -30,8 +30,8 @@ app.configure(function () {
 	app.set('dev-path', app.get('api-path') + '/dev'); // Auth-free.
 
 	// Facebook Client Callback Url
-	app.set('client-facebook-signup-path', '/facebook?action=signup');
-	app.set('client-facebook-signin-path', '/facebook?action=signin');
+	app.set('client-facebook-signup-path', '/auth/facebook?action=signup');
+	app.set('client-facebook-signin-path', '/auth/facebook?action=signin');
 
 	// Password encryption
 	app.set('crypto-key', 'k3yb0ardc4t');

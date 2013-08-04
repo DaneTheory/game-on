@@ -1,0 +1,48 @@
+<div ng-if="!AuthenticationModel.isSignedIn()" class="navbar navbar-fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="">Sign in</a>
+	</div>
+</div>
+
+<hr/>
+
+<form class="form-horizontal col-lg-10" novalidation ng-submit="signIn(username, password)" ng-init="clear()">
+	<fieldset>
+		<div class="form-group">
+			<label for="inputUsername" class="col-lg-2 control-label">Username</label>
+			<div class="col-lg-10">
+				<input type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="username">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="inputPassword" class="col-lg-2 control-label">Password</label>
+			<div class="col-lg-10">
+				<input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="password">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-lg-10 col-offset-2">
+				<button type="submit" class="btn btn-default">Sign in</button>
+			</div>
+		</div>
+
+		<div ng-show="AuthenticationModel.errorMessage" class="col-lg-10 col-offset-2 alert alert-danger">
+			{{AuthenticationModel.errorMessage}}
+		</div>
+	</fieldset>
+</form>
+
+
+<div class="clearfix"></div>
+<hr/>
+<div class="well">
+	<p>Or sign in with</p>
+	
+	<div class="btn-group">
+		<button class="btn btn-primary" ng-click="signInFacebookRequestToken()">Facebook</button>
+		<button class="btn btn-primary" ng-click="">Twitter</button>
+		<button class="btn btn-primary" ng-click="">Google+</button>
+	</div>
+</div>

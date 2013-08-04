@@ -2,11 +2,10 @@
 
 var app = angular.module('football94', ['ngCookies']);
 
-var serverUrl = '//localhost:3000',
-	apiVersion = 1;
+var serverUrl = '//localhost:3000';
 
 app.constant('ServerUrl', serverUrl);
-app.constant('ApiUrl', serverUrl + '/api/' + apiVersion);
+app.constant('ApiUrl', serverUrl + '/api/1');
 app.constant('DefaultRoute', '/feed');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
@@ -43,26 +42,26 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/match/MatchCollectionView.html',
 			controller: 'MatchCtrl'
 		})
-		.when('/match/create', {
-			templateUrl: '../views/match/MatchCreateView.html',
+		.when('/match/new', {
+			templateUrl: '../views/match/MatchNewView.html',
 			controller: 'MatchCtrl'
 		})
 		.when('/match/:matchId', {
 			templateUrl: 'views/match/MatchDetailView.html',
 			controller: 'MatchCtrl'
 		})
-		.when('/signin', {
-			templateUrl: 'views/SignInView.html',
+		.when('/auth/signin', {
+			templateUrl: 'views/authentication/SignInView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})
-		.when('/signup', {
-			templateUrl: 'views/SignUpView.html',
+		.when('/auth/signup', {
+			templateUrl: 'views/authentication/SignUpView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})
-		.when('/facebook', {
-			templateUrl: 'views/AuthFacebookView.html',
+		.when('/auth/facebook', {
+			templateUrl: 'views/authentication/FacebookView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})

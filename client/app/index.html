@@ -8,6 +8,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	
+	<!-- Fix Html5Mode -->
 	<base href="/"/>
 	
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -22,12 +23,13 @@
 	<!-- Application content -->
 	<div>
 		<div ng-include="'/views/MenuView.html'" ng-controller="MenuCtrl"></div>
+
 		<div ng-view></div>
 	</div>
 	<!-- Application content -->
 
+	<!-- TODO: Load GoogleMaps async -->
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-
 	
 	<script src="components/angular-unstable/angular.js"></script>
 	<script src="components/angular-resource/angular-resource.js"></script>
@@ -35,9 +37,6 @@
 	<script src="components/angular-sanitize/angular-sanitize.js"></script>
 	<script src="components/lodash/lodash.js"></script>
 	<script src="components/js-md5/js/md5.js"></script>
-	<script src="components/jquery/jquery.js"></script>
-	<!-- Fix me (waiting for BS3) -->
-	<script src="bootstrap.js"></script>
 	<script src="components/socket.io-client/dist/socket.io.js"></script>
 
 	<!-- build:js scripts/scripts.js -->

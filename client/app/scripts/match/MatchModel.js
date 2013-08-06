@@ -25,12 +25,18 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 
 	var processMatches = function (matches) {
 		_.each(matches, function (match) {
+			// All players
 			var players = match.players;
+
+			// Players not including me.
 			var otherPlayers = _.where(players, function (player) {
 				return player._id !== AuthenticationModel.player._id;
 			});
 
+			// First 3 other players
 			match.playersDisplay = otherPlayers.splice(0, 3);
+
+			// Rest of the players
 			match.playersExtra = otherPlayers.splice(0);
 		});
 

@@ -4,6 +4,7 @@ exports.join = function (req, res) {
 
 	var matchId = req.route.params.matchId,
 		playerId = req.session.passport.user,
+		pushNotification = req.app.pushNotification,
 		models = req.app.db.base.models,
 		Match = models.Match;
 
@@ -17,6 +18,9 @@ exports.join = function (req, res) {
 		match.players.push(playerId);
 		match.save(function(err, doc){
 			if (err) return res.send(500, 'Sorry, something went wrong, please try again later.' + '\n' + err);
+
+			pushNotification.emit(match.organizer, 'feed', 'The player ' + playerId + ' has joint one of your matches.');
+
 			res.send(200);
 		});
 	};

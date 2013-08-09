@@ -20,7 +20,7 @@ app.db.once('open', function () {
 // Session - mongoStore
 var sessionStore = new mongoStore({ url: app.get('mongodb-uri') });
 
-// General app config stuff	
+// General app config stuff 
 app.configure(function () {
 	app.disable('x-powered-by');
 	
@@ -71,36 +71,25 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 
+
+
 // Socket IO (Push Notification)
-var sio = require('socket.io').listen(server),
+var socketIo = require('socket.io').listen(server),
 	passportSocketIo = require('passport.socketio');
 
 // Except for the optional fail and success the parameter object has the 
 // Same attribute than the session middleware http://www.senchalabs.org/connect/middleware-session.html
-
-sio.set('authorization', passportSocketIo.authorize({
-	cookieParser: express.cookieParser, 		// Or connect.cookieParser
-	key: 'connect.sid',							// The cookie where express (or connect) stores its session id.
-	secret: app.get('session-secret'),  		// The session secret to parse the cookie
-	store: sessionStore     					// The session store that express uses
-	// fail: function(data, accept) {      		// *optional* callbacks on success or fail
-	// 		accept(null, false);              	// Second param takes boolean on whether or not to allow handshake
+socketIo.set('authorization', passportSocketIo.authorize({
+	cookieParser: express.cookieParser,         // Or connect.cookieParser
+	key: 'connect.sid',                         // The cookie where express (or connect) stores its session id.
+	secret: app.get('session-secret'),          // The session secret to parse the cookie
+	store: sessionStore                         // The session store that express uses
+	// fail: function(data, accept) {           // *optional* callbacks on success or fail
+	//      accept(null, false);                // Second param takes boolean on whether or not to allow handshake
 	// },
 	// success: function(data, accept) {
-	// 		accept(null, true);
+	//      accept(null, true);
 	// }
  }));
 
-sio.sockets.on('connection', function(socket){
-	console.log('user connected: ', socket.handshake.user.name);
-
-	// var currentUser = socket.handshake.user; 
-
-	// // Filter sockets by user
-	// passportSocketIo.filterSocketsByUser(sio, function (user) {
-	//   return user._id === user._id;
-	// }).forEach(function(s){
-	// 	s.emit('feed', { message: 'Hello world!' });
-	// });
-
-});
+app.pushNotification = require('./helper/PushNotificationHelper')(socketIo);

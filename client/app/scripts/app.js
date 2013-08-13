@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('football94', ['ngCookies']);
+var app = angular.module('football', ['ngCookies']);
 
 var serverUrl = '//localhost:3000';
 

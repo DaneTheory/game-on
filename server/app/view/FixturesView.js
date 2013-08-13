@@ -2,19 +2,15 @@ var _ = require('lodash');
 
 exports.init = function(req, res){
 
-	var models = req.app.db.base.models;
+	var models = req.app.db.base.models,
+		encryptPassword = models.Player.encryptPassword;
 
-	// Drop all
+	// Drop all documents
 	models.Player.remove({}, function(err){});
 	models.Venue.remove({}, function(err){});
 	models.Match.remove({}, function(err){});
 
-	/** 
-	 * Player
-	 */
-
-	var encryptPassword = models.Player.encryptPassword;
-
+	// Player
 	var players = [
 		{
 			username: 'pablodenadai',
@@ -80,9 +76,7 @@ exports.init = function(req, res){
 		ps.push(p);
 	});
 
-	/** 
-	 * Venue
-	 */
+	// Venue
 	var venues = [
 		{
 			name: 'Albert Park',
@@ -105,9 +99,7 @@ exports.init = function(req, res){
 		vs.push(v);
 	});
 
-	/** 
-	 * Match
-	 */
+	// Match
 	var matches = [
 		{
 			title: 'South-Americans Friendly',

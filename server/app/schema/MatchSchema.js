@@ -1,5 +1,7 @@
-// http://localhost:3000/api/1/match/
-
+// 
+// ### Match Schema
+// Endpoint: http://localhost:3000/api/1/match/
+// 
 exports = module.exports = function(app, mongoose) {
 
 	var MatchSchema = new mongoose.Schema({
@@ -15,6 +17,7 @@ exports = module.exports = function(app, mongoose) {
 			modified: { type: Date, default: Date.now }
 		}
 	});
+	MatchSchema.index({ _id: 1, organizer: 1 }, { unique: true });
 	
 	MatchSchema.statics.organizer = function (q, term) {
 		return this.find({ 'organizer': term });

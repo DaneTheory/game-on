@@ -1,11 +1,13 @@
-// Local
-exports.init = function (req, res) {
+// 
+// Local Sign In
+// 
+exports.localSignIn = function (req, res) {
 
-	var passport = req._passport.instance;
-
-	var username = req.body.username,
+	var passport = req._passport.instance,
+		username = req.body.username,
 		password = req.body.password;
 
+	// Validate `username` and `password`.
 	var validate = function() {
 		if (!username) return res.send(400, 'Username required');
 		if (!password) return res.send(400, 'Password required');
@@ -13,48 +15,63 @@ exports.init = function (req, res) {
 		attemptLogin();
 	};
 	
+	// Try to login with the given credentials.
 	attemptLogin = function() {
 		passport.authenticate('local', function(err, player, info) {
 			if (err) return res.send(500, err);
-			
-			if (!player) {
-				return res.send(400, 'Username and password combination not found.');
-			} else {
-				req.login(player, function(err) {
-					if (err) return res.send(500, err);
-					
-					player.password = undefined;
-					player.email = undefined;
-					res.send(200, { player: player });
-				});
-			}
+			if (!player) return res.send(400, 'Username and password combination not found.');
+
+			req.login(player, function(err) {
+				if (err) return res.send(500, err);
+				
+				// Remove `password` and `email` before sending off the player's data.
+				player.password = undefined;
+				player.email = undefined;
+
+				res.send(200, { player: player });
+			});
 		})(req, res);
 	};
 	
 	validate();
 };
 
-// Social
+
+
+// 
+// Facebook Sign In (Step 1)
+// Request token.
+// 
 exports.facebookSignIn = function(req, res, next){
-	var passport = req._passport.instance,
-		origin = req.headers.origin,
-		clientFacebookSigninPath = req.app.get('client-facebook-signin-path');
 	
+	var passport = req._passport.instance,
+		callbackUrl = [
+			req.headers.origin,
+			req.app.get('facebook-signin-callback')
+		].join('');
+	
+	// Attempt Facebook login
 	passport.authenticate('facebook', {
 		display: 'touch', 
-		callbackURL: origin + clientFacebookSigninPath
+		callbackURL: callbackUrl
 	})(req, res, next);
+
 };
 
+// 
+// Facebook Sign In (Step 2)
+// Validate token.
+// 
 exports.facebookSignInCallback = function(req, res, next){
+	
 	var Player = req.app.db.base.models.Player,
 		passport = req._passport.instance,
-		origin = req.headers.origin,
-		clientFacebookSigninPath = req.app.get('client-facebook-signin-path');
+		callbackUrl = [
+			req.headers.origin,
+			req.app.get('facebook-signin-callback')
+		].join('');
 	
-	passport.authenticate('facebook', {
-		callbackURL: origin + clientFacebookSigninPath 
-	}, function(err, player, info) {
+	var facebookSignIn = function (err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
 		
 		var profile = info.profile;
@@ -70,5 +87,7 @@ exports.facebookSignInCallback = function(req, res, next){
 				res.send(200, { player: player });
 			});
 		});
-	})(req, res, next);
+	}
+
+	passport.authenticate('facebook', { callbackURL: callbackUrl }, facebookSignIn)(req, res, next);
 };

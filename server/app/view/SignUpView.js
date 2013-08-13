@@ -1,5 +1,7 @@
-// Local
-exports.init = function (req, res) {
+// 
+// Local Sign Up workflow.
+// 
+exports.localSignUp = function (req, res) {
 
 	var Player = req.app.db.base.models.Player,
 		passport = req._passport.instance;
@@ -9,6 +11,7 @@ exports.init = function (req, res) {
 		name = req.body.name,
 		email = req.body.email;
 
+	// Validate fields.
 	var validate = function() {
 		if (!username) return res.send(400, 'Username required');
 		if (!name) return res.send(400, 'Name required');
@@ -26,6 +29,7 @@ exports.init = function (req, res) {
 		duplicateUserCheck();
 	};
 	
+	// Validate if `Player` has already signed up. 
 	var duplicateUserCheck = function() {
 		Player.findOne({ $or: [
 			{ username: username },
@@ -45,6 +49,7 @@ exports.init = function (req, res) {
 		});
 	};
 	
+	// Create new `Player`.
 	var createUser = function() {
 		Player.create({
 			username: username,
@@ -58,6 +63,7 @@ exports.init = function (req, res) {
 		});
 	};
 	
+	// Sign In.
 	var signIn = function() {
 		passport.authenticate('local', function(err, player, info) {
 			if (err) return res.send(500, err);
@@ -73,15 +79,22 @@ exports.init = function (req, res) {
 		})(req, res);
 	};
 	
+	// Start up the flow...
 	validate();
 };
 
-// Social
+
+
+
+// 
+// Social Sign Up workflow.
+// 
 var signUpSocial = function (req, res, username, profile) {
 
 	var Player = req.app.db.base.models.Player,
 		passport = req._passport.instance;
 
+	// Validate info.
 	var validate = function() {
 		if (!username) return res.send(400, 'Username required');
 		
@@ -92,6 +105,7 @@ var signUpSocial = function (req, res, username, profile) {
 		duplicateUserCheck();
 	};
 	
+	// Validade duplicate.
 	var duplicateUserCheck = function() {
 		Player.findOne({ username: username }, function (err, doc) {
 			if (err) return res.send(500, err);
@@ -101,6 +115,7 @@ var signUpSocial = function (req, res, username, profile) {
 		});
 	};
 	
+	// Create new `Player`.
 	var createUser = function() {
 		Player.create({
 			username: username,
@@ -112,6 +127,7 @@ var signUpSocial = function (req, res, username, profile) {
 		});
 	};
 	
+	// Sign in new `Player`.
 	var signIn = function(player) {
 		req.login(player, function(err) {
 			if (err) return res.send(500, err);
@@ -120,27 +136,43 @@ var signUpSocial = function (req, res, username, profile) {
 		});
 	};
 	
+	// Start the flow...
 	validate();
 };
 
+//
+// Facebook Sign Up (Step 1)
+// Request token.
+//
 exports.facebookSignUp = function(req, res, next) {
+	
 	var passport = req._passport.instance,
-		origin = req.headers.origin,
-		clientFacebookSignupPath = req.app.get('client-facebook-signup-path');
+		callbackUrl = [
+			req.headers.origin,
+			req.app.get('facebook-signup-callback')
+		].join('');
 
 	passport.authenticate('facebook', {
 		display: 'touch', 
-		callbackURL: origin + clientFacebookSignupPath
+		callbackURL: callbackUrl
 	})(req, res, next);
+
 };
 
+//
+// Facebook Sign Up (Step 2)
+// Validate token.
+//
 exports.facebookSignUpCallback = function(req, res, next) {
+
 	var Player = req.app.db.base.models.Player,
 		passport = req._passport.instance,
-		origin = req.headers.origin,
-		clientFacebookSignupPath = req.app.get('client-facebook-signup-path');
+		callbackUrl = [
+			req.headers.origin,
+			req.app.get('facebook-signup-callback')
+		].join('');
 
-	passport.authenticate('facebook', { callbackURL: origin + clientFacebookSignupPath }, function(err, player, info) {
+	var facebookSignUp = function(err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
 
 		var profile = info.profile;
@@ -152,5 +184,8 @@ exports.facebookSignUpCallback = function(req, res, next) {
 			var username = profile.provider + profile.id;
 			signUpSocial(req, res, username, profile);
 		});
-	})(req, res, next);
+	};
+
+	passport.authenticate('facebook', { callbackURL: callbackUrl }, facebookSignUp)(req, res, next);
+
 };

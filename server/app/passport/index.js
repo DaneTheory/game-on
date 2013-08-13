@@ -1,9 +1,12 @@
+//
+// ### Passport Authentication
+// 
 exports = module.exports = function(app, passport) {
 	var env = require('./../env')(),
 		LocalStrategy = require('passport-local').Strategy,
 		FacebookStrategy = require('passport-facebook').Strategy;
 	
-	// Local
+	// Local Strategy
 	passport.use(new LocalStrategy(function(username, password, done) {
 		// Lookup conditions
 		var conditions = {};
@@ -28,7 +31,7 @@ exports = module.exports = function(app, passport) {
 		});
 	}));
 	
-	// Facebook
+	// Facebook Strategy
 	if (env['facebook-oauth-key']) {
 		passport.use(new FacebookStrategy({
 			clientID: env['facebook-oauth-key'],

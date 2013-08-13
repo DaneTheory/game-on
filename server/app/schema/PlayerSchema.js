@@ -1,5 +1,7 @@
-// http://localhost:3000/api/1/player/
-
+// 
+// ### Player Schema
+// Endpoint: http://localhost:3000/api/1/player/
+// 
 exports = module.exports = function(app, mongoose) {
 
     var PlayerSchema = new mongoose.Schema({
@@ -19,8 +21,11 @@ exports = module.exports = function(app, mongoose) {
     });
     PlayerSchema.index({ location: '2d' });
 
+    // 
+    // Example:
     // http://localhost:3000/api/1/player/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
-    // maxDistance = km
+    // @maxDistance {number} Distance in Kms
+    // 
     PlayerSchema.statics.near = function (q, term) {
         var coordinates = [ Number(q.latitude), Number(q.longitude) ];
         var maxDistance = q.maxDistance;
@@ -32,6 +37,7 @@ exports = module.exports = function(app, mongoose) {
             });
     };
 
+    // Encrypt strings using SHA-2 standard.
     PlayerSchema.statics.encryptPassword = function(password) {
         return require('crypto').createHmac('sha512', app.get('crypto-key')).update(password).digest('hex');
     };

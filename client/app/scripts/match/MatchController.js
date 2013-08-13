@@ -3,16 +3,7 @@
 app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel, MatchModel) {
 
 	$scope.MatchModel = MatchModel;
-
 	$scope.matchId = $routeParams.matchId;
-
-	$scope.createNew = function (match) {
-		match = {};
-	};
-
-	$scope.isNew = function (match) {
-		return !match._id;
-	};
 
 	$scope.getById = function () {
 		MatchModel.getById($scope.matchId);
@@ -20,6 +11,10 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 
 	$scope.getCollection = function() {
 		MatchModel.getCollection();
+	};
+
+	$scope.isNew = function (match) {
+		return !match._id;
 	};
 
 	$scope.hasJoint = function (players) {

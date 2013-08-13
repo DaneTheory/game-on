@@ -8,7 +8,7 @@ app.controller('MenuCtrl', function ($scope, $location, $http, ApiUrl, PushNotif
 	$scope.isSearching = false;
 	$scope.notifications = 0;
 
-	PushNotificationHelper.on('feed', function (data) {
+	PushNotificationHelper.on('MatchJoined', function (data) {
 		console.log(data);
 		$scope.notifications++;
 	});

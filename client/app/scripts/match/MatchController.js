@@ -1,10 +1,20 @@
+//
+// # MatchController.js  
+// Match business logic.
+//
+// 2013 Pablo De Nadai
+//
+
 'use strict';
 
 app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel, MatchModel) {
 
 	$scope.MatchModel = MatchModel;
+
+	// Assign the `MatchId` from Url Param into the scope.
 	$scope.matchId = $routeParams.matchId;
 
+	
 	$scope.getById = function () {
 		MatchModel.getById($scope.matchId);
 	};

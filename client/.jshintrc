@@ -1,7 +1,6 @@
 {
   "node": true,
   "browser": true,
-  "es5": true,
   "esnext": true,
   "bitwise": true,
   "camelcase": true,
@@ -19,12 +18,11 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
-  "laxcomma"      : true,
-  "laxbreak"      : true,
-  "browser"       : true,
-  "maxlen"        : 120,
-  "predef"        : [
-      "app",
+  "laxcomma": true,
+  "laxbreak": true,
+  "browser": true,
+  "maxlen": 120,
+  "predef": [
       "window",
       "document",
       "console",
@@ -38,5 +36,8 @@
       "it",
       "chai",
       "inject"
-  ]
+  ],
+  "globals": {
+    "app": true
+  }
 }

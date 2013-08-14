@@ -1,8 +1,17 @@
+//
+// # AuthenticationController.js  
+// App authentication business logic.
+// It handles Local and Social (Facebook) strategies.
+//
+// 2013 Pablo De Nadai
+//
+
 'use strict';
 
 app.controller('AuthenticationCtrl',
 	function ($scope, $http, $location, $window, AuthenticationModel, DefaultRoute, ApiUrl) {
 
+	// Credentials
 	$scope.username = null;
 	$scope.password = null;
 	$scope.name = null;
@@ -10,19 +19,37 @@ app.controller('AuthenticationCtrl',
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
+	//
+	// ### function signIn (username, password)
+	// #### @username {username} Username
+	// #### @password {password} Password
+	// Sign In: Local strategy logic.
+	// 
 	$scope.signIn = function (username, password) {
 		return $http.post(ApiUrl + '/auth/signin', {
 			username: username,
 			password: password
-		}).success(function(data) {
+		}).success(function (data) {
+			// Add signed in Player to the model and cookies.
 			AuthenticationModel.setPlayer(data.player);
+			// Redicted route to default route.
 			$location.path(DefaultRoute);
 		}).error(function (data) {
+			// Remove signed in Player from the model and clean the cookies.
 			AuthenticationModel.removePlayer();
+			// Display error message.
 			AuthenticationModel.errorMessage = data;
 		});
 	};
 
+	//
+	// ### function signUp (username, password, name, email)
+	// #### @username {username} Username
+	// #### @password {password} Password
+	// #### @name {name} Name
+	// #### @email {email} Email
+	// Sign Up: Local strategy logic.
+	// 
 	$scope.signUp = function (username, password, name, email) {
 		return $http.post(ApiUrl + '/auth/signup', {
 			username: username,

@@ -1,23 +1,39 @@
+//
+// # Football (Inspired by jogabo.com)
+// `Football` connects you with the players in your city and
+// allows you to find, organize and share matches effortlessly.
+// 
+// 2013 Pablo De Nadai
+//
+
 'use strict';
 
 var app = angular.module('football', ['ngCookies']);
 
+// TODO: Add this to an environment kind of file.
 var serverUrl = '//localhost:3000';
-
-app.constant('ServerUrl', serverUrl);
-app.constant('ApiUrl', serverUrl + '/api/1');
-app.constant('DefaultRoute', '/feed');
+app.constant('ServerUrl', serverUrl);				// Back-end Url
+app.constant('ApiUrl', serverUrl + '/api/1');		// Back-end RESTful API Url.
+app.constant('DefaultRoute', '/feed');				// Default __private__ page.
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
+	// Set `html5Model` on. (uh oh!)
 	$locationProvider.html5Mode(true);
 
+	// Add `AuthenticationInterceptor` to check if the `Player` is still Signed In.
 	$httpProvider.interceptors.push('AuthenticationInterceptor');
+
+	// Add `withCredentials` header to requests. (CORS requirement)
 	$httpProvider.defaults.withCredentials = true;
 
 	// Google Maps Style
 	google.maps.visualRefresh = true;
 
+	//
+	// AngularJS Routing.
+	// It's getting pretty fat.
+	//
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/MainView.html',
@@ -80,11 +96,14 @@ app.run(function ($rootScope, $location, DefaultRoute, AuthenticationModel) {
 
 	// Register listener to watch route changes.
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+
 		if (!AuthenticationModel.isSignedIn()) {
+			// If not Signed In yet, but it's trying to access a private page, then redirect it to the `Sign In` page.
 			if (next.redirectTo === undefined && next.requireAuthentication === undefined) {
 				$location.path('/signin');
 			}
 		} else {
+			// If already Signed In, but it's trying to access a public page, then redirect it to the `DefaultRoute`.
 			if (next.requireAuthentication === false) {
 				$location.path(DefaultRoute);
 			}

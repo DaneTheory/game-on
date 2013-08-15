@@ -14,13 +14,32 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 	// Assign the `MatchId` from Url Param into the scope.
 	$scope.matchId = $routeParams.matchId;
 
-	
 	$scope.getById = function () {
 		MatchModel.getById($scope.matchId);
 	};
 
-	$scope.getCollection = function() {
+	$scope.getCollection = function () {
 		MatchModel.getCollection();
+	};
+
+	// 
+	// ### function clear ()
+	// Empty the match model.
+	// 
+	$scope.clear = function () {
+		MatchModel.match = {};
+	};
+
+	$scope.save = function (match) {
+		MatchModel.save(match);
+	};
+
+	$scope.join = function (match) {
+		MatchModel.join(match);
+	};
+
+	$scope.leave = function (match) {
+		MatchModel.leave(match);
 	};
 
 	$scope.isNew = function (match) {
@@ -33,14 +52,6 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 				return player._id == AuthenticationModel.player._id;
 			});
 		}
-	};
-
-	$scope.join = function (match) {
-		MatchModel.join(match);
-	};
-
-	$scope.leave = function (match) {
-		MatchModel.leave(match);
 	};
 
 });

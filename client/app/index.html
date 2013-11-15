@@ -2,14 +2,10 @@
 <html>
 <head>
 	<title>Football</title>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-	
-	<!-- Fix Html5Mode -->
-	<base href="/"/>
 	
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
@@ -18,51 +14,63 @@
 	<!-- endbuild -->
 </head>
 
-<body ng-app="football">
-
+<body>
 	<!-- Application content -->
-	<div>
-		<div ng-include="'/views/MenuView.html'" ng-controller="MenuCtrl"></div>
-
+	<div ng-app="gameOn">
+		<div ng-include="'/views/MenuView.html'"></div>
 		<div ng-view></div>
 	</div>
-	<!-- Application content -->
 
 	<!-- TODO: Load GoogleMaps async -->
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+	<script src="components/jquery/jquery.js"></script>
+	<script src="components/angular/angular.js"></script>
 	
-	<script src="components/angular-unstable/angular.js"></script>
-	<script src="components/angular-resource/angular-resource.js"></script>
-	<script src="components/angular-cookies/angular-cookies.js"></script>
-	<script src="components/angular-sanitize/angular-sanitize.js"></script>
+	<!-- build:js scripts/plugins.js -->
 	<script src="components/lodash/lodash.js"></script>
 	<script src="components/js-md5/js/md5.js"></script>
 	<script src="components/socket.io-client/dist/socket.io.js"></script>
+	
+    <script src="components/sass-bootstrap/js/affix.js"></script>
+    <script src="components/sass-bootstrap/js/alert.js"></script>
+    <script src="components/sass-bootstrap/js/button.js"></script>
+    <script src="components/sass-bootstrap/js/carousel.js"></script>
+    <script src="components/sass-bootstrap/js/transition.js"></script>
+    <script src="components/sass-bootstrap/js/dropdown.js"></script>
+    <script src="components/sass-bootstrap/js/modal.js"></script>
+    <script src="components/sass-bootstrap/js/scrollspy.js"></script>
+    <script src="components/sass-bootstrap/js/tab.js"></script>
+    <script src="components/sass-bootstrap/js/tooltip.js"></script>
+    <script src="components/sass-bootstrap/js/popover.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/modules.js -->
+    <script src="components/angular-resource/angular-resource.js"></script>
+    <script src="components/angular-cookies/angular-cookies.js"></script>
+    <script src="components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="components/angular-route/angular-route.js"></script>
+    <!-- endbuild -->
 
 	<!-- build:js scripts/scripts.js -->
 	<script src="scripts/app.js"></script>
 
 	<script src="scripts/menu/MenuController.js"></script>
-	
 	<script src="scripts/authentication/AuthenticationController.js"></script>
 	<script src="scripts/authentication/AuthenticationModel.js"></script>
-	
 	<script src="scripts/player/PlayerController.js"></script>
 	<script src="scripts/player/PlayerModel.js"></script>
-	
 	<script src="scripts/match/MatchController.js"></script>
 	<script src="scripts/match/MatchModel.js"></script>
-	
 	<script src="scripts/venue/VenueController.js"></script>
 	<script src="scripts/venue/VenueModel.js"></script>
 	
 	<script src="scripts/common/interceptor/AuthenticationInterceptor.js"></script>
-
 	<script src="scripts/common/directive/BlurDirective.js"></script>
 	<script src="scripts/common/directive/EscapeDirective.js"></script>
+	<script src="scripts/common/directive/EnterDirective.js"></script>
 	<script src="scripts/common/directive/FocusDirective.js"></script>
 	<script src="scripts/common/directive/MapDirective.js"></script>
-
+	<script src="scripts/common/directive/SearchDirective.js"></script>
 	<script src="scripts/common/helper/DateHelper.js"></script>
 	<script src="scripts/common/helper/PlayerHelper.js"></script>
 	<script src="scripts/common/helper/TokenMatcherHelper.js"></script>

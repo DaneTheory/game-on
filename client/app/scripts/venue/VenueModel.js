@@ -1,3 +1,7 @@
+//
+//
+//
+
 'use strict';
 
 app.factory('VenueModel', function ($http, ApiUrl) {
@@ -12,6 +16,7 @@ app.factory('VenueModel', function ($http, ApiUrl) {
 		return $http.get(ApiUrl + '/venue/' + venueId)
 			.success(angular.bind(this, function (data) {
 				this.venue = data.payload[0];
+				this.venue.id = this.venue._id;
 			}))
 			.error(angular.bind(this, function () {
 				this.venue = null;
@@ -19,12 +24,11 @@ app.factory('VenueModel', function ($http, ApiUrl) {
 	};
 
 	this.getCollection = function (params) {
-
 		var defaultParams = {};
 
 		var url = ApiUrl + '/venue';
 
-		if (params.latitude && params.longitude && params.maxDistance) {
+		if (params && params.latitude && params.longitude && params.maxDistance) {
 			url += '/finder/near';
 			defaultParams = angular.extend(defaultParams, params);
 		}

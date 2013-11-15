@@ -3,9 +3,9 @@
 // Utility method to replace tokens in a string with the named values in a supplied object literal.
 //
 
-app.factory('TokenMatcherHelper', function () {
+'use strict';
 
-	'use strict';
+app.factory('TokenMatcherHelper', function () {
 
 	//
 	// ### function replaceNamedTokens template, data

@@ -9,15 +9,18 @@
 'use strict';
 
 app.controller('AuthenticationCtrl',
-	function ($scope, $http, $location, $window, AuthenticationModel, DefaultRoute, ApiUrl) {
+	function ($scope, $http, $location, $window, AuthenticationModel, ApiUrl) {
 
 	// Credentials
+	// TODO: Move this to Model?
 	$scope.username = null;
 	$scope.password = null;
 	$scope.name = null;
 	$scope.email = null;
 
 	$scope.AuthenticationModel = AuthenticationModel;
+
+
 
 	//
 	// ### function signIn (username, password)
@@ -33,7 +36,7 @@ app.controller('AuthenticationCtrl',
 			// Add signed in Player to the model and cookies.
 			AuthenticationModel.setPlayer(data.player);
 			// Redicted route to default route.
-			$location.path(DefaultRoute);
+			$location.path(AuthenticationModel.getPath());
 		}).error(function (data) {
 			// Remove signed in Player from the model and clean the cookies.
 			AuthenticationModel.removePlayer();
@@ -58,7 +61,7 @@ app.controller('AuthenticationCtrl',
 			email: email
 		}).success(function(data) {
 			AuthenticationModel.setPlayer(data.player);
-			$location.path(DefaultRoute);
+			$location.path(AuthenticationModel.getPath());
 		}).error(function (data) {
 			AuthenticationModel.removePlayer();
 			AuthenticationModel.errorMessage = data;
@@ -89,7 +92,7 @@ app.controller('AuthenticationCtrl',
 			}).success(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.setPlayer(data.player);
-				$location.path(DefaultRoute); // Redirect to the private page.
+				$location.path(AuthenticationModel.getPath()); // Redirect to the private page.
 			}).error(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.errorMessage = data;
@@ -110,7 +113,7 @@ app.controller('AuthenticationCtrl',
 			}).success(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.setPlayer(data.player);
-				$location.path(DefaultRoute); // Redirect to the private page.
+				$location.path(AuthenticationModel.getPath()); // Redirect to the private page.
 			}).error(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationModel.errorMessage = data;

@@ -1,15 +1,31 @@
 <div class="profile-view" ng-init="getById()">
 	<div class="header">
+		<h1>{{PlayerModel.player.name}}</h1>
 		
 		<img class="img-circle" ng-src="{{PlayerModel.player.imageUrl}}" width="70" height="70">
+		
+		<p><strong>@{{PlayerModel.player.username}}</strong></p>
+		<p>{{PlayerModel.player.city}}</p>
 
-		<div class="details">
-			<p>{{PlayerModel.player.name}}</p>
-			<p><strong>@{{PlayerModel.player.username}}</strong></p>
-			<p>{{PlayerModel.player.age}}, {{PlayerModel.player.gender}} - {{PlayerModel.player.city}}</p>
+		<button class="btn btn-default">Edit</button>
+	</div>
+	
+	<div class="navbar navbar-static-top navbar-inverse">
+		<div class="container">
+			<ul class="nav navbar-nav">
+				<li><a href="#">Feeds ({{notifications}})</a></li>
+				<li><a href="#">Profile</a></li>
+			</ul>
 		</div>
 	</div>
 
-	<map coordinates="PlayerModel.player.location"></map>
-	
+	<div class="about">
+		<map coordinates="PlayerModel.player.location"></map>
+	</div>
+
+	<div class="feeds medias">
+		<div ng-include="'/views/player/_PlayerFeedItemView.html'"></div>
+		<div ng-include="'/views/match/_MatchFeedItemView.html'"></div>
+		<div ng-include="'/views/venue/_VenueFeedItemView.html'"></div>
+	</div>
 </div>

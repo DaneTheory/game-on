@@ -1,4 +1,5 @@
 //
+// # MapDirective.js
 // Directive that renders a map with a marker on the given coordinate
 //
 

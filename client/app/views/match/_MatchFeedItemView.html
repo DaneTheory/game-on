@@ -1,0 +1,21 @@
+<div class="media">
+	<div class="media-body">
+		<p>
+			<span class="img-circle img-venue img-small"></span>
+			<span class="img-circle img-venue img-small"></span>
+			<span class="img-circle img-venue img-small"></span>
+			<span class="img-circle img-venue img-small"></span>
+		</p>
+
+		<a class="media-heading" href="/match/{{match.id}}">Brazilian Friends</a>
+		<p><a href="/venue/{{match.venue.id}}">Albert Park</a> on Friday</p>
+		<p>
+			<span>2.5km</span>
+			<span ng-show="match.price">{{match.price | currency }}</span>
+			<span ng-show="!match.price">Free</span>
+		</p>
+
+		<button ng-if="!hasJoint(match.players)" class="btn btn-success" ng-click="join(match)">Join</button>
+		<button ng-if="hasJoint(match.players)" class="btn btn-danger" ng-click="leave(match)">Leave</button>
+	</div>
+</div>

@@ -1,8 +1,11 @@
-// Bootstrap
-@import "bootstrap.css";
+// Default Twitter Bootstrap 3.0.2
+@import "sass-bootstrap/lib/bootstrap";
 
-// Bootstrap overrides
-@import "bsImage";
+$fa-font-path: "/components/font-awesome/fonts/";
+@import "font-awesome/scss/font-awesome"; 
+
+// Twitter Bootstrap Overrides
+@import "bootstrapImg";
 
 // Custom components
 @import "map";

@@ -1,3 +1,7 @@
+//
+//
+//
+
 'use strict';
 
 app.factory('PlayerModel', function ($http, ApiUrl, DateHelper, TokenMatcherHelper) {
@@ -21,6 +25,8 @@ app.factory('PlayerModel', function ($http, ApiUrl, DateHelper, TokenMatcherHelp
 
 	var processPlayers = function (players) {
 		_.each(players, function (player) {
+			player.id = player._id;
+
 			// Age
 			var birthday = new Date(player.birthday);
 			player.age = DateHelper.getAgeFromBirthday(birthday);

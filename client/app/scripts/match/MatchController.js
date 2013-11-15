@@ -7,9 +7,10 @@
 
 'use strict';
 
-app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel, MatchModel) {
+app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel, MatchModel, VenueModel) {
 
 	$scope.MatchModel = MatchModel;
+	$scope.VenueModel = VenueModel;
 
 	// Assign the `MatchId` from Url Param into the scope.
 	$scope.matchId = $routeParams.matchId;
@@ -20,14 +21,6 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 
 	$scope.getCollection = function () {
 		MatchModel.getCollection();
-	};
-
-	// 
-	// ### function clear ()
-	// Empty the match model.
-	// 
-	$scope.clear = function () {
-		MatchModel.match = {};
 	};
 
 	$scope.save = function (match) {
@@ -43,13 +36,13 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 	};
 
 	$scope.isNew = function (match) {
-		return !match._id;
+		return !match.id;
 	};
 
 	$scope.hasJoint = function (players) {
 		if (AuthenticationModel.isSignedIn()) {
 			return _.find(players, function (player) {
-				return player._id == AuthenticationModel.player._id;
+				return player.id == AuthenticationModel.player.id;
 			});
 		}
 	};

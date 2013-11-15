@@ -1,3 +1,7 @@
+//
+//
+//
+
 'use strict';
 
 app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueModel) {

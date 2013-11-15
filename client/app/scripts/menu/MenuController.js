@@ -1,15 +1,17 @@
+//
+//
+//
+
 'use strict';
 
 app.controller('MenuCtrl', function ($scope, $location, $http, ApiUrl, PushNotificationHelper, AuthenticationModel) {
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
-	$scope.search = null;
-	$scope.isSearching = false;
 	$scope.notifications = 0;
 
 	PushNotificationHelper.on('MatchJoined', function (data) {
-		console.log(data);
+		console.log('Someone joined your game:', data);
 		$scope.notifications++;
 	});
 
@@ -17,15 +19,6 @@ app.controller('MenuCtrl', function ($scope, $location, $http, ApiUrl, PushNotif
 		AuthenticationModel.removePlayer();
 		$location.path('/');
 		return $http.get(ApiUrl + '/auth/signout');
-	};
-
-	$scope.stopSearching = function () {
-		$scope.search = '';
-		$scope.isSearching = false;
-	};
-
-	$scope.startSearching = function () {
-		$scope.isSearching = true;
 	};
 
 });

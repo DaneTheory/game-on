@@ -1,3 +1,7 @@
+//
+//
+//
+
 'use strict';
 
 app.factory('AuthenticationModel', function ($http, $cookieStore) {
@@ -9,9 +13,14 @@ app.factory('AuthenticationModel', function ($http, $cookieStore) {
 		return !!this.player;
 	};
 
+	this.getPath = function() {
+		return '/player/' + this.player.id;
+	};
+
 	this.setPlayer = function(player) {
 		this.errorStatus = null;
 		this.player = player;
+		this.player.id = player._id;
 		$cookieStore.put('player', player);
 	};
 

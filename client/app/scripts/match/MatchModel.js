@@ -1,3 +1,7 @@
+//
+//
+//
+
 'use strict';
 
 app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
@@ -23,14 +27,16 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 		].join(',')
 	};
 
-	var processMatches = function (matches) {
+	var parseMatches = function (matches) {
 		_.each(matches, function (match) {
+			match.id = match._id;
+
 			// All players
 			var players = match.players;
 
 			// Players not including me.
 			var otherPlayers = _.where(players, function (player) {
-				return player._id !== AuthenticationModel.player._id;
+				return player.id !== AuthenticationModel.player.id;
 			});
 
 			// First 3 other players
@@ -48,7 +54,7 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 				params: getParams
 			})
 			.success(angular.bind(this, function (data) {
-				this.match = _.first(processMatches(data.payload));
+				this.match = _.first(parseMatches(data.payload));
 			}))
 			.error(angular.bind(this, function () {
 				this.match = null;
@@ -60,7 +66,7 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 				params: getParams
 			})
 			.success(angular.bind(this, function(data){
-				this.collection = processMatches(data.payload);
+				this.collection = parseMatches(data.payload);
 			}))
 			.error(angular.bind(this, function(){
 				this.collection = null;
@@ -68,7 +74,7 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 	};
 
 	this.join = function (match) {
-		return $http.post(ApiUrl + '/match/' + match._id + '/join')
+		return $http.post(ApiUrl + '/match/' + match.id + '/join')
 			.success(angular.bind(this, function (data){
 				match.players.push(AuthenticationModel.player);
 			}))
@@ -78,11 +84,11 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 	};
 
 	this.leave = function (match) {
-		return $http.post(ApiUrl + '/match/' + match._id + '/leave')
+		return $http.post(ApiUrl + '/match/' + match.id + '/leave')
 			.success(angular.bind(this, function (){
 
 				var playerIndex = _.findIndex(match.players, function (player) {
-					return player._id == AuthenticationModel.player._id;
+					return player.id == AuthenticationModel.player.id;
 				});
 
 				if (playerIndex > -1) {
@@ -90,9 +96,17 @@ app.factory('MatchModel', function ($http, ApiUrl, AuthenticationModel) {
 				}
 
 			}))
-			.error(angular.bind(this, function(){
+			.error(angular.bind(this, function() {
 				console.log('MatchModel leave error');
 			}));
+	};
+
+	this.save = function (match) {
+
+	};
+
+	this.clear = function () {
+		this.match = {};
 	};
 
 	return this;

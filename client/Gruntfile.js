@@ -1,94 +1,84 @@
-// Generated on 2013-07-27 using generator-angular 0.3.1
+// Generated on 2013-11-15 using generator-angular 0.6.0-rc.1
 'use strict';
-var LIVERELOAD_PORT = 35729;
-var modRewrite = require('connect-modrewrite');
-var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
-var mountFolder = function (connect, dir) {
-	return connect.static(require('path').resolve(dir));
-};
-
+ 
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
-
+ 
 module.exports = function (grunt) {
-	// load all grunt tasks
-	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
-	// configurable paths
-	var yeomanConfig = {
-		app: 'app',
-		dist: 'dist'
-	};
-
-	try {
-		yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
-	} catch (e) {}
-
+	require('load-grunt-tasks')(grunt);
+	require('time-grunt')(grunt);
+ 
 	grunt.initConfig({
-		yeoman: yeomanConfig,
+		yeoman: {
+			// configurable paths
+			app: require('./bower.json').appPath || 'app',
+			dist: 'dist'
+		},
 		watch: {
 			compass: {
 				files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-				tasks: ['compass:server']
+				tasks: ['compass:server', 'autoprefixer']
+			},
+			styles: {
+				files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+				tasks: ['copy:styles', 'autoprefixer']
 			},
 			livereload: {
 				options: {
-					livereload: LIVERELOAD_PORT
+					livereload: '<%= connect.options.livereload %>'
 				},
 				files: [
 					'<%= yeoman.app %>/{,*/}*.html',
-					'{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+					'.tmp/styles/{,*/}*.css',
 					'{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
 					'<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
 				]
+			}
+		},
+		autoprefixer: {
+			options: ['last 1 version'],
+			dist: {
+				files: [{
+					expand: true,
+					cwd: '.tmp/styles/',
+					src: '{,*/}*.css',
+					dest: '.tmp/styles/'
+				}]
 			}
 		},
 		connect: {
 			options: {
 				port: 9000,
 				// Change this to '0.0.0.0' to access the server from outside.
-				hostname: 'localhost'
+				hostname: 'localhost',
+				livereload: 35729
 			},
 			livereload: {
 				options: {
-					middleware: function (connect) {
-						return [
-							modRewrite([
-								'!\\.\\w+$ /'
-							]),
-							lrSnippet,
-							mountFolder(connect, '.tmp'),
-							mountFolder(connect, yeomanConfig.app)
-						];
-					}
+					open: true,
+					base: [
+						'.tmp',
+						'<%= yeoman.app %>'
+					]
 				}
 			},
 			test: {
 				options: {
-					middleware: function (connect) {
-						return [
-							mountFolder(connect, '.tmp'),
-							mountFolder(connect, 'test')
-						];
-					}
+					port: 9001,
+					base: [
+						'.tmp',
+						'test',
+						'<%= yeoman.app %>'
+					]
 				}
 			},
 			dist: {
 				options: {
-					middleware: function (connect) {
-						return [
-							mountFolder(connect, yeomanConfig.dist)
-						];
-					}
+					base: '<%= yeoman.dist %>'
 				}
-			}
-		},
-		open: {
-			server: {
-				url: 'http://localhost:<%= connect.options.port %>'
 			}
 		},
 		clean: {
@@ -106,7 +96,8 @@ module.exports = function (grunt) {
 		},
 		jshint: {
 			options: {
-				jshintrc: '.jshintrc'
+				jshintrc: '.jshintrc',
+				reporter: require('jshint-stylish')
 			},
 			all: [
 				'Gruntfile.js',
@@ -120,11 +111,11 @@ module.exports = function (grunt) {
 				generatedImagesDir: '.tmp/images/generated',
 				imagesDir: '<%= yeoman.app %>/images',
 				javascriptsDir: '<%= yeoman.app %>/scripts',
-				fontsDir: '<%= yeoman.app %>/styles/fonts',
+				fontsDir: '<%= yeoman.app %>/fonts',
 				importPath: '<%= yeoman.app %>/components',
 				httpImagesPath: '/images',
 				httpGeneratedImagesPath: '/images/generated',
-				httpFontsPath: '/styles/fonts',
+				httpFontsPath: '/fonts',
 				relativeAssets: false
 			},
 			dist: {},
@@ -161,7 +152,7 @@ module.exports = function (grunt) {
 			html: ['<%= yeoman.dist %>/{,*/}*.html'],
 			css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
 			options: {
-				dirs: ['<%= yeoman.dist %>']
+				assetsDirs: ['<%= yeoman.dist %>']
 			}
 		},
 		imagemin: {
@@ -231,7 +222,7 @@ module.exports = function (grunt) {
 						'.htaccess',
 						'components/**/*',
 						'images/{,*/}*.{gif,webp}',
-						'styles/fonts/*'
+						'fonts/*'
 					]
 				}, {
 					expand: true,
@@ -241,17 +232,26 @@ module.exports = function (grunt) {
 						'generated/*'
 					]
 				}]
+			},
+			styles: {
+				expand: true,
+				cwd: '<%= yeoman.app %>/styles',
+				dest: '.tmp/styles/',
+				src: '{,*/}*.css'
 			}
 		},
 		concurrent: {
 			server: [
-				'compass:server'
+				'compass:server',
+				'copy:styles'
 			],
 			test: [
-				'compass'
+				'compass',
+				'copy:styles'
 			],
 			dist: [
 				'compass:dist',
+				'copy:styles',
 				'imagemin',
 				'svgmin',
 				'htmlmin'
@@ -272,9 +272,9 @@ module.exports = function (grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= yeoman.dist %>/scripts',
+					cwd: '.tmp/concat/scripts',
 					src: '*.js',
-					dest: '<%= yeoman.dist %>/scripts'
+					dest: '.tmp/concat/scripts'
 				}]
 			}
 		},
@@ -288,42 +288,44 @@ module.exports = function (grunt) {
 			}
 		}
 	});
-
+ 
 	grunt.registerTask('server', function (target) {
 		if (target === 'dist') {
-			return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+			return grunt.task.run(['build', 'connect:dist:keepalive']);
 		}
-
+ 
 		grunt.task.run([
 			'clean:server',
 			'concurrent:server',
+			'autoprefixer',
 			'connect:livereload',
-			'open',
 			'watch'
 		]);
 	});
-
+ 
 	grunt.registerTask('test', [
 		'clean:server',
 		'concurrent:test',
+		'autoprefixer',
 		'connect:test',
 		'karma'
 	]);
-
+ 
 	grunt.registerTask('build', [
 		'clean:dist',
 		'useminPrepare',
 		'concurrent:dist',
+		'autoprefixer',
 		'concat',
-		'copy',
-		'cdnify',
 		'ngmin',
+		'copy:dist',
+		'cdnify',
 		'cssmin',
 		'uglify',
 		'rev',
 		'usemin'
 	]);
-
+ 
 	grunt.registerTask('default', [
 		'jshint',
 		'test',

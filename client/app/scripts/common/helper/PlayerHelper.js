@@ -1,10 +1,14 @@
+//
+//
+//
+
 'use strict';
 
 app.factory('PlayerHelper', function (AuthenticationModel) {
 
 	var isMe = function (playerId) {
 		try {
-			return AuthenticationModel.player._id === playerId;
+			return AuthenticationModel.player.id === playerId;
 		} catch (err) {
 			return false;
 		}

@@ -1,4 +1,27 @@
-<div class="container" ng-init="clear()">
-	<textarea rows="4"></textarea>
+<div class="container" ng-init="MatchModel.clear()">
+
+	<ul class="icons">
+		<li class="well">
+			<h1>Title</h1>
+			<input type="text" class="form-control" ng-model="MatchModel.match.title"/>
+		</li>
+		<li class="well">
+			<h1>When</h1>
+			<input type="date" class="form-control" ng-model="MatchModel.match.when"/>
+		</li>
+		<li class="well">
+			<h1>Venue</h1>
+			<div ng-init="VenueModel.getCollection()">
+				<div ng-repeat="venue in VenueModel.collection">
+					<div ng-include="'/views/venue/_VenueItemView.html'"></div>
+				</div>
+			</div>
+		</li>
+		<li class="well">
+			<h1>Price</h1>
+			<input type="number" class="form-control" ng-model="MatchModel.match.price"/>
+		</li>
+	</ul>
+
 	<button class="btn btn-success" ng-click="save()">Save</button>
 </div>

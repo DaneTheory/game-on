@@ -83,13 +83,13 @@ socketIo.set('authorization', passportSocketIo.authorize({
 	cookieParser: express.cookieParser,         // Or connect.cookieParser
 	key: 'connect.sid',                         // The cookie where express (or connect) stores its session id.
 	secret: app.get('session-secret'),          // The session secret to parse the cookie
-	store: sessionStore                         // The session store that express uses
-	// fail: function(data, accept) {           // *optional* callbacks on success or fail
-	//      accept(null, false);                // Second param takes boolean on whether or not to allow handshake
-	// },
-	// success: function(data, accept) {
-	//      accept(null, true);
-	// }
+	store: sessionStore,                        // The session store that express uses
+	fail: function(data, accept) {           	// *optional* callbacks on success or fail
+	     accept(null, false);                	// Second param takes boolean on whether or not to allow handshake
+	},
+	success: function(data, accept) {
+	     accept(null, true);
+	}
  }));
 
 app.pushNotification = require('./helper/PushNotificationHelper')(socketIo);

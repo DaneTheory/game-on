@@ -53,9 +53,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			controller: 'MatchCtrl'
 		})
 
-		.when('/search/:type/:term', {
+		.when('/search/:type', {
 			templateUrl: 'views/search/SearchView.html',
-			controller: 'SearchCtrl'
+			controller: 'SearchCtrl',
+			reloadOnSearch: false
 		})
 
 		.when('/auth/signin', {

@@ -35,7 +35,6 @@ app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueMode
 	var getGeoLocationSuccess = function(location) {
 		// See https://groups.google.com/forum/?fromgroups#!topic/angular/nFbtADyEHg8
 		$scope.$apply(function() {
-			console.log(location.coords);
 			$location.search({
 				latitude: location.coords.latitude,
 				longitude: location.coords.longitude

@@ -6,7 +6,7 @@ exports = module.exports = function(app, mongoose) {
 
     var PlayerSchema = new mongoose.Schema({
         username: { type: String, required: true },
-        password: { type: String },
+        password: { type: String, select: false },
         name: { type: String },
         email: { type: String },
         gender: { type: String },
@@ -18,6 +18,10 @@ exports = module.exports = function(app, mongoose) {
             id: { type: Number }
             // TODO: Merge profile and player data.
         }
+    },
+    {
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true }
     });
     PlayerSchema.index({ location: '2d' });
 
@@ -48,6 +52,10 @@ exports = module.exports = function(app, mongoose) {
     PlayerSchema.statics.encryptPassword = function(password) {
         return require('crypto').createHmac('sha512', app.get('crypto-key')).update(password).digest('hex');
     };
+
+    PlayerSchema.virtual('documentType').get(function () {
+        return 'player';
+    });
 
     mongoose.model('Player', PlayerSchema);
 }

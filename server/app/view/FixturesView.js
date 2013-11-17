@@ -111,7 +111,8 @@ exports.init = function(req, res){
 				ps[3].id
 			],
 			price: 0, 
-			organizer: ps[0].id
+			organizer: ps[0].id,
+			location: vs[0].location
 		},
 		{
 			title: 'Maori Football Club',
@@ -123,7 +124,8 @@ exports.init = function(req, res){
 				ps[3].id
 			],
 			price: 5, 
-			organizer: ps[4].id
+			organizer: ps[4].id,
+			location: vs[1].location
 		},
 		{
 			title: 'North Melbourne Neighbours',
@@ -135,7 +137,8 @@ exports.init = function(req, res){
 				ps[3].id
 			],
 			price: 2.99, 
-			organizer: ps[2].id
+			organizer: ps[2].id,
+			location: vs[2].location
 		}
 	];
 

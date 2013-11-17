@@ -27,6 +27,14 @@ exports.searchNear = function (req, res) {
         });
     };
 
+    var findMatch = function (callback) {
+        models.Match.near(query, term).limit(maxResults).exec(function (err, matches) {
+            if (err) res.send(err);
+            outcome.push.apply(outcome, matches);
+            callback(null, 'done');
+        });
+    };
+
     var findVenue = function (callback) {
         models.Venue.near(query, term).limit(maxResults).exec(function (err, venues) {
             if (err) res.send(err);
@@ -53,10 +61,7 @@ exports.searchNear = function (req, res) {
         if (err) res.send(err);
 
         var currentLocation = {
-            location: {
-                latitude: query.latitude,
-                longitude: query.longitude
-            }
+            location: [query.latitude, query.longitude]
         };
 
         sortByProximity(currentLocation, outcome);
@@ -64,5 +69,5 @@ exports.searchNear = function (req, res) {
         res.send(outcome);
     };
 
-    require('async').parallel([findPlayer, findVenue], asyncFinally);
+    require('async').parallel([findMatch], asyncFinally);
 };

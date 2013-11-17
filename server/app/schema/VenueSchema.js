@@ -7,6 +7,10 @@ exports = module.exports = function(app, mongoose) {
     var VenueSchema = new mongoose.Schema({
         name: { type: String, required: true },
         location: { type: Array }
+    },
+    {
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true }
     });
     VenueSchema.index({ location: '2d' });
 
@@ -25,6 +29,10 @@ exports = module.exports = function(app, mongoose) {
                 }
             });
     };
+
+    VenueSchema.virtual('documentType').get(function () {
+        return 'venue';
+    });
 
     mongoose.model('Venue', VenueSchema);
 };

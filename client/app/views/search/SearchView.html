@@ -1,14 +1,9 @@
-<div class="search-view">
+<div class="search-view" ng-init="getGeoLocation()">
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="container">
 			<ul class="nav navbar-nav">
-				<li><a href="" ng-click="near()">Near</a></li>
-				<li><a href="#">Games</a></li>
-				<li><a href="#">Players</a></li>
-				<li><a href="#">Venues</a></li>
+				<li ng-repeat="(key, value) in searchTypes"><a href="" ng-click="search(key, searchTerm)">{{value}}</a></li>
 			</ul>
 		</div>
 	</div>
-
-
 </div>

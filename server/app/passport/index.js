@@ -16,7 +16,7 @@ exports = module.exports = function(app, passport) {
 			conditions.email = username;
 		}
 		
-		app.db.base.models.Player.findOne(conditions, function(err, player) {
+		app.db.base.models.Player.findOne(conditions, '+password', function(err, player) {
 			if (err) return done(err);
 			if (!player) return done(null, false, { message: 'Unknown player' });
 			

@@ -22,15 +22,22 @@ exports = module.exports = function(app, mongoose) {
     VenueSchema.statics.near = function (q, term) {
         var coordinates = [ Number(q.latitude), Number(q.longitude) ];
         var maxDistance = q.maxDistance;
-        return this.find({
-                'location': {
-                    $near: coordinates,
-                    $maxDistance: maxDistance / 111.12
-                }
-            });
+
+        var query = {
+            'location': {
+                $near: coordinates,
+                $maxDistance: maxDistance / 111.12
+            }
+        };
+
+        if (term) {
+            query.name = new RegExp('^' + term, "i");
+        }
+
+        return this.find(query);
     };
 
-    VenueSchema.virtual('documentType').get(function () {
+    VenueSchema.virtual('type').get(function () {
         return 'venue';
     });
 

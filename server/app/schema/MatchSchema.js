@@ -60,7 +60,7 @@ exports = module.exports = function(app, mongoose) {
 		return this.find({ 'venue': term });
 	};
 
-	MatchSchema.virtual('documentType').get(function () {
+	MatchSchema.virtual('type').get(function () {
         return 'match';
     });
 

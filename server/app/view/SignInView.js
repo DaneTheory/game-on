@@ -23,11 +23,6 @@ exports.localSignIn = function (req, res) {
 
 			req.login(player, function(err) {
 				if (err) return res.send(500, err);
-				
-				// Remove `password` and `email` before sending off the player's data.
-				player.password = undefined;
-				player.email = undefined;
-
 				res.send(200, { player: player });
 			});
 		})(req, res);

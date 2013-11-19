@@ -8,7 +8,7 @@ exports = module.exports = function(app, mongoose) {
         username: { type: String, required: true },
         password: { type: String, select: false },
         name: { type: String },
-        email: { type: String },
+        email: { type: String, select: false },
         gender: { type: String },
         birthday: { type: Date },
         city: { type: String },
@@ -53,7 +53,7 @@ exports = module.exports = function(app, mongoose) {
         return require('crypto').createHmac('sha512', app.get('crypto-key')).update(password).digest('hex');
     };
 
-    PlayerSchema.virtual('documentType').get(function () {
+    PlayerSchema.virtual('type').get(function () {
         return 'player';
     });
 

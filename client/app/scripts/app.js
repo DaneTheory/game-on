@@ -52,13 +52,11 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/match/MatchDetailView.html',
 			controller: 'MatchCtrl'
 		})
-
-		.when('/search/:type', {
+		.when('/search', {
 			templateUrl: 'views/search/SearchView.html',
 			controller: 'SearchCtrl',
 			reloadOnSearch: false
 		})
-
 		.when('/auth/signin', {
 			templateUrl: 'views/authentication/SignInView.html',
 			controller: 'AuthenticationCtrl',

@@ -56,7 +56,6 @@ exports.searchNear = function (req, res) {
         });
     };
 
-  
     var asyncFinally = function (err, results) {
         if (err) res.send(err);
 
@@ -69,5 +68,5 @@ exports.searchNear = function (req, res) {
         res.send(outcome);
     };
 
-    require('async').parallel([findMatch], asyncFinally);
+    require('async').parallel([findPlayer, findMatch, findVenue], asyncFinally);
 };

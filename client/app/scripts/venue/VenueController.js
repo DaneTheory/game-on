@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueModel) {
+app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueModel, GeolocationHelper) {
 
 	$scope.VenueModel = VenueModel;
 
@@ -26,10 +26,8 @@ app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueMode
 	};
 
 	$scope.getGeoLocation = function(){
-		navigator.geolocation.getCurrentPosition(
-			getGeoLocationSuccess,
-			getGeoLocationError
-		);
+		$scope.geoLocation = GeolocationHelper.getGeoLocation();
+		$scope.geoLocation.then(getGeoLocationSuccess);
 	};
 
 	var getGeoLocationSuccess = function(location) {
@@ -40,10 +38,6 @@ app.controller('VenueCtrl', function ($scope, $routeParams, $location, VenueMode
 				longitude: location.coords.longitude
 			});
 		});
-	};
-
-	var getGeoLocationError = function(err) {
-		console.log('[getGeoLocationError] err', err);
 	};
 
 });

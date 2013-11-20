@@ -7,7 +7,7 @@
 		<p><strong>@{{PlayerModel.player.username}}</strong></p>
 		<p>{{PlayerModel.player.city}}</p>
 
-		<button class="btn btn-default">Edit</button>
+		<button ng-show="PlayerHelper.isMe(PlayerModel.player.id)" class="btn btn-default">Edit</button>
 	</div>
 	
 	<div class="navbar navbar-static-top navbar-inverse">

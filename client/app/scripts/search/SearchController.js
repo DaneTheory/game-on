@@ -6,9 +6,11 @@
 
 app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, ApiUrl, GeolocationHelper) {
 
-	$scope.maxDistance = 5; // 5km
+	$scope.maxDistance = 500000; // 5km
 	$scope.searchType = 'near';
 	$scope.searchTerm = '';
+
+	$scope.searchResults = [];
 	
 	$scope.searchTypes = {
 		'near': 'Near',
@@ -35,10 +37,12 @@ app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, A
 					term: searchTerm
 				}
 			})
-			.success(angular.bind(this, function (data) {
+			.success(angular.bind($scope, function (data) {
+				this.searchResults = data;
 				console.log('Success.', data);
 			}))
-			.error(angular.bind(this, function (data) {
+			.error(angular.bind($scope, function (data) {
+				this.searchResults = [];
 				console.log('Error.', data);
 			}));
 		});

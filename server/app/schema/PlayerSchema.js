@@ -57,5 +57,13 @@ exports = module.exports = function(app, mongoose) {
         return 'player';
     });
 
+    PlayerSchema.virtual('imageUrl').get(function () {
+        return 'http://www.gravatar.com/avatar/?s=100&d=mm';
+    });
+
+    PlayerSchema.virtual('age').get(function () {
+        return 21;
+    });
+
     mongoose.model('Player', PlayerSchema);
 }

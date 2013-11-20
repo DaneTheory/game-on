@@ -12,7 +12,8 @@ var app = angular.module('gameOn', [
 	'ngCookies',
 	'ngResource',
 	'ngSanitize',
-	'ngRoute'
+	'ngRoute',
+	'ngAnimate'
 ]);
 
 // TODO: Use Grunt to set this values depending on build profile.

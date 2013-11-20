@@ -25,3 +25,20 @@ video {
 	width: 100%;
 	height: auto;
 }
+
+.search-query {
+	-webkit-transition: all linear 0.25s;
+	transition: all linear 0.25s;
+	width: 200px;
+	opacity: 1;
+}
+
+.search-query.ng-hide-add,
+.search-query.ng-hide-remove {
+	display: inline-block !important;
+}
+
+.search-query.ng-hide {
+	width: 0;
+	opacity: 0;
+}

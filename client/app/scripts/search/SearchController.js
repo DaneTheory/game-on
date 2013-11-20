@@ -6,7 +6,7 @@
 
 app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, ApiUrl, GeolocationHelper) {
 
-	$scope.maxDistance = 500000; // 5km
+	$scope.maxDistance = 50000000; // 5km
 	$scope.searchType = 'near';
 	$scope.searchTerm = '';
 

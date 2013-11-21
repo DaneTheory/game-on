@@ -1,0 +1,14 @@
+.nav-center {
+    margin: 0 auto;
+    display: table;
+    table-layout: fixed;
+    float:none;
+
+    & > li {
+    	display: inline-block;
+    }
+}
+
+.navbar {
+	min-height: 0;
+}

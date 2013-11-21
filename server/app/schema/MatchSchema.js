@@ -5,13 +5,16 @@
 exports = module.exports = function(app, mongoose) {
 
 	var MatchSchema = new mongoose.Schema({
-		title: { type: String },
+		description: { type: String },
 		venue: { type: mongoose.Schema.ObjectId, ref: 'Venue'},
-		when: { type: Date, default: Date.now },
-		players: [{ type: mongoose.Schema.ObjectId, ref: 'Player' }],
-		price: { type: Number },
-		organizer: { type: mongoose.Schema.ObjectId, ref: 'Player'},
 		location: { type: Array },
+		players: [{ type: mongoose.Schema.ObjectId, ref: 'Player' }],
+		organizer: { type: mongoose.Schema.ObjectId, ref: 'Player'},
+		when: { type: Date, default: Date.now },
+		price: { type: Number },
+		maxAttendees: { type: Number, default: 0 },
+		gender: { type: String, upper: true, match: /[MFX]/ },
+		rate: { type: Number, min: 1, max: 5 },
 
 		meta: {
 			created: { type: Date, default: Date.now },

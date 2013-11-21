@@ -14,10 +14,10 @@ app.directive('search', function () {
 		template:
 			'<div>' +
 				'<div class="form-group">' +
-					'<input type="text" class="search-query form-control" placeholder="Search" ng-model="term" ng-show="isSearchOpen" focus="isSearchOpen" escape="openSearch()" blur="closeSearch()" enter="search(term)"/>' +
+					'<input type="text" class="search-query form-control" placeholder="Search for matches, venues or players" ng-model="term" ng-show="isSearchOpen" focus="isSearchOpen" escape="openSearch()" blur="closeSearch()" enter="search(term)"/>' +
 				'</div>' +
 						
-				'<button class="btn btn-default" ng-show="!isSearchOpen" ng-click="openSearch()"><i class="fa fa-search fa-lg"></i></button>' +
+				'<button class="btn btn-default" ng-show="!isSearchOpen" ng-click="openSearch()"><i class="fa fa-search fa-lg"></i> Search</button>' +
 			'</div>',
 		replace: true,
 		controller: function($scope, $location) {

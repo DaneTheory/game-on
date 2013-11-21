@@ -6,30 +6,21 @@
 
 app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, ApiUrl, GeolocationHelper) {
 
-	$scope.maxDistance = 50000000; // 5km
-	$scope.searchType = 'near';
+	$scope.maxDistance = 10; // 10km
 	$scope.searchTerm = '';
 
 	$scope.searchResults = [];
 	
-	$scope.searchTypes = {
-		'near': 'Near',
-		'player': 'Player',
-		'venue': 'Venue',
-		'match': 'Match'
-	}
-
-	$scope.search = function (searchType, searchTerm) {
+	$scope.search = function (searchTerm) {
 		console.log('Geolocating...');
 
-		$scope.searchType = searchType;
 		$scope.searchTerm = searchTerm;
 
 		GeolocationHelper.getGeoLocation().then(function (location) {
 			console.log('Geolocated.');
 			console.log('Searching...');
 
-			$http.get(ApiUrl + '/search/' + searchType, {
+			$http.get(ApiUrl + '/search/near', {
 				params: {
 					latitude: location.coords.latitude,
 					longitude: location.coords.longitude,
@@ -38,12 +29,14 @@ app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, A
 				}
 			})
 			.success(angular.bind($scope, function (data) {
-				this.searchResults = data;
 				console.log('Success.', data);
+
+				this.searchResults = data;
 			}))
 			.error(angular.bind($scope, function (data) {
-				this.searchResults = [];
 				console.log('Error.', data);
+
+				this.searchResults = [];
 			}));
 		});
 	};
@@ -53,10 +46,7 @@ app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, A
 	});
 
 	$scope.init = function () {
-		var search = $location.search(),
-			term = search ? search.term : null;
-
-		$scope.search($scope.searchType, term);
+		$scope.search($location.search().term);
 	};
 
 	$scope.init();

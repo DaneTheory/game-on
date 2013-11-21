@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, ApiUrl, GeolocationHelper) {
+app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, $q, ApiUrl, GeolocationHelper) {
 
 	$scope.maxDistance = 10; // 10km
 	$scope.searchTerm = '';
@@ -40,6 +40,23 @@ app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, A
 			}));
 		});
 	};
+
+	$scope.getDistance = function (coordinatesTo) {
+		var deferred = $q.defer();
+
+		GeolocationHelper.getGeoLocation().then(function (location) {
+			var coordinatesFrom = [
+				location.coords.latitude,
+				location.coords.longitude
+			];
+
+			var distance = GeolocationHelper.getDistanceFromCoordinates(coordinatesFrom, coordinatesTo);
+
+			deferred.resolve(distance);
+		});
+
+		return deferred.promise;
+	}
 
 	$scope.$on('$routeUpdate', function () {
 		$scope.init();

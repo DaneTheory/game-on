@@ -19,8 +19,8 @@ exports.init = function(req, res){
 			email: 'pablodenadai@gmail.com',
 			gender: 'M',
 			birthday: new Date('04/16/1988'),
-			city: 'Melbourne, Australia',
-			location: [-37.7886711, 144.9390435],
+			location: 'Melbourne, Australia',
+			coordinates: [-37.7886711, 144.9390435],
 			rate: 4
 		},
 		{
@@ -30,8 +30,8 @@ exports.init = function(req, res){
 			email: 'tamati.mikaere@gmail.com',
 			birthday: new Date('02/16/1992'),
 			gender: 'M',
-			city: 'Wellington, New Zealand',
-			location: [-41.2889, 174.7772],
+			location: 'Wellington, New Zealand',
+			coordinates: [-41.2889, 174.7772],
 			rate: 2
 		},
 		{
@@ -41,8 +41,8 @@ exports.init = function(req, res){
 			email: 'anahera.hine@gmail.com',
 			birthday: new Date('02/16/1992'),
 			gender: 'F',
-			city: 'Wellington, New Zealand',
-			location: [-41.2889, 174.7772],
+			location: 'Wellington, New Zealand',
+			coordinates: [-41.2889, 174.7772],
 			rate: 4
 		},
 		{
@@ -52,8 +52,8 @@ exports.init = function(req, res){
 			email: 'ibrahim.malik@gmail.com',
 			birthday: new Date('02/20/1982'),
 			gender: 'M',
-			city: 'Cairo, Egypt',
-			location: [30.0566, -31.2262],
+			location: 'Cairo, Egypt',
+			coordinates: [30.0566, 31.2262],
 			rate: 3
 		},
 		{
@@ -63,8 +63,8 @@ exports.init = function(req, res){
 			email: 'farah.fawziya@gmail.com',
 			birthday: new Date('02/20/1985'),
 			gender: 'F',
-			city: 'Cairo, Egypt',
-			location: [30.0566, -31.2262],
+			location: 'Cairo, Egypt',
+			coordinates: [30.0566, 31.2262],
 			rate: 5
 		}
 	];

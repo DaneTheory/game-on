@@ -1,3 +1,7 @@
+var crypto = require('crypto'),
+    dateHelper = require('./../helper/DateHelper')(),
+    tokenMatcherHelper = require('./../helper/TokenMatcherHelper')();
+        
 // 
 // ### Player Schema
 // Endpoint: http://localhost:3000/api/1/player/
@@ -8,12 +12,12 @@ exports = module.exports = function(app, mongoose) {
         username: { type: String, required: true },
         password: { type: String, select: false },
         name: { type: String },
-        email: { type: String, select: false },
-        gender: { type: String },
+        email: { type: String },
+        gender: { type: String, upper: true, match: /[MF]/ },
         birthday: { type: Date },
-        city: { type: String },
-        location: { type: Array },
-        rate: { type: Number },
+        location: { type: String },
+        coordinates: { type: Array },
+        rate: { type: Number, min: 1, max: 5 },
         profile: {
             id: { type: Number }
             // TODO: Merge profile and player data.
@@ -23,7 +27,7 @@ exports = module.exports = function(app, mongoose) {
         toObject: { virtuals: true },
         toJSON: { virtuals: true }
     });
-    PlayerSchema.index({ location: '2d' });
+    PlayerSchema.index({ coordinates: '2d' });
 
     // 
     // Example:
@@ -35,7 +39,7 @@ exports = module.exports = function(app, mongoose) {
             maxDistance = q.maxDistance;
 
         var query = {
-            'location': {
+            'coordinates': {
                 $near: coordinates,
                 $maxDistance: maxDistance / 111.12
             }
@@ -50,7 +54,7 @@ exports = module.exports = function(app, mongoose) {
 
     // Encrypt strings using SHA-2 standard.
     PlayerSchema.statics.encryptPassword = function(password) {
-        return require('crypto').createHmac('sha512', app.get('crypto-key')).update(password).digest('hex');
+        return crypto.createHmac('sha512', app.get('crypto-key')).update(password).digest('hex');
     };
 
     PlayerSchema.virtual('type').get(function () {
@@ -58,11 +62,15 @@ exports = module.exports = function(app, mongoose) {
     });
 
     PlayerSchema.virtual('imageUrl').get(function () {
-        return 'http://www.gravatar.com/avatar/?s=100&d=mm';
+        var gravatar = 'http://www.gravatar.com/avatar/{0}?s=100&d=mm',
+            email = this.email,
+            hash = email ? crypto.createHash('md5').update(email.toLowerCase()).digest('hex') : '';
+
+        return tokenMatcherHelper.replaceNumberedTokens(gravatar, [hash]);
     });
 
     PlayerSchema.virtual('age').get(function () {
-        return 21;
+        return dateHelper.getAgeFromBirthday(this.birthday);
     });
 
     mongoose.model('Player', PlayerSchema);

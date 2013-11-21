@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.factory('PlayerModel', function ($http, ApiUrl, DateHelper, TokenMatcherHelper) {
+app.factory('PlayerModel', function ($http, ApiUrl, TokenMatcherHelper) {
 
 	this.collection = null;
 	this.player = {
@@ -26,15 +26,6 @@ app.factory('PlayerModel', function ($http, ApiUrl, DateHelper, TokenMatcherHelp
 	var processPlayers = function (players) {
 		_.each(players, function (player) {
 			player.id = player._id;
-
-			// Age
-			var birthday = new Date(player.birthday);
-			player.age = DateHelper.getAgeFromBirthday(birthday);
-
-			// Imager Url
-			var template = 'http://www.gravatar.com/avatar/{0}?s=100&d=mm',
-				hash = player.email ? md5(player.email.trim().toLowerCase()) : '';
-			player.imageUrl = TokenMatcherHelper.replaceNumberedTokens(template, [hash]);
 		});
 
 		return players;

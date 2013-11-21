@@ -14,8 +14,7 @@ exports = module.exports = function(app, mongoose) {
 		price: { type: Number },
 		maxAttendees: { type: Number, default: 0 },
 		gender: { type: String, upper: true, match: /[MFX]/ },
-		rate: { type: Number, min: 1, max: 5 },
-
+		
 		meta: {
 			created: { type: Date, default: Date.now },
 			modified: { type: Date, default: Date.now }

@@ -34,22 +34,14 @@ exports = module.exports = function(app, mongoose) {
     // http://localhost:3000/api/1/player/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
     // @maxDistance {number} Distance in Kms
     // 
-    PlayerSchema.statics.near = function (q, term) {
-        var coordinates = [ Number(q.latitude), Number(q.longitude) ],
-            maxDistance = q.maxDistance;
-
-        var query = {
+    PlayerSchema.statics.near = function (q) {
+        return this.find({
             'coordinates': {
-                $near: coordinates,
-                $maxDistance: maxDistance / 111.12
-            }
-        };
-
-        if (term) {
-            query.name = new RegExp('^' + term, "i");
-        }
-
-        return this.find(query);
+                $near: [ Number(q.latitude), Number(q.longitude) ],
+                $maxDistance: q.maxDistance / 111.12
+            },
+            'name': q.term ? new RegExp('^' + q.term, "i") : undefined
+        });
     };
 
     // Encrypt strings using SHA-2 standard.
@@ -72,6 +64,10 @@ exports = module.exports = function(app, mongoose) {
     PlayerSchema.virtual('age').get(function () {
         return dateHelper.getAgeFromBirthday(this.birthday);
     });
+
+    // PlayerSchema.virtual('distance').get(function() {
+    //     return 1;
+    // });
 
     mongoose.model('Player', PlayerSchema);
 }

@@ -8,65 +8,90 @@ exports.searchNear = function (req, res) {
 
     var models = req.app.db.base.models;
 
-    // TODO: Sanitize `term`.
-    var query = {
-            latitude: req.query.latitude || 0,
-            longitude: req.query.longitude || 0,
-            maxDistance: req.query.maxDistance  || 0
-        },
-        term = req.query.term || null,
+
+    // TODO: Sanitize `query`.
+    var query = req.query,
         maxResults = 20;
+
+    var userLocation = {
+        coordinates: [query.latitude, query.longitude]
+    };
 
     var outcome = [];
 
     var findPlayer = function (callback) {
-        models.Player.near(query, term).limit(maxResults).exec(function (err, players) {
+        models.Player.near(query).limit(maxResults).exec(function (err, players) {
             if (err) res.send(err);
+
+            // Fix immutable results.
+            players = players.map(function (player) {
+                player = player.toObject();
+                player.distance = getDistance(userLocation.coordinates, player.coordinates);
+                return player;
+            });
+
             outcome.push.apply(outcome, players);
             callback(null, 'done');
         });
     };
 
-    var findMatch = function (callback) {
-        models.Match.near(query, term).limit(maxResults).exec(function (err, matches) {
-            if (err) res.send(err);
-            outcome.push.apply(outcome, matches);
-            callback(null, 'done');
-        });
+    // var findMatch = function (callback) {
+    //     models.Match.near(query, term).limit(maxResults).exec(function (err, matches) {
+    //         if (err) res.send(err);
+    //         outcome.push.apply(outcome, matches);
+    //         callback(null, 'done');
+    //     });
+    // };
+
+    // var findVenue = function (callback) {
+    //     models.Venue.near(query, term).limit(maxResults).exec(function (err, venues) {
+    //         if (err) res.send(err);
+    //         outcome.push.apply(outcome, venues);
+    //         callback(null, 'done');
+    //     });
+    // };
+
+    var getDistance = function (coordinatesFrom, coordinatesTo) {
+        var r = 6371; // Radius of the earth in km
+
+        var lat1 = coordinatesFrom[0],
+            lon1 = coordinatesFrom[1],
+            lat2 = coordinatesTo[0],
+            lon2 = coordinatesTo[1];
+        
+        var dLat = degreesToRadians(lat2 - lat1);  // degreesToRadians below
+        var dLon = degreesToRadians(lon2 - lon1); 
+    
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.sin(dLon / 2) * Math.sin(dLon / 2) * 
+                Math.cos(degreesToRadians(lat1)) * 
+                Math.cos(degreesToRadians(lat2));
+
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+
+        var distance = r * c; // Distance in km
+        
+        return distance; 
     };
 
-    var findVenue = function (callback) {
-        models.Venue.near(query, term).limit(maxResults).exec(function (err, venues) {
-            if (err) res.send(err);
-            outcome.push.apply(outcome, venues);
-            callback(null, 'done');
-        });
+    var degreesToRadians = function (deg) {
+        return deg * (Math.PI / 180);
     };
 
-    var distance = function (loc1, loc2) {
-        return Math.sqrt(
-            Math.pow( loc2.location[1] - loc1.location[1], 2 ) +
-            Math.pow( loc2.location[0] - loc1.location[0], 2 )
-        );
-    };
-
-    var sortByProximity = function (currentLocation, arr) {
+    var sortByProximity = function (baseLocation, arr) {
         arr.sort(function (a, b) {
-            return distance( currentLocation, a ) - distance( currentLocation, b );
+            return getDistance(baseLocation.coordinates, a.coordinates) -
+                getDistance(baseLocation.coordinates, b.coordinates);
         });
     };
 
     var asyncFinally = function (err, results) {
         if (err) res.send(err);
 
-        var currentLocation = {
-            location: [query.latitude, query.longitude]
-        };
-
-        sortByProximity(currentLocation, outcome);
+        sortByProximity(userLocation, outcome);
 
         res.send(outcome);
     };
 
-    require('async').parallel([findPlayer, findMatch, findVenue], asyncFinally);
+    require('async').parallel([findPlayer], asyncFinally);
 };

@@ -41,23 +41,6 @@ app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, $
 		});
 	};
 
-	$scope.getDistance = function (coordinatesTo) {
-		var deferred = $q.defer();
-
-		GeolocationHelper.getGeoLocation().then(function (location) {
-			var coordinatesFrom = [
-				location.coords.latitude,
-				location.coords.longitude
-			];
-
-			var distance = GeolocationHelper.getDistanceFromCoordinates(coordinatesFrom, coordinatesTo);
-
-			deferred.resolve(distance);
-		});
-
-		return deferred.promise;
-	}
-
 	$scope.$on('$routeUpdate', function () {
 		$scope.init();
 	});

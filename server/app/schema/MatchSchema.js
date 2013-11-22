@@ -44,7 +44,7 @@ exports = module.exports = function(app, mongoose) {
             query.title = new RegExp('^' + q.term, "i");
         }
 
-       return this.find(query);
+       return this.find(query).populate(['venue', 'organizer', 'players']);
     };
 	
 	MatchSchema.statics.organizer = function (q, term) {

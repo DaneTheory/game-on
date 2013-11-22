@@ -6,7 +6,8 @@ exports = module.exports = function(app, mongoose) {
 
     var VenueSchema = new mongoose.Schema({
         name: { type: String, required: true },
-        coordinates: { type: Array }
+        coordinates: { type: Array },
+        location: { type: String }
     },
     {
         toObject: { virtuals: true },

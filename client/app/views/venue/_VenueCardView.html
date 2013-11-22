@@ -1,11 +1,10 @@
-<div class="media well">
-	<div class="pull-left">
-		<div class="img-circle"></div>
-		<p>2.5km</p>
-	</div>
-
-	<div class="media-body">
-		<a href="#/venue/{{card.id}}">{{card.name}}</a>
-		<p>Melbourne, Australia</p>
+<div class="panel panel-default">
+	<div class="panel-body media">
+		<div class="media-body">
+			<h5 class="media-heading"><strong><a href="#/venue/{{card.id}}">{{ card.name }}</a></strong></h5>
+			<p>{{ card.location }} - {{ card.distance | distance }}</p>
+			<a class="btn btn-primary">Start a game</a>
+			<a class="btn btn-primary" href="http://maps.google.com/maps?q={{ card.coordinates[0] }},{{ card.coordinates[1] }}">View map</a>
+		</div>
 	</div>
 </div>

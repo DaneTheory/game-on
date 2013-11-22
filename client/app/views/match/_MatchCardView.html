@@ -1,27 +1,30 @@
-<div class="media well">
-	<div class="pull-left">
-		<div class="img-circle img-venue"></div>
+<div class="panel panel-default">
+	<div class="panel-body media">
+		<div class="media-body">
+			<h5 class="media-heading">
+				<strong>
+					<a href="#/match/{{ card.id }}">{{ card.description }}</a>
+				</strong>
+			</h5>
 
-		<button ng-if="!hasJoint(card.players)" class="btn btn-success" ng-click="join(card)">Join</button>
-		<button ng-if="hasJoint(card.players)" class="btn btn-danger" ng-click="leave(card)">Leave</button>
-	</div>
+			<p>
+				<a ng-repeat="player in card.players" class="btn-xs" href="#/player/{{ player.id }}" role="button">
+					<img class="img-circle" ng-src="{{ player.imageUrl }}" width="20" height="20">
+				</a>
+			</p>			
 
-	<div class="media-body">
-		<a class="media-heading" href="#/match/{{card.id}}">{{card.title}}</a>
-		<p><a href="#/venue/{{card.venue.id}}">{{card.venue.name}}</a> on {{card.when | date}}</p>
-		<p>
-			<span>2.5km</span>
-			<span> - </span>
-			<span ng-show="card.price">{{card.price | currency }}</span>
-			<span ng-show="!card.price">Free</span>
-		</p>
-		<p>
-			Going ({{card.players.length}})
-			<span ng-if="hasJoint(card.players)">You</span>
-			<span ng-repeat="player in card.playersDisplay">
-				<a href="/{{player.id}}">{{player.name}}</a>
-			</span>
-			<span ng-if="card.playersExtra">and others.</span>
-		</p>
+			<p>{{card.when | date}}</p>
+
+			<p>
+				<a href="#/venue/{{ card.venue.id }}">{{ card.venue.name }}</a>
+				<span>{{ card.distance | distance }}</span>
+				<span ng-show="card.price">{{card.price | currency }}</span>
+				<span ng-show="!card.price">Free</span>
+			</p>
+
+
+			<button ng-if="!hasJoint(card.players)" class="btn btn-success" ng-click="join(card)">Join</button>
+			<button ng-if="hasJoint(card.players)" class="btn btn-danger" ng-click="leave(card)">Leave</button>
+		</div>
 	</div>
 </div>

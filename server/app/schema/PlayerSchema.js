@@ -8,8 +8,15 @@ var crypto = require('crypto'),
 // 
 exports = module.exports = function(app, mongoose) {
 
+    //
+    //
+    //
+    function addAtNotation (string) {
+        return '@' + string;
+    };
+
     var PlayerSchema = new mongoose.Schema({
-        username: { type: String, required: true },
+        username: { type: String, required: true, get: addAtNotation },
         password: { type: String, select: false },
         name: { type: String },
         email: { type: String },
@@ -56,6 +63,10 @@ exports = module.exports = function(app, mongoose) {
 
     PlayerSchema.virtual('type').get(function () {
         return 'player';
+    });
+
+    PlayerSchema.virtual('username').get(function () {
+        return this.username;
     });
 
     PlayerSchema.virtual('imageUrl').get(function () {

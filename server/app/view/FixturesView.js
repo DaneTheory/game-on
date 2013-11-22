@@ -9,6 +9,7 @@ exports.init = function(req, res){
 	models.Player.remove({}, function(err){});
 	models.Venue.remove({}, function(err){});
 	models.Match.remove({}, function(err){});
+	models.Feed.remove({}, function(err){});
 
 	// Player
 	var players = [
@@ -158,5 +159,24 @@ exports.init = function(req, res){
 		ms.push(m);
 	});
 
-	res.send(200);
+	// Feed
+	var feeds = [
+		{
+			player: ps[0].id,
+			type: 'match',
+			action: 'joined',
+			who: ps[1].id,
+			when: new Date,
+			where: vs[0].id
+		}
+	];
+
+	var fs = [];
+	_.each(feeds, function (feed) {
+		var f = new models.Feed(feed);
+		f.save();
+		fs.push(f);
+	});
+
+	res.send(200, 'Fixtures created with success.');
 };

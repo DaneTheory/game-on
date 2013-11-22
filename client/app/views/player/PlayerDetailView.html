@@ -1,31 +1,23 @@
 <div class="profile-view" ng-init="getById()">
 	<div class="header">
 		<h1>{{PlayerModel.player.name}}</h1>
-		
 		<img class="img-circle" ng-src="{{PlayerModel.player.imageUrl}}" width="70" height="70">
-		
-		<p><strong>@{{PlayerModel.player.username}}</strong></p>
+		<p>{{PlayerModel.player.username}}</p>
 		<p>{{PlayerModel.player.city}}</p>
-
-		<button ng-show="PlayerHelper.isMe(PlayerModel.player.id)" class="btn btn-default">Edit</button>
+		<button ng-show="isMe()" class="btn btn-default">Edit</button>
 	</div>
 	
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="container">
 			<ul class="nav navbar-nav nav-center">
-				<li><a href="#">Feeds <span class="badge badge-danger">{{notifications}}5</span></a></li>
-				<li><a href="#">Profile</a></li>
+				<li ng-class="{active: tab == 0}"><a href="" ng-click="tab = 0">Profile</a></li>
+				<li ng-class="{active: tab == 1}"><a href="" ng-click="tab = 1" ng-show="isMe()">Feeds <span class="badge badge-danger">{{notifications}}5</span></a></li>
 			</ul>
 		</div>
 	</div>
 
-	<div class="about">
-		<map coordinates="PlayerModel.player.coordinates"></map>
+	<div ng-switch="tab">
+		<div ng-switch-when="0"><div ng-include="'./views/player/_PlayerProfileView.html'"></div></div>
+		<div ng-switch-when="1"><div ng-include="'./views/player/_PlayerFeedView.html'"></div></div>
 	</div>
-
-<!-- 	<div class="feeds medias">
-		<div ng-include="'/views/player/_PlayerFeedItemView.html'"></div>
-		<div ng-include="'/views/match/_MatchFeedItemView.html'"></div>
-		<div ng-include="'/views/venue/_VenueFeedItemView.html'"></div>
-	</div> -->
 </div>

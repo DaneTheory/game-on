@@ -1,12 +1,22 @@
-<div class="media well">
-	<div class="pull-left">
-		<img class="img-circle" ng-src="{{card.imageUrl}}" width="70" height="70">
-	</div>
+<div class="panel panel-default">
+	<div class="panel-body media">
+		<div class="pull-left">
+			<a href="#/player/{{ card.id }}">
+				<img class="img-circle" ng-src="{{ card.imageUrl }}" width="65" height="65">
+			</a>
+		</div>
 
-	<div class="media-body">
-		<a class="media-heading" href="#/player/{{card.id}}">{{card.name}}</a>
-		<p>@{{card.username}}</p>
-		<p>{{card.age}}, {{card.gender}} - {{card.location}}</p>
-		<p>{{card.distance}}km</p>
+		<div class="media-body">
+			<h5 class="media-heading"><strong>{{ card.name }}</strong></h5>
+			<p class="text-muted">@{{ card.username }}</p>
+			<p>{{ card.location }} - {{ card.distance | distance }}</p>
+			<p>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star-o"></i>
+			</p>
+		</div>
 	</div>
 </div>

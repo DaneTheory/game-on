@@ -6,13 +6,13 @@ exports = module.exports = function(app, mongoose) {
 
     var VenueSchema = new mongoose.Schema({
         name: { type: String, required: true },
-        location: { type: Array }
+        coordinates: { type: Array }
     },
     {
         toObject: { virtuals: true },
         toJSON: { virtuals: true }
     });
-    VenueSchema.index({ location: '2d' });
+    VenueSchema.index({ coordinates: '2d' });
 
     // 
     // Example:
@@ -24,7 +24,7 @@ exports = module.exports = function(app, mongoose) {
         var maxDistance = q.maxDistance;
 
         var query = {
-            'location': {
+            'coordinates': {
                 $near: coordinates,
                 $maxDistance: maxDistance / 111.12
             }

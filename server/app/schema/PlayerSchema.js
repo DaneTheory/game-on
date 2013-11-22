@@ -35,13 +35,18 @@ exports = module.exports = function(app, mongoose) {
     // @maxDistance {number} Distance in Kms
     // 
     PlayerSchema.statics.near = function (q) {
-        return this.find({
+        var query = {
             'coordinates': {
                 $near: [ Number(q.latitude), Number(q.longitude) ],
                 $maxDistance: q.maxDistance / 111.12
-            },
-            'name': q.term ? new RegExp('^' + q.term, "i") : undefined
-        });
+            }            
+        };
+
+        if (q.term) {
+            query.name = new RegExp('^' + q.term, "i");
+        }
+
+        return this.find(query);
     };
 
     // Encrypt strings using SHA-2 standard.

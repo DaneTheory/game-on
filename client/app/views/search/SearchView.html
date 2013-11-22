@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="container">
-		<div ng-repeat="card in searchResults" ng-switch="card.type">
+		<div ng-repeat="card in searchResults" ng-switch="card.type" class="col-sm-6 col-md-3">
 			<div ng-switch-when="player" player-card/>
 			<div ng-switch-when="venue" venue-card/>
 			<div ng-switch-when="match" match-card/>

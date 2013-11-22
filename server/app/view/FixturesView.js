@@ -80,15 +80,15 @@ exports.init = function(req, res){
 	var venues = [
 		{
 			name: 'Albert Park',
-			location: [-37.8420, 144.9500]
+			coordinates: [-37.8420, 144.9500]
 		},
 		{
 			name: 'Maracana',
-			location: [-22.9122, -43.2302]
+			coordinates: [-22.9122, -43.2302]
 		},
 		{
 			name: 'Camp Nou',
-			location: [41.3809, -2.1228]
+			coordinates: [41.3809, -2.1228]
 		}
 	];
 
@@ -102,7 +102,7 @@ exports.init = function(req, res){
 	// Match
 	var matches = [
 		{
-			title: 'South-Americans Friendly',
+			description: 'South-Americans Friendly',
 	        venue: vs[0].id,
 			players: [
 				ps[0].id,
@@ -112,10 +112,12 @@ exports.init = function(req, res){
 			],
 			price: 0, 
 			organizer: ps[0].id,
-			location: vs[0].location
+			coordinates: vs[0].coordinates,
+			gender: 'X',
+			maxPlayers: 10
 		},
 		{
-			title: 'Maori Football Club',
+			description: 'Maori Football Club',
 	        venue: vs[1].id,
 			players: [
 				ps[4].id,
@@ -125,10 +127,12 @@ exports.init = function(req, res){
 			],
 			price: 5, 
 			organizer: ps[4].id,
-			location: vs[1].location
+			coordinates: vs[1].coordinates,
+			gender: 'F',
+			maxPlayers: 14
 		},
 		{
-			title: 'North Melbourne Neighbours',
+			description: 'North Melbourne Neighbours',
 	        venue: vs[2].id,
 			players: [
 				ps[0].id,
@@ -138,7 +142,9 @@ exports.init = function(req, res){
 			],
 			price: 2.99, 
 			organizer: ps[2].id,
-			location: vs[2].location
+			coordinates: vs[2].coordinates,
+			gender: 'M',
+			maxPlayers: 22
 		}
 	];
 

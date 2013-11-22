@@ -7,12 +7,12 @@ exports = module.exports = function(app, mongoose) {
 	var MatchSchema = new mongoose.Schema({
 		description: { type: String },
 		venue: { type: mongoose.Schema.ObjectId, ref: 'Venue'},
-		location: { type: Array },
+		coordinates: { type: Array },
 		players: [{ type: mongoose.Schema.ObjectId, ref: 'Player' }],
 		organizer: { type: mongoose.Schema.ObjectId, ref: 'Player'},
 		when: { type: Date, default: Date.now },
 		price: { type: Number },
-		maxAttendees: { type: Number, default: 0 },
+		maxPlayers: { type: Number, default: 0 },
 		gender: { type: String, upper: true, match: /[MFX]/ },
 		
 		meta: {
@@ -25,26 +25,23 @@ exports = module.exports = function(app, mongoose) {
         toJSON: { virtuals: true }
     });
 	MatchSchema.index({ _id: 1, organizer: 1 }, { unique: true });
-    MatchSchema.index({ location: '2d' });
+    MatchSchema.index({ coordinates: '2d' });
 
 	// 
     // Example:
     // http://localhost:3000/api/1/match/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
     // @maxDistance {number} Distance in Kms
     // 
-    MatchSchema.statics.near = function (q, term) {
-        var coordinates = [ Number(q.latitude), Number(q.longitude) ],
-            maxDistance = q.maxDistance;
-
+    MatchSchema.statics.near = function (q) {
         var query = {
-            'location': {
-                $near: coordinates,
-                $maxDistance: maxDistance / 111.12
+            'coordinates': {
+                $near: [ Number(q.latitude), Number(q.longitude) ],
+                $maxDistance: q.maxDistance / 111.12
             }
         };
 
-        if (term) {
-            query.title = new RegExp('^' + term, "i");
+        if (q.term) {
+            query.title = new RegExp('^' + q.term, "i");
         }
 
        return this.find(query);

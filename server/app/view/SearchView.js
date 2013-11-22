@@ -24,6 +24,7 @@ exports.searchNear = function (req, res) {
             if (err) res.send(err);
 
             // Fix immutable results.
+            // DRY
             players = players.map(function (player) {
                 player = player.toObject();
                 player.distance = getDistance(userLocation.coordinates, player.coordinates);
@@ -35,22 +36,36 @@ exports.searchNear = function (req, res) {
         });
     };
 
-    // var findMatch = function (callback) {
-    //     models.Match.near(query, term).limit(maxResults).exec(function (err, matches) {
-    //         if (err) res.send(err);
-    //         outcome.push.apply(outcome, matches);
-    //         callback(null, 'done');
-    //     });
-    // };
+    var findMatch = function (callback) {
+        models.Match.near(query).limit(maxResults).exec(function (err, matches) {
+            if (err) res.send(err);
+
+            // Fix immutable results.
+            // DRY
+            // if (matches) {
+                matches = matches.map(function (match) {
+                    match = match.toObject();
+                    match.distance = getDistance(userLocation.coordinates, match.coordinates);
+                    return match;
+                });
+            // }
+
+            console.log('matches', matches);
+
+            outcome.push.apply(outcome, matches);
+            callback(null, 'done');
+        });
+    };
 
     // var findVenue = function (callback) {
-    //     models.Venue.near(query, term).limit(maxResults).exec(function (err, venues) {
+    //     models.Venue.near(query).limit(maxResults).exec(function (err, venues) {
     //         if (err) res.send(err);
     //         outcome.push.apply(outcome, venues);
     //         callback(null, 'done');
     //     });
     // };
 
+    // Move it to a helper.
     var getDistance = function (coordinatesFrom, coordinatesTo) {
         var r = 6371; // Radius of the earth in km
 
@@ -74,10 +89,12 @@ exports.searchNear = function (req, res) {
         return distance; 
     };
 
+    // Move it to a helper.
     var degreesToRadians = function (deg) {
         return deg * (Math.PI / 180);
     };
 
+    // Move it to a helper.
     var sortByProximity = function (baseLocation, arr) {
         arr.sort(function (a, b) {
             return getDistance(baseLocation.coordinates, a.coordinates) -
@@ -93,5 +110,5 @@ exports.searchNear = function (req, res) {
         res.send(outcome);
     };
 
-    require('async').parallel([findPlayer], asyncFinally);
+    require('async').parallel([findPlayer, findMatch], asyncFinally);
 };

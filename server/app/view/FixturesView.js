@@ -80,15 +80,18 @@ exports.init = function(req, res){
 	var venues = [
 		{
 			name: 'Albert Park',
-			coordinates: [-37.8420, 144.9500]
+			coordinates: [-37.8420, 144.9500],
+			location: 'Melbourne, Australia'
 		},
 		{
 			name: 'Maracana',
-			coordinates: [-22.9122, -43.2302]
+			coordinates: [-22.9122, -43.2302],
+			location: 'Rio De Janeiro, Brazil'
 		},
 		{
 			name: 'Camp Nou',
-			coordinates: [41.3809, -2.1228]
+			coordinates: [41.3809, -2.1228],
+			location: 'Barcelona, Spain'
 		}
 	];
 

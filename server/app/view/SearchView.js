@@ -23,7 +23,7 @@ exports.searchNear = function (req, res) {
         models.Player.near(query).limit(maxResults).exec(function (err, players) {
             if (err) res.send(err);
 
-            // Fix immutable results.
+            // Fixes immutable results.
             // DRY
             players = players.map(function (player) {
                 player = player.toObject();
@@ -40,15 +40,13 @@ exports.searchNear = function (req, res) {
         models.Match.near(query).limit(maxResults).exec(function (err, matches) {
             if (err) res.send(err);
 
-            // Fix immutable results.
+            // Fixes immutable results.
             // DRY
-            // if (matches) {
-                matches = matches.map(function (match) {
-                    match = match.toObject();
-                    match.distance = getDistance(userLocation.coordinates, match.coordinates);
-                    return match;
-                });
-            // }
+            matches = matches.map(function (match) {
+                match = match.toObject();
+                match.distance = getDistance(userLocation.coordinates, match.coordinates);
+                return match;
+            });
 
             console.log('matches', matches);
 
@@ -57,13 +55,23 @@ exports.searchNear = function (req, res) {
         });
     };
 
-    // var findVenue = function (callback) {
-    //     models.Venue.near(query).limit(maxResults).exec(function (err, venues) {
-    //         if (err) res.send(err);
-    //         outcome.push.apply(outcome, venues);
-    //         callback(null, 'done');
-    //     });
-    // };
+    var findVenue = function (callback) {
+        models.Venue.near(query).limit(maxResults).exec(function (err, venues) {
+            if (err) res.send(err);
+
+            // Fixes immutable results.
+            // DRY
+            venues = venues.map(function (venue) {
+                venue = venue.toObject();
+                venue.distance = getDistance(userLocation.coordinates, venue.coordinates);
+                return venue;
+            });
+
+
+            outcome.push.apply(outcome, venues);
+            callback(null, 'done');
+        });
+    };
 
     // Move it to a helper.
     var getDistance = function (coordinatesFrom, coordinatesTo) {
@@ -110,5 +118,5 @@ exports.searchNear = function (req, res) {
         res.send(outcome);
     };
 
-    require('async').parallel([findPlayer, findMatch], asyncFinally);
+    require('async').parallel([findPlayer, findVenue, findMatch], asyncFinally);
 };

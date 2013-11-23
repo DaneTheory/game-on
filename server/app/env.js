@@ -4,7 +4,7 @@ module.exports = function() {
 			'facebook-oauth-key': '',
 			'facebook-oauth-secret': '',
 
-			'client-url-cors': 'http://localhost:9000'
+			'client-url-cors': 'http://192.168.20.102:9000'
 		}, 
 		'production': {
 			'facebook-oauth-key': '',

@@ -2,19 +2,21 @@
 //
 //
 
-app.filter('distance', function () {
+app.filter('distance', function ($filter) {
     return function (distance) {
 
-        var rounded = Math.round(distance * 10) / 10,
-            formatted;
+        var formatted,
+            unit;
 
-        if (rounded < 1) {
+        if (distance < 1) {
             // Converte to metres.
-            rounded = rounded * 100;
-            formatted = rounded + ' metres';
+            distance = distance * 100;
+            unit = 'm';
         } else {
-            formatted = rounded + ' km';
+            unit = 'km';
         }
+
+        formatted = $filter('number')(distance, 1) + ' ' + unit;
 
         return formatted;
     };

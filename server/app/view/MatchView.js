@@ -10,7 +10,8 @@ exports.joinMatch = function (req, res) {
 		playerId = req.session.passport.user,
 		pushNotification = req.app.pushNotification,
 		models = req.app.db.base.models,
-		Match = models.Match;
+		Match = models.Match,
+		Feed = models.Feed;
 
 	//
 	// ### function _join (match)
@@ -28,17 +29,20 @@ exports.joinMatch = function (req, res) {
 		match.save(function(err, doc){
 			if (err) return res.send(500, err);
 
-			// Send notification to organizer
-			pushNotification.emitTo(match.organizer, {
-				type: 'MatchJoined',
+			Feed.create({
+				player: match.organizer,
+				type: 'match',
+				action: 'joined',
+				match: match._id,
 				meta: {
-					playerId: playerId,
-					matchId: match._id
+					createdBy: playerId
 				}
-			});
+			}, function (err) {
+				if (err) return res.send(500, err);
 
-			// Join successful
-			res.send(200);
+				// Join successful
+				return res.send(200);
+			});
 		});
 	};
 

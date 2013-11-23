@@ -10,7 +10,7 @@
 		<div class="container">
 			<ul class="nav navbar-nav nav-center">
 				<li ng-class="{active: tab == 0}"><a href="" ng-click="tab = 0">Profile</a></li>
-				<li ng-class="{active: tab == 1}"><a href="" ng-click="tab = 1" ng-show="isMe()">Feeds <span ng-if="notifications" class="badge badge-danger">{{notifications}}</span></a></li>
+				<li ng-class="{active: tab == 1}"><a href="" ng-click="tab = 1" ng-show="isMe()">Feeds <span ng-if="FeedModel.feeds" class="badge badge-danger">{{FeedModel.feeds.length}}</span></a></li>
 			</ul>
 		</div>
 	</div>

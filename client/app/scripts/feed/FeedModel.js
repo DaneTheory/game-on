@@ -4,15 +4,20 @@
 
 app.service('FeedModel', function ($http, $q, CacheHelper, AuthenticationModel, ApiUrl) {
 
+    var feeds = [];
+
     return {
-        getList: function () {
+        feeds: feeds,
+
+        getFeeds: function () {
+            var deferred = $q.defer();
+
             // TODO: Do it in a way where the result is always related to the user signed in.
             var playerId = AuthenticationModel.player.id;
 
-            var deferred = $q.defer();
-
-            if (CacheHelper.get(playerId)) {
-                deferred.resolve(CacheHelper.get(playerId));
+            
+            if (CacheHelper.get('feed')) {
+                deferred.resolve(CacheHelper.get('feed'));
             } else {
                 $http.get(ApiUrl + '/feed/finder/player/' + playerId, {
                     params: {
@@ -20,10 +25,10 @@ app.service('FeedModel', function ($http, $q, CacheHelper, AuthenticationModel, 
                     }
                 })
                 .success(function (data) {
-                    deferred.resolve(CacheHelper.put(playerId, data.payload));
+                    deferred.resolve(CacheHelper.put('feed', data.payload));
                 })
                 .error(function () {
-                    deferred.resolve(CacheHelper.put(playerId, null));
+                    deferred.resolve(CacheHelper.put('feed', null));
                 });
             }
 

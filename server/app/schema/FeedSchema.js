@@ -38,7 +38,7 @@ exports = module.exports = function(app, mongoose) {
 	});
 
 	FeedSchema.post('save', function (doc) {
-		app.pushNotification.emitTo(doc.player, doc);
+		app.pushNotification.emitTo(doc.player, 'feed', null);
 	});
 
 	mongoose.model('Feed', FeedSchema);

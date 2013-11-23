@@ -4,12 +4,20 @@
 
 'use strict';
 
-app.controller('FeedCtrl', function ($scope, FeedModel) {
+app.controller('FeedCtrl', function ($scope, FeedModel, PushNotificationHelper, CacheHelper) {
 
-	$scope.feeds;
+	PushNotificationHelper.on('feed', function () {
+		$scope.loadFeeds();
+	});
 
-	FeedModel.getList().then(angular.bind($scope, function (feeds) {
-		this.feeds = feeds;
-	}));
+	$scope.loadFeeds = function () {
+		CacheHelper.remove('feed');
+
+		FeedModel.getFeeds().then(angular.bind($scope, function (feeds) {
+			FeedModel.feeds = feeds;
+		}));
+	};
+
+	$scope.loadFeeds();
 
 });

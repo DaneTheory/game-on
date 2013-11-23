@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+	<div class="panel-body media">
+		<div class="pull-left">
+			<a href="#/player/{{ feed.who.id }}">
+				<img class="img-circle" ng-src="{{ feed.who.imageUrl }}" width="65" height="65">
+			</a>
+		</div>
+
+		<div class="media-body">
+			<h5 class="media-heading"><strong>{{ feed.who.name }}</strong></h5>
+			<p>{{ feed.action }} <a href="#/match/{{ feed.what.id }}">{{ feed.what.description }}</a> {{ feed.meta.createdAt | momentRelative }}</p>
+		</div>
+	</div>
+</div>

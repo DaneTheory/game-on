@@ -167,7 +167,8 @@ exports.init = function(req, res){
 			action: 'joined',
 			who: ps[1].id,
 			when: new Date,
-			where: vs[0].id
+			where: vs[0].id,
+			what: ms[0].id
 		}
 	];
 

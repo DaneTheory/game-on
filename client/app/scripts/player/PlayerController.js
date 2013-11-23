@@ -4,13 +4,18 @@
 
 'use strict';
 
-app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, PlayerHelper) {
+app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, PlayerHelper, FeedModel) {
 
 	$scope.PlayerModel = PlayerModel;
 	$scope.PlayerHelper = PlayerHelper;
 	
 	$scope.playerId = $routeParams.playerId;
-	$scope.tab = 0;
+	$scope.tab = 1;
+	$scope.notifications = 0;
+
+	FeedModel.getList().then(angular.bind($scope, function (data) {
+		this.notifications = data ? data.length : 0;
+	}))
 
 	$scope.getCollection = function() {
 		PlayerModel.getCollection();

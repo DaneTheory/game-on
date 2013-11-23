@@ -12,6 +12,7 @@ exports = module.exports = function(app, mongoose) {
 		who: { type: mongoose.Schema.ObjectId, ref: 'Player' },
 		when: { type: Date, default: Date.now },
 		where: { type: mongoose.Schema.ObjectId, ref: 'Venue' },
+		what: { type: mongoose.Schema.ObjectId, ref: 'Match' },
 		
 		meta: {
 			createdAt: { type: Date },

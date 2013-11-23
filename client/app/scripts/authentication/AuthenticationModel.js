@@ -20,7 +20,6 @@ app.factory('AuthenticationModel', function ($http, $cookieStore) {
 	this.setPlayer = function(player) {
 		this.errorStatus = null;
 		this.player = player;
-		this.player.id = player._id;
 		$cookieStore.put('player', player);
 	};
 

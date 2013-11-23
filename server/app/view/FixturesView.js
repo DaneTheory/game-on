@@ -165,10 +165,12 @@ exports.init = function(req, res){
 			player: ps[0].id,
 			type: 'match',
 			action: 'joined',
-			who: ps[1].id,
-			when: new Date,
-			where: vs[0].id,
-			what: ms[0].id
+			venue: vs[0].id,
+			match: ms[0].id,
+			meta: {
+				createdBy: ps[1].id,
+				createdAt: new Date
+			}
 		}
 	];
 

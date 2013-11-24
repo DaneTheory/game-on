@@ -25,7 +25,7 @@ exports = module.exports = function(app, mongoose) {
 	FeedSchema.index({ _id: 1, player: 1 }, { unique: true });
 
 	FeedSchema.statics.player = function (q, term) {
-		return this.find({ 'player': term });
+		return this.find({ 'player': term }).sort({ 'meta.createdAt': -1 });
 	};
 	
 	FeedSchema.virtual('isRead').get(function () {

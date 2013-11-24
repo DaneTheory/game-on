@@ -21,7 +21,8 @@ app.service('FeedModel', function ($http, $q, CacheHelper, AuthenticationModel, 
             } else {
                 $http.get(ApiUrl + '/feed/finder/player/' + playerId, {
                     params: {
-                        populate: 'match,meta.createdBy'
+                        populate: 'match,meta.createdBy',
+                        limit: 10
                     }
                 })
                 .success(function (data) {

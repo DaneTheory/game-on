@@ -1,14 +1,14 @@
-<div class="panel panel-default">
-	<div class="panel-body media">
-		<div class="pull-left">
-			<a href="#/player/{{ feed.meta.createdBy.id }}">
-				<img class="img-circle" ng-src="{{ feed.meta.createdBy.imageUrl }}" width="65" height="65">
-			</a>
-		</div>
+<div class="media">
+	<div class="pull-left">
+		<a href="#/player/{{ feed.meta.createdBy.id }}">
+			<img class="img-circle" ng-src="{{ feed.meta.createdBy.imageUrl }}" width="45" height="45">
+		</a>
+	</div>
 
-		<div class="media-body">
-			<h5 class="media-heading"><strong>{{ feed.meta.createdBy.name }}</strong></h5>
-			<p>{{ feed.action }} <a href="#/match/{{ feed.match.id }}">{{ feed.match.description }}</a> {{ feed.meta.createdAt | momentRelative }}</p>
-		</div>
+	<div class="media-body">
+		<h4 class="media-heading"><strong>{{ feed.meta.createdBy.name }}</strong></h4>
+		<p>{{ feed.action }} <a href="#/match/{{ feed.match.id }}">{{ feed.match.description }}</a> {{ feed.meta.createdAt | momentRelative }}</p>
 	</div>
 </div>
+<!-- <h4 class="list-group-item-heading">List group item heading</h4>
+<p class="list-group-item-text">...</p> -->

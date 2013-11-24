@@ -16,3 +16,8 @@ $fa-font-path: "/components/font-awesome/fonts/";
 @import "mainView.scss";
 @import "venueView.scss";
 @import "profileView.scss";
+
+
+.list-group-item-unread {
+	background-color: lighten($state-info-bg, 7%);
+}

@@ -20,4 +20,12 @@ app.controller('FeedCtrl', function ($scope, FeedModel, PushNotificationHelper, 
 
 	$scope.loadFeeds();
 
+	$scope.markAsRead = function (feed) {
+		FeedModel.markAsRead(feed);
+	};
+
+	$scope.markAllAsRead = function () {
+		FeedModel.markAllAsRead();
+	};
+
 });

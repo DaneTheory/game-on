@@ -27,10 +27,10 @@ exports = module.exports = function(app, mongoose) {
 	FeedSchema.statics.player = function (q, term) {
 		return this.find({ 'player': term }).sort({ 'meta.createdAt': -1 });
 	};
-	
-	FeedSchema.virtual('isRead').get(function () {
-        return this.readAt ? true : false;
-    });
+
+	FeedSchema.virtual('id').get(function () {
+		return this._id;
+	});
 
 	FeedSchema.pre('save', function (next) {
 		if (!this.meta.createdAt) this.meta.createdAt = new Date;

@@ -24,13 +24,20 @@ exports = module.exports = function(app) {
 	app.get(authPath + '/signin/facebook', require('./SignInView').facebookSignIn);
 	app.get(authPath + '/signin/facebook/callback', require('./SignInView').facebookSignInCallback);
 
-	// Custom Methods (not CRUD).
+	// Custom Methods (not CRUD)
+	// Match
 	app.post(apiPath + '/match/:matchId/join', require('./MatchView').joinMatch);
 	app.post(apiPath + '/match/:matchId/leave', require('./MatchView').leaveMatch);
 	app.post(apiPath + '/match', require('./MatchView').newMatch);
 	app.del(apiPath + '/match', require('./MatchView').deleteMatch);
 
+	// Search
 	app.get(apiPath + '/search/near', require('./SearchView').searchNear);
+
+	// Feed
+	app.post(apiPath + '/feed/markAsRead/all', require('./FeedView').markAllAsRead);
+	app.post(apiPath + '/feed/markAsRead/:feedId', require('./FeedView').markAsRead);
+
 
 	// Create API CRUD using MERS.
 	// TODO: Replace MERS with a better solution.

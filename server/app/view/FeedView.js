@@ -25,9 +25,6 @@ exports.markAllAsRead = function (req, res) {
 
     Feed.update({ 'player': playerId }, { $set: { 'meta.readAt': new Date } }, { multi: true }, function (err, numAffected) {
         if (err) return res.send(500, err);
-
-        console.log('numAffected', numAffected);
-
         return res.send(200);
     });
 

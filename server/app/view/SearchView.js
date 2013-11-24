@@ -48,8 +48,6 @@ exports.searchNear = function (req, res) {
                 return match;
             });
 
-            console.log('matches', matches);
-
             outcome.push.apply(outcome, matches);
             callback(null, 'done');
         });

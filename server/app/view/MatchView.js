@@ -65,7 +65,8 @@ exports.leaveMatch = function (req, res) {
 		playerId = req.session.passport.user,
 		pushNotification = req.app.pushNotification,
 		models = req.app.db.base.models,
-		Match = models.Match;
+		Match = models.Match,
+		Feed = models.Feed;
 
 	//
 	// ### function leave (match)
@@ -76,18 +77,22 @@ exports.leaveMatch = function (req, res) {
 		match.players.remove(playerId);
 		match.save(function(err, doc){
 			if (err) return res.send(500, err);
-			
+
 			// Send notification to organizer
-			pushNotification.emitTo(match.organizer, {
-				type: 'MatchLeft',
+			Feed.create({
+				player: match.organizer,
+				type: 'match',
+				action: 'left',
+				match: match._id,
 				meta: {
-					playerId: playerId,
-					matchId: match._id
+					createdBy: playerId
 				}
+			}, function (err) {
+				if (err) return res.send(500, err);
+
+				// Leave successful
+				return res.send(200);
 			});
-			
-			// Leave successful
-			res.send(200);
 		});
 	};
 

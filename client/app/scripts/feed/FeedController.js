@@ -7,6 +7,10 @@
 app.controller('FeedCtrl', function ($scope, FeedModel, PushNotificationHelper, CacheHelper) {
 
 	PushNotificationHelper.on('feed', function () {
+		if (window.navigator.vibrate) {
+			window.navigator.vibrate(200);
+		}
+
 		$scope.loadFeeds();
 	});
 

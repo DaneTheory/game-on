@@ -1,40 +1,35 @@
-<form class="form-horizontal col-lg-10" novalidation ng-submit="signIn(username, password)" ng-init="clear()">
-	<fieldset>
-		<div class="form-group">
-			<label for="inputUsername" class="col-lg-2 control-label">Username</label>
-			<div class="col-lg-10">
+<div class="row">
+	<div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+
+		<form novalidation ng-submit="signIn(username, password)" role="form">
+			<div class="form-group">
+				<label for="inputUsername">Username</label>
 				<input type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="username">
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="inputPassword" class="col-lg-2 control-label">Password</label>
-			<div class="col-lg-10">
+			
+			<div class="form-group">
+				<label for="inputPassword">Password</label>
 				<input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="password">
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<div class="col-lg-10 col-offset-2">
-				<button type="submit" class="btn btn-default">Sign in</button>
+			
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Sign in</button>
+			</div>
+
+			<div ng-show="AuthenticationModel.errorMessage" class="alert alert-danger">
+				{{AuthenticationModel.errorMessage}}
+			</div>
+		</form>
+
+
+		<div class="well text-center">
+			<p class="lead">Or sign in with</p>
+			<div class="btn-group">
+				<button class="btn btn-primary" ng-click="signInFacebookRequestToken()">Facebook</button>
+				<button class="btn btn-primary" ng-click="">Twitter</button>
+				<button class="btn btn-primary" ng-click="">Google+</button>
 			</div>
 		</div>
 
-		<div ng-show="AuthenticationModel.errorMessage" class="col-lg-10 col-offset-2 alert alert-danger">
-			{{AuthenticationModel.errorMessage}}
-		</div>
-	</fieldset>
-</form>
-
-
-<div class="clearfix"></div>
-<hr/>
-<div class="well">
-	<p>Or sign in with</p>
-	
-	<div class="btn-group">
-		<button class="btn btn-primary" ng-click="signInFacebookRequestToken()">Facebook</button>
-		<button class="btn btn-primary" ng-click="">Twitter</button>
-		<button class="btn btn-primary" ng-click="">Google+</button>
 	</div>
 </div>

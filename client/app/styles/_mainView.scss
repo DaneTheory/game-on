@@ -1,3 +1,31 @@
-body {
-	padding-top: 50px;
+.main-view {
+	background-image: url('//192.168.20.102:3000/images/background_intro.jpg');
+	background-size: cover;
+	background-position: 50% 50%;
+
+	height: 100%;
+	width: 100%;
+
+	margin: -50px 0;
+	position: absolute;
+
+	h1,
+	p {
+		color: #fff;
+		text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	}
+
+	h1 {
+		font-size: 45px;
+		margin-top: 40px;
+	}
+
+	p {
+		font-size: 25px;
+	}
+
+	.buttons {
+		margin-top: 50px;
+	}
+
 }

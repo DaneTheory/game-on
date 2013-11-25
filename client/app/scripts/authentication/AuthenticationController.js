@@ -126,7 +126,7 @@ app.controller('AuthenticationCtrl',
 		$location.hash(null); // Remove Facebook `#_=_` buggy hash.
 	};
 
-	$scope.clear = function () {
+	$scope.init = function () {
 		// Development placeholders.
 		$scope.username = 'pablodenadai';
 		$scope.password = '123';
@@ -134,5 +134,7 @@ app.controller('AuthenticationCtrl',
 		$scope.email = 'pablodenadai@gmail.com';
 		AuthenticationModel.errorStatus = null;
 	};
+
+	$scope.init();
 
 });

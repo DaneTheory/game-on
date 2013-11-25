@@ -1,22 +1,26 @@
 <div class="profile-view" ng-init="getById()">
-	<div class="header">
-		<h1>{{PlayerModel.player.name}}</h1>
-		<img class="img-circle" ng-src="{{PlayerModel.player.imageUrl}}" width="70" height="70">
-		<p>{{PlayerModel.player.username}}</p>
-		<p>{{PlayerModel.player.city}}</p>
+	<div class="header text-center">
+		<h3>{{PlayerModel.player.name}}</h3>
+		<img class="img-circle" ng-src="{{PlayerModel.player.imageUrl}}" width="100" height="100">
+		<p class="lead">{{ PlayerModel.player.username }}</p>
+		<p class="location">
+			{{ PlayerModel.player.location }}
+			<span class="divider">·</span>
+			<i ng-repeat="rate in PlayerModel.player.rateArray track by $index" class="fa" ng-class="{ 'fa-star': rate, 'fa-star-o': !rate }"></i>
+			</p>
 	</div>
 	
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="container">
 			<ul class="nav navbar-nav nav-center">
-				<li ng-class="{active: tab == 0}"><a href="" ng-click="tab = 0">Profile</a></li>
+				<li ng-class="{active: tab == 0}"><a href="" ng-click="tab = 0">Stats</a></li>
 				<li ng-class="{active: tab == 1}"><a href="" ng-click="tab = 1" ng-show="isMe()">Feeds <span ng-if="FeedModel.feeds" class="badge badge-danger">{{ ( FeedModel.feeds | filter: { 'meta.readAt': null } ).length }}</span></a></li>
 			</ul>
 		</div>
 	</div>
 
 	<div ng-switch="tab">
-		<div ng-switch-when="0"><div ng-include="'./views/player/_PlayerProfileView.html'"></div></div>
+		<div ng-switch-when="0"><div ng-include="'./views/player/_PlayerStatsView.html'"></div></div>
 		<div ng-switch-when="1"><div ng-include="'./views/feed/_FeedView.html'"></div></div>
 	</div>
 </div>

@@ -11,13 +11,13 @@ $fa-font-path: "/components/font-awesome/fonts/";
 @import "animation";
 @import "navbar";
 @import "badge";
+@import "listGroup";
 
 // Views
 @import "mainView.scss";
 @import "venueView.scss";
 @import "profileView.scss";
 
-
-.list-group-item-unread {
-	background-color: lighten($state-info-bg, 7%);
+* {
+	outline: none !important;
 }

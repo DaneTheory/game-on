@@ -25,6 +25,8 @@ exports = module.exports = function(app, mongoose) {
         location: { type: String },
         coordinates: { type: Array },
         rate: { type: Number, min: 1, max: 5 },
+        matchesPlayed: { type: Number, default: 0 },
+        matchesOrganized: { type: Number, default: 0 },
         profile: {
             id: { type: Number }
             // TODO: Merge profile and player data.
@@ -69,8 +71,28 @@ exports = module.exports = function(app, mongoose) {
         return this.username;
     });
 
+    PlayerSchema.virtual('rateArray').get(function () {
+        var rate = this.rate,
+            i = 0,
+            max = 5,
+            array = [];
+
+        while (i < max) {
+            if (rate > 0) {
+                array.push(1);
+            } else {
+                array.push(0);
+            }
+
+            rate--;
+            i++;
+        }
+
+        return array;
+    });
+
     PlayerSchema.virtual('imageUrl').get(function () {
-        var gravatar = 'http://www.gravatar.com/avatar/{0}?s=100&d=mm',
+        var gravatar = 'http://www.gravatar.com/avatar/{0}?s=200&d=mm',
             email = this.email,
             hash = email ? crypto.createHash('md5').update(email.toLowerCase()).digest('hex') : '';
 

@@ -11,7 +11,8 @@ exports.joinMatch = function (req, res) {
 		pushNotification = req.app.pushNotification,
 		models = req.app.db.base.models,
 		Match = models.Match,
-		Feed = models.Feed;
+		Feed = models.Feed,
+		Player = models.Player;
 
 	//
 	// ### function _join (match)
@@ -28,6 +29,10 @@ exports.joinMatch = function (req, res) {
 		match.players.push(playerId);
 		match.save(function(err, doc){
 			if (err) return res.send(500, err);
+
+			Player.findByIdAndUpdate(playerId, { $inc: { matchesPlayed: 1 } }, function (err) {
+				if (err) res.send(500, err);
+			});
 
 			Feed.create({
 				player: match.organizer,
@@ -66,7 +71,8 @@ exports.leaveMatch = function (req, res) {
 		pushNotification = req.app.pushNotification,
 		models = req.app.db.base.models,
 		Match = models.Match,
-		Feed = models.Feed;
+		Feed = models.Feed,
+		Player = models.Player;
 
 	//
 	// ### function leave (match)
@@ -77,6 +83,13 @@ exports.leaveMatch = function (req, res) {
 		match.players.remove(playerId);
 		match.save(function(err, doc){
 			if (err) return res.send(500, err);
+
+
+			// TODO: Too much going on in this save callback.
+			// Probably should be using async.
+			Player.findByIdAndUpdate(playerId, { $inc: { matchesPlayed: -1 } }, function (err) {
+				if (err) res.send(500, err);
+			});
 
 			// Send notification to organizer
 			Feed.create({

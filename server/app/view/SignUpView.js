@@ -15,7 +15,7 @@ exports.localSignUp = function (req, res) {
 	var validate = function() {
 		if (!username) return res.send(400, 'Username required');
 		if (!name) return res.send(400, 'Name required');
-		if (!email) return res.send(400, 'Email required');
+		if (!email) return res.send(400, 'Email address required');
 		if (!password) return res.send(400, 'Password required');
 
 		if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
@@ -23,7 +23,7 @@ exports.localSignUp = function (req, res) {
 		}
 
 		if (!/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(email)) {
-			return res.send(400, 'Email invalid format');
+			return res.send(400, 'Invalid email address format');
 		}
 
 		duplicateUserCheck();
@@ -39,9 +39,9 @@ exports.localSignUp = function (req, res) {
 			
 			if (doc) {
 				if (doc.username === username) {
-					return res.send(400, 'Username already taken.');
+					return res.send(400, 'Username is already taken.');
 				} else {
-					return res.send(400, 'Email already taken.');
+					return res.send(400, 'Email address is already taken.');
 				}
 			}
 
@@ -109,7 +109,7 @@ var signUpSocial = function (req, res, username, profile) {
 	var duplicateUserCheck = function() {
 		Player.findOne({ username: username }, function (err, doc) {
 			if (err) return res.send(500, err);
-			if (doc) return res.send(400, 'Username already taken.');
+			if (doc) return res.send(400, 'Username is already taken.');
 
 			createUser();
 		});

@@ -19,12 +19,14 @@
 <body>
 	<!-- Application content -->
 	<div ng-app="gameOn">
-		<div ng-include="'/views/MenuView.html'"></div>
+		<div ng-include="'/views/menu/_MenuView.html'"></div>
 		<div ng-view></div>
 	</div>
 
 	<!-- TODO: Load GoogleMaps async -->
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+	<script src="http://platform.twitter.com/widgets.js"></script>
+
 	<script src="components/jquery/jquery.js"></script>
 	<script src="components/angular/angular.js"></script>
 	
@@ -34,18 +36,9 @@
 	<script src="components/socket.io-client/dist/socket.io.js"></script>
 	<script src="components/moment/moment.js"></script>
 	
-    <script src="components/sass-bootstrap/js/affix.js"></script>
-    <script src="components/sass-bootstrap/js/alert.js"></script>
-    <script src="components/sass-bootstrap/js/button.js"></script>
-    <script src="components/sass-bootstrap/js/carousel.js"></script>
     <script src="components/sass-bootstrap/js/collapse.js"></script>
     <script src="components/sass-bootstrap/js/transition.js"></script>
     <script src="components/sass-bootstrap/js/dropdown.js"></script>
-    <script src="components/sass-bootstrap/js/modal.js"></script>
-    <script src="components/sass-bootstrap/js/scrollspy.js"></script>
-    <script src="components/sass-bootstrap/js/tab.js"></script>
-    <script src="components/sass-bootstrap/js/tooltip.js"></script>
-    <script src="components/sass-bootstrap/js/popover.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/modules.js -->
@@ -61,6 +54,7 @@
 	<script src="scripts/app.js"></script>
 
 	<script src="scripts/menu/MenuController.js"></script>
+	<script src="scripts/main/MainController.js"></script>
 	<script src="scripts/authentication/AuthenticationController.js"></script>
 	<script src="scripts/authentication/AuthenticationModel.js"></script>
 	<script src="scripts/player/PlayerController.js"></script>

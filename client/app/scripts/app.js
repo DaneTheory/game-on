@@ -18,8 +18,8 @@ var app = angular.module('gameOn', [
 ]);
 
 // TODO: Use Grunt to set this values depending on build profile.
-app.constant('ServerUrl', '//192.168.20.102:3000');
-app.constant('ApiUrl', '//192.168.20.102:3000/api/1');
+app.constant('ServerUrl', '//localhost:3000');
+app.constant('ApiUrl', '//localhost:3000/api/1');
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -35,7 +35,8 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	// Routing.
 	$routeProvider
 		.when('/', {
-			templateUrl: 'views/MainView.html',
+			templateUrl: 'views/main/MainView.html',
+			controller: 'MainCtrl',
 			requireAuthentication: false
 		})
 		.when('/player/:playerId', {

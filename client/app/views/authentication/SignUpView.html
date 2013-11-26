@@ -1,53 +1,40 @@
-<form class="form-horizontal col-lg-10" novalidation ng-submit="signUp(username, password, name, email)" ng-init="clear()">
-	<fieldset>
-	<div class="form-group">
-		<label for="inputName" class="col-lg-2 control-label">Name</label>
-		<div class="col-lg-10">
-			<input type="text" id="inputName" class="form-control" placeholder="Name" ng-model="name" required>
-		</div>
-	</div>
+<div class="auth-view main-background">
+	<div class="ol-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+		<form novalidation ng-submit="signUp(username, password, name, email)" role="form">
+			<div class="form-group">
+				<label for="inputName">Name</label>
+				<input type="text" id="inputName" class="form-control" placeholder="Name" ng-model="name" required>
+			</div>
 
-	<div class="form-group">
-		<label for="inputEmail" class="col-lg-2 control-label">Email</label>
-		<div class="col-lg-10">
-			<input type="email" id="inputEmail" class="form-control" placeholder="Email" ng-model="email" required>
-		</div>
-	</div>
+			<div class="form-group">
+				<label for="inputEmail">Email</label>
+				<input type="email" id="inputEmail" class="form-control" placeholder="Email" ng-model="email" required>
+			</div>
 
-	<div class="form-group">
-		<label for="inputUsername" class="col-lg-2 control-label">Username</label>
-		<div class="col-lg-10">
-			<input type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="username" required>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="inputPassword" class="col-lg-2 control-label">Password</label>
-		<div class="col-lg-10">
-			<input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="password" required>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<div class="col-lg-10 col-offset-2">
-			<button type="submit" class="btn btn-default">Sign up</button>
-		</div>
-	</div>
-	
-	<div ng-show="AuthenticationModel.errorMessage" class="col-lg-10 col-offset-2 alert alert-danger">
-		{{AuthenticationModel.errorMessage}}
-	</div>
-	</fieldset>
-</form>
+			<div class="form-group">
+				<label for="inputUsername">Username</label>
+				<input type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="username" required>
+			</div>
+			
+			<div class="form-group">
+				<label for="inputPassword">Password</label>
+				<input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="password" required>
+			</div>
+			
+			<div class="form-group">
+				<button type="submit" class="btn btn-lg btn-success">Sign up</button>
+			</div>
+			
+			<div ng-show="AuthenticationModel.errorMessage" class="alert alert-danger">
+				{{AuthenticationModel.errorMessage}}
+			</div>
+		</form>
 
-<div class="clearfix"></div>
-<hr/>
-<div class="well">
-	<p>Or sign up with</p>
-	
-	<div class="btn-group">
-		<button class="btn btn-primary" ng-click="signUpFacebookRequestToken()">Facebook</button>
-		<button class="btn btn-primary" ng-click="">Twitter</button>
-		<button class="btn btn-primary" ng-click="">Google+</button>
+		<p class="lead">Or sign up with</p>
+		<div class="btn-group">
+			<button class="btn btn-primary" ng-click="signUpFacebookRequestToken()">Facebook</button>
+			<button class="btn btn-primary" ng-click="">Twitter</button>
+			<button class="btn btn-primary" ng-click="">Google+</button>
+		</div>
 	</div>
 </div>

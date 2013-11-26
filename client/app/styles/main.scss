@@ -17,12 +17,9 @@ $fa-font-path: "/components/font-awesome/fonts/";
 @import "mainView.scss";
 @import "venueView.scss";
 @import "profileView.scss";
+@import "authView.scss";
 
 // Generic
-body {
-	padding-top: 50px;
-}
-
 * {
 	outline: none !important;
 }

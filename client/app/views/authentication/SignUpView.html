@@ -1,15 +1,15 @@
 <div class="auth-view main-background">
-	<div class="ol-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+	<div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1">
 		<form novalidation ng-submit="signUp(username, password, name, email)" role="form">
 			<div class="form-group">
 				<label for="inputName">Name</label>
 				<input type="text" id="inputName" class="form-control" placeholder="Name" ng-model="name" required>
 			</div>
 
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="inputEmail">Email</label>
 				<input type="email" id="inputEmail" class="form-control" placeholder="Email" ng-model="email" required>
-			</div>
+			</div> -->
 
 			<div class="form-group">
 				<label for="inputUsername">Username</label>
@@ -22,7 +22,7 @@
 			</div>
 			
 			<div class="form-group">
-				<button type="submit" class="btn btn-lg btn-success">Sign up</button>
+				<button type="submit" class="btn btn-lg btn-primary">Sign up</button>
 			</div>
 			
 			<div ng-show="AuthenticationModel.errorMessage" class="alert alert-danger">
@@ -32,9 +32,9 @@
 
 		<p class="lead">Or sign up with</p>
 		<div class="btn-group">
-			<button class="btn btn-primary" ng-click="signUpFacebookRequestToken()">Facebook</button>
-			<button class="btn btn-primary" ng-click="">Twitter</button>
-			<button class="btn btn-primary" ng-click="">Google+</button>
+			<button class="btn btn-info" ng-click="signUpFacebookRequestToken()">Facebook</button>
+			<button class="btn btn-info" ng-click="">Twitter</button>
+			<button class="btn btn-info" ng-click="">Google+</button>
 		</div>
 	</div>
 </div>

@@ -15,7 +15,7 @@ app.directive('search', function () {
 			'<form class="navbar-form navbar-left" role="search">' +
 				'<div class="form-group">' +
 					'<input type="text" class="search-query form-control" placeholder="Search for games or players" ng-model="term" ng-show="isSearchOpen" focus="isSearchOpen" escape="openSearch()" blur="closeSearch()" enter="search(term)"/>' +
-					'<button class="btn btn-default" ng-show="!isSearchOpen" ng-click="openSearch()"><i class="fa fa-search fa-lg"></i> Search</button>' +
+					'<button class="btn btn-info" ng-show="!isSearchOpen" ng-click="openSearch()"><i class="fa fa-search fa-lg"></i> Search</button>' +
 				'</div>' +
 			'</form>',
 		replace: true,

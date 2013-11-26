@@ -11,6 +11,7 @@ app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel,
 
 	$scope.MatchModel = MatchModel;
 	$scope.VenueModel = VenueModel;
+	$scope.AuthenticationModel = AuthenticationModel;
 
 	// Assign the `MatchId` from Url Param into the scope.
 	$scope.matchId = $routeParams.matchId;

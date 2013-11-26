@@ -20,7 +20,7 @@
 	.social-buttons {
 		position: absolute;
 		left: 0;
-		bottom: 0;
+		bottom: 50px;
 		width: 100%;
 		text-align: center;
 	}
@@ -31,13 +31,13 @@
 }
 
 .main-background {
-	background-image: url('//localhost:3000/images/background_intro.jpg');
+	background-image: url('//192.168.20.102:3000/images/background_intro.jpg');
 	background-size: cover;
 	background-position: 50% 50%;
 
-	height: 100%;
+	min-height: 100%;
 	width: 100%;
 
-	padding: 50px 0;
+	padding: 30px 0;
 	position: absolute;
 }

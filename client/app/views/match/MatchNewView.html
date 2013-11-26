@@ -17,45 +17,77 @@
 		</div>
 
 		<div class="well well-sm">
-			<textarea class="form-control" rows="4" maxlength="180" ng-model="description"></textarea>
+			<div ng-switch on="activeTab">
+				<div ng-switch-when="0">
+					<textarea class="form-control" rows="3" maxlength="180" ng-model="description"></textarea>
+				</div>
+				<div ng-switch-when="1">
+					<div class="btn-group">
+						<button type="button" class="btn btn-info">Male</button>
+						<button type="button" class="btn btn-info">Female</button>
+						<button type="button" class="btn btn-info">Mixed</button>
+					</div>
+				</div>
+				<div ng-switch-when="2">
+					
+				</div>
+				<div ng-switch-when="3">
+					<div class="input-group">
+						<span class="input-group-addon">$</span>
+						<input type="text" class="form-control">
+						<span class="input-group-addon">.00</span>
+					</div>
+				</div>
+				<div ng-switch-when="4">
+					
+				</div>
+				<div ng-switch-when="5">
+					<div class="btn-group">
+						<button type="button" class="btn btn-info">5-a-side</button>
+						<button type="button" class="btn btn-info">7-a-side</button>
+						<button type="button" class="btn btn-info">11-a-side</button>
+					</div>
+				</div>
+			</div>
+			
 			
 			<nav class="navbar navbar-inverse navbar-static navbar-collapse" role="navigation">
 				<ul class="nav navbar-nav">
-					<li class="active">
-						<a href="#">
+					<li ng-class="{ active: activeTab == 0 }">
+						<a href="" ng-click="activeTab = 0">
 							<i class="fa fa-tag fa-lg"></i>
 							Title
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li ng-class="{ active: activeTab == 1 }">
+						<a href="" ng-click="activeTab = 1">
 							<i class="fa fa-male fa-lg"></i>
 							<i class="fa fa-female fa-lg"></i>
 							Gender
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li ng-class="{ active: activeTab == 2 }">
+						<a href="" ng-click="activeTab = 2">
 							<i class="fa fa-map-marker fa-lg"></i>
 							Location
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li ng-class="{ active: activeTab == 3 }">
+						<a href="" ng-click="activeTab = 3">
 							<i class="fa fa-dollar fa-lg"></i>
 							Price
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li ng-class="{ active: activeTab == 4 }">
+						<a href="" ng-click="activeTab = 4">
 							<i class="fa fa-calendar fa-lg"></i>
 							Date
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li ng-class="{ active: activeTab == 5 }">
+						<a href="" ng-click="activeTab = 5">
 							<i class="fa fa-users fa-lg"></i>
-							Limit
+							Size
 						</a>
 					</li>
 				</ul>

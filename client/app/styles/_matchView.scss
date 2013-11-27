@@ -5,12 +5,20 @@
 	    resize: none;
 	}
 
+	map {
+		height: 250px;
+	}
+
 	.navbar {
-		margin-top: 10px;
-		margin-bottom: 0;
+		margin-top: 0;
+		margin-bottom: 10px;
 	}
 
 	.media {
 		margin-bottom: 5px;
+	}
+
+	.col-label {
+		padding-top: 7px;
 	}
 }

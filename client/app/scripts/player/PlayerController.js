@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedModel, PlayerHelper, PushNotificationHelper, CacheHelper) {
+app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedModel, PlayerHelper, VibrationHelper, PushNotificationHelper, GeolocationHelper, CacheHelper) {
 
 	$scope.PlayerModel = PlayerModel;
 	$scope.PlayerHelper = PlayerHelper;
@@ -13,23 +13,15 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedMo
 	$scope.playerId = $routeParams.playerId;
 	$scope.tab = 0;
 
-	// TODO: Review this.
+	// TODO: Review this code.
 	$scope.getById = function () {
 		PlayerModel.getById($scope.playerId);
 	};
 
-	// TODO: Review this.
+	// TODO: Review this code.
 	$scope.isMe = function () {
 		return PlayerHelper.isMe(PlayerModel.player.id);
 	};
-
-	PushNotificationHelper.on('feed', function () {
-		if (window.navigator.vibrate) {
-			window.navigator.vibrate(200);
-		}
-
-		$scope.loadFeeds();
-	});
 
 	$scope.loadFeeds = function () {
 		CacheHelper.remove('feed');
@@ -41,5 +33,12 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedMo
 
 	$scope.loadFeeds();
 
+	PushNotificationHelper.on('feed', function () {
+		VibrationHelper.vibrate();
 
+		$scope.loadFeeds();
+	});
+
+	// Pre-load Geolocation.
+	GeolocationHelper.getGeoLocation();
 });

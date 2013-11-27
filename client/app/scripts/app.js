@@ -49,7 +49,7 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 		})
 		.when('/match/new', {
 			templateUrl: '../views/match/MatchNewView.html',
-			controller: 'MatchCtrl'
+			controller: 'MatchNewCtrl'
 		})
 		.when('/match/:matchId', {
 			templateUrl: 'views/match/MatchDetailView.html',

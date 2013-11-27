@@ -4,16 +4,20 @@
 
 'use strict';
 
-app.factory('GeolocationHelper', function ($rootScope, $q) {
+app.factory('GeolocationHelper', function ($rootScope, $q, CacheHelper) {
 
 	var getGeoLocation = function () {
 		var deferred = $q.defer();
 
-		navigator.geolocation.getCurrentPosition(function (location) {
-        	$rootScope.$apply(function(){
-	        	deferred.resolve(location);
-	    	});
-		});
+		if (CacheHelper.get('geolocation')) {
+            deferred.resolve(CacheHelper.get('geolocation'));
+        } else {
+        	navigator.geolocation.getCurrentPosition(function (location) {
+	        	$rootScope.$apply(function(){
+		        	deferred.resolve(CacheHelper.put('geolocation', location));
+		    	});
+			});	
+        }
 	    
 	    return deferred.promise;
     };

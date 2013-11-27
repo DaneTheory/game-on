@@ -28,7 +28,7 @@ app.service('FeedModel', function ($http, $q, CacheHelper, AuthenticationModel, 
                     deferred.resolve(CacheHelper.put('feed', data.payload));
                 })
                 .error(function () {
-                    deferred.resolve(CacheHelper.put('feed', null));
+                    deferred.resolve(CacheHelper.remove('feed'));
                 });
             }
 

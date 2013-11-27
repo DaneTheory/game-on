@@ -4,13 +4,37 @@
 
 'use strict';
 
-app.factory('VenueModel', function ($http, ApiUrl) {
+app.service('VenueModel', function ($http, $q, CacheHelper, ApiUrl) {
 
-	this.collection = null;
-	this.venue = {
-		name: null,
-		location: null
-	};
+	this.venues = [];
+
+	return {
+		venues: this.venues,
+
+		getVenuesByCoordinates: function (coordinates, maxDistance) {
+			var deferred = $q.defer();
+
+			if (CacheHelper.get('venuesByCoordinates')) {
+				deferred.resolve(CacheHelper.get('venuesByCoordinates'));
+			} else {
+				$http.get(ApiUrl + '/venue/finder/near', {
+					params: {
+						latitude: coordinates.latitude,
+						longitude: coordinates.longitude,
+						maxDistance: maxDistance || 10
+					}
+				})
+				.success(function (data) {
+					deferred.resolve(CacheHelper.put('venuesByCoordinates', data.payload));
+				})
+				.error(function () {
+					deferred.resolve(CacheHelper.remove('venuesByCoordinates'));
+				})
+			}
+
+			return deferred.promise;
+		}
+	}
 
 	this.getById = function (venueId) {
 		return $http.get(ApiUrl + '/venue/' + venueId)
@@ -44,6 +68,5 @@ app.factory('VenueModel', function ($http, ApiUrl) {
 			}));
 	};
 
-	return this;
 
 });

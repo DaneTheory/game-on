@@ -6,7 +6,4 @@
 
 app.controller('MainCtrl', function ($scope) {
 
-	// Twitter button
-	twttr.widgets.load();
-
 });

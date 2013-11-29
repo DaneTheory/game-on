@@ -7,9 +7,9 @@
 
 	<div class="container">
 		<div ng-repeat="card in searchResults" ng-switch="card.type" class="col-sm-6 col-md-3">
-			<div ng-switch-when="player"><div ng-include="'./views/search/_PlayerSearchItemView.html'"></div></div>
-			<div ng-switch-when="venue"><div ng-include="'./views/search/_VenueSearchItemView.html'"></div></div>
-			<div ng-switch-when="match"><div ng-include="'./views/search/_MatchSearchItemView.html'"></div></div>
+			<div ng-switch-when="player"><div ng-include="'views/search/_PlayerSearchItemView.html'"></div></div>
+			<div ng-switch-when="venue"><div ng-include="'views/search/_VenueSearchItemView.html'"></div></div>
+			<div ng-switch-when="match"><div ng-include="'views/search/_MatchSearchItemView.html'"></div></div>
 		</div>
 	</div>
 </div>

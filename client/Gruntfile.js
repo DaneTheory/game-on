@@ -1,16 +1,16 @@
-// Generated on 2013-11-15 using generator-angular 0.6.0-rc.1
+// Generated on 2013-11-27 using generator-angular 0.6.0-rc.1
 'use strict';
- 
+
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
- 
+
 module.exports = function (grunt) {
 	require('load-grunt-tasks')(grunt);
 	require('time-grunt')(grunt);
- 
+
 	grunt.initConfig({
 		yeoman: {
 			// configurable paths
@@ -18,6 +18,14 @@ module.exports = function (grunt) {
 			dist: 'dist'
 		},
 		watch: {
+			coffee: {
+				files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+				tasks: ['coffee:dist']
+			},
+			coffeeTest: {
+				files: ['test/spec/{,*/}*.coffee'],
+				tasks: ['coffee:test']
+			},
 			compass: {
 				files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
 				tasks: ['compass:server', 'autoprefixer']
@@ -53,7 +61,7 @@ module.exports = function (grunt) {
 			options: {
 				port: 9000,
 				// Change this to '0.0.0.0' to access the server from outside.
-				hostname: '192.168.20.102',
+				hostname: 'localhost',
 				livereload: 35729
 			},
 			livereload: {
@@ -104,6 +112,30 @@ module.exports = function (grunt) {
 				'<%= yeoman.app %>/scripts/{,*/}*.js'
 			]
 		},
+		coffee: {
+			options: {
+				sourceMap: true,
+				sourceRoot: ''
+			},
+			dist: {
+				files: [{
+					expand: true,
+					cwd: '<%= yeoman.app %>/scripts',
+					src: '{,*/}*.coffee',
+					dest: '.tmp/scripts',
+					ext: '.js'
+				}]
+			},
+			test: {
+				files: [{
+					expand: true,
+					cwd: 'test/spec',
+					src: '{,*/}*.coffee',
+					dest: '.tmp/spec',
+					ext: '.js'
+				}]
+			}
+		},
 		compass: {
 			options: {
 				sassDir: '<%= yeoman.app %>/styles',
@@ -127,9 +159,12 @@ module.exports = function (grunt) {
 		},
 		// not used since Uglify task does concat,
 		// but still available if needed
-		/*concat: {
-			dist: {}
-		},*/
+		concat: {
+			 addTemplate: {
+                src: [ '.tmp/concat/scripts/scripts.js', '.tmp/templates.js' ],
+                dest: '.tmp/concat/scripts/scripts.js'
+            }
+		},
 		rev: {
 			dist: {
 				files: {
@@ -204,7 +239,7 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					cwd: '<%= yeoman.app %>',
-					src: ['*.html', 'views/*.html'],
+					src: ['*.html'],
 					dest: '<%= yeoman.dist %>'
 				}]
 			}
@@ -242,14 +277,17 @@ module.exports = function (grunt) {
 		},
 		concurrent: {
 			server: [
+				'coffee:dist',
 				'compass:server',
 				'copy:styles'
 			],
 			test: [
+				'coffee',
 				'compass',
 				'copy:styles'
 			],
 			dist: [
+				'coffee',
 				'compass:dist',
 				'copy:styles',
 				'imagemin',
@@ -286,14 +324,27 @@ module.exports = function (grunt) {
 					]
 				}
 			}
+		},
+		ngtemplates:{
+			gameOn: {
+				cwd: '<%= yeoman.app %>',
+				src: [ 'views/**/*.html' ],
+				dest: '.tmp/templates.js',
+				options: {
+			    	htmlmin: {
+			    		collapseWhitespace: false, 
+			    		collapseBooleanAttributes: true
+			    	}
+			    }
+			}
 		}
 	});
- 
+
 	grunt.registerTask('server', function (target) {
 		if (target === 'dist') {
 			return grunt.task.run(['build', 'connect:dist:keepalive']);
 		}
- 
+
 		grunt.task.run([
 			'clean:server',
 			'concurrent:server',
@@ -302,7 +353,7 @@ module.exports = function (grunt) {
 			'watch'
 		]);
 	});
- 
+
 	grunt.registerTask('test', [
 		'clean:server',
 		'concurrent:test',
@@ -310,13 +361,15 @@ module.exports = function (grunt) {
 		'connect:test',
 		'karma'
 	]);
- 
+
 	grunt.registerTask('build', [
 		'clean:dist',
+		'ngtemplates',
 		'useminPrepare',
 		'concurrent:dist',
 		'autoprefixer',
 		'concat',
+		'concat:addTemplate',
 		'ngmin',
 		'copy:dist',
 		'cdnify',
@@ -325,7 +378,7 @@ module.exports = function (grunt) {
 		'rev',
 		'usemin'
 	]);
- 
+
 	grunt.registerTask('default', [
 		'jshint',
 		'test',

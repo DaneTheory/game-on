@@ -4,7 +4,7 @@ var _ = require('lodash');
 // Join Match
 // Add the logged in `Player` to a match.
 // 
-exports.joinMatch = function (req, res) {
+exports.join = function (req, res) {
 
 	var matchId = req.route.params.matchId,
 		playerId = req.session.passport.user,
@@ -19,7 +19,7 @@ exports.joinMatch = function (req, res) {
 	// #### @match {object} Match to join the player to.
 	// Join a player to a match.
 	//
-	var _joinMatch = function (match) {
+	var _join = function (match) {
 		// Exit if player has already joined this match
 		var hasPlayer = _.find(match.players, function (id){
 			return id == playerId;
@@ -30,24 +30,29 @@ exports.joinMatch = function (req, res) {
 		match.save(function(err, doc){
 			if (err) return res.send(500, err);
 
+			// TODO: Should be using async!!!
+			// Update matches played
 			Player.findByIdAndUpdate(playerId, { $inc: { matchesPlayed: 1 } }, function (err) {
-				if (err) res.send(500, err);
-			});
-
-			Feed.create({
-				player: match.organizer,
-				type: 'match',
-				action: 'joined',
-				match: match._id,
-				meta: {
-					createdBy: playerId
-				}
-			}, function (err) {
 				if (err) return res.send(500, err);
-
-				// Join successful
-				return res.send(200);
 			});
+
+			// Send notification to organizer
+			if (playerId != doc.organizer) {
+				Feed.create({
+					player: match.organizer,
+					type: 'match',
+					action: 'joined',
+					match: match._id,
+					meta: {
+						createdBy: playerId
+					}
+				}, function (err) {
+					if (err) return res.send(500, err);
+				});
+			}
+			
+			// Join successful
+			return res.send(200);
 		});
 	};
 
@@ -55,7 +60,7 @@ exports.joinMatch = function (req, res) {
 	Match.findById(matchId, function (err, doc){
 		if (err) return res.send(500, err);
 
-		_joinMatch(doc);
+		_join(doc);
 	});
 
 };
@@ -64,7 +69,7 @@ exports.joinMatch = function (req, res) {
 // Leave Match
 // Remove the logged in `Player` from a match.
 // 
-exports.leaveMatch = function (req, res) {
+exports.leave = function (req, res) {
 
 	var matchId = req.route.params.matchId,
 		playerId = req.session.passport.user,
@@ -84,28 +89,28 @@ exports.leaveMatch = function (req, res) {
 		match.save(function(err, doc){
 			if (err) return res.send(500, err);
 
-
-			// TODO: Too much going on in this save callback.
-			// Probably should be using async.
+			// TODO: Should be using async!!!
+			// Update matches played
 			Player.findByIdAndUpdate(playerId, { $inc: { matchesPlayed: -1 } }, function (err) {
-				if (err) res.send(500, err);
+				if (err) return res.send(500, err);
 			});
 
 			// Send notification to organizer
-			Feed.create({
-				player: match.organizer,
-				type: 'match',
-				action: 'left',
-				match: match._id,
-				meta: {
-					createdBy: playerId
-				}
-			}, function (err) {
-				if (err) return res.send(500, err);
+			if (playerId != doc.organizer) {
+				Feed.create({
+					player: match.organizer,
+					type: 'match',
+					action: 'left',
+					match: match._id,
+					meta: {
+						createdBy: playerId
+					}
+				}, function (err) {
+					if (err) return res.send(500, err);
+				});
+			}
 
-				// Leave successful
-				return res.send(200);
-			});
+			return res.send(200);
 		});
 	};
 
@@ -122,20 +127,37 @@ exports.leaveMatch = function (req, res) {
 // New Match
 // Creates a new match. (Set the logged in `Player` as the `Organizer`)
 // 
-exports.newMatch = function (req, res) {
+exports.create = function (req, res) {
 
 	var playerId = req.session.passport.user,
-		models = req.app.db.base.model,
-		Match = models.Match;
+		models = req.app.db.base.models,
+		Match = models.Match,
+		Player = models.Player;
 
 	var match = new Match();
+
+	// TODO: Validate data.
 	match.organizer = playerId;
-	// TODO: Add other properties
+	match.description = req.body.description;
+	match.venue = req.body.venue.id;
+	match.coordinates = req.body.venue.coordinates;
+	match.players = [ playerId ];
+	match.when = req.body.when;
+	match.price = req.body.price;
+	match.maxPlayers = req.body.maxPlayers;
+	match.gender = req.body.gender;
+
+	match.meta.createdAt = new Date;
+
 	match.save(function(err, doc){
 		if (err) return res.send(500, err);
 
-		// Success
-		res.send(200);
+		Player.findByIdAndUpdate(playerId, { $inc: { matchesOrganized: 1 } }, function (err) {
+			if (err) return res.send(500, err);
+		});
+
+		// Created
+		return res.send(201);
 	});
 
 };
@@ -144,7 +166,7 @@ exports.newMatch = function (req, res) {
 // Delete Match
 // Removes a match if the logged in `Player` is also the `Organizer`.
 // 
-exports.deleteMatch = function (req, res) {
+exports.delete = function (req, res) {
 
 	var playerId = req.session.passport.user,
 		model = req.app.db.base.model,
@@ -157,7 +179,7 @@ exports.deleteMatch = function (req, res) {
 		// Remove
 		doc.remove(function(){
 			// Success
-			res.send(200);
+			return res.send(200);
 		});
 	});
 

@@ -5,11 +5,20 @@
 		</div>
 	</div>
 
-	<div class="container">
-		<div ng-repeat="card in searchResults" ng-switch="card.type" class="col-sm-6 col-md-3">
-			<div ng-switch-when="player"><div ng-include="'views/search/_PlayerSearchItemView.html'"></div></div>
-			<div ng-switch-when="venue"><div ng-include="'views/search/_VenueSearchItemView.html'"></div></div>
-			<div ng-switch-when="match"><div ng-include="'views/search/_MatchSearchItemView.html'"></div></div>
+	<div class="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+		<div ng-show="!searchResults.length" class="well text-center">
+			<h4>It doesn't seem to have anything around you.</h4>
+			<p>Come back later!</p>
+		</div>
+
+		<div ng-show="searchResults.length">
+			<div class="list-group">
+				<div ng-repeat="card in searchResults" ng-switch="card.type" class="list-group-item">
+					<!-- <div ng-switch-when="player"><div ng-include="'views/search/_PlayerSearchItemView.html'"></div></div> -->
+					<!-- <div ng-switch-when="venue"><div ng-include="'views/search/_VenueSearchItemView.html'"></div></div> -->
+					<div ng-switch-when="match"><div ng-include="'views/search/_MatchSearchItemView.html'"></div></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

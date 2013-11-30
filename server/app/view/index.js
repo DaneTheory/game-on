@@ -26,10 +26,10 @@ exports = module.exports = function(app) {
 
 	// Custom Methods (not CRUD)
 	// Match
-	app.post(apiPath + '/match/:matchId/join', require('./MatchView').joinMatch);
-	app.post(apiPath + '/match/:matchId/leave', require('./MatchView').leaveMatch);
-	app.post(apiPath + '/match', require('./MatchView').newMatch);
-	app.del(apiPath + '/match', require('./MatchView').deleteMatch);
+	app.post(apiPath + '/match/:matchId/join', require('./MatchView').join);
+	app.post(apiPath + '/match/:matchId/leave', require('./MatchView').leave);
+	app.post(apiPath + '/match', require('./MatchView').create);
+	app.del(apiPath + '/match', require('./MatchView').delete);
 
 	// Search
 	app.get(apiPath + '/search/near', require('./SearchView').searchNear);

@@ -4,10 +4,11 @@
 
 'use strict';
 
-app.controller('MatchNewCtrl', function ($scope, AuthenticationModel, GeolocationHelper, VenueModel) {
+app.controller('MatchNewCtrl', function ($scope, $location, AuthenticationModel, GeolocationHelper, MatchModel, VenueModel) {
 
 	$scope.AuthenticationModel = AuthenticationModel;
 	$scope.VenueModel = VenueModel;
+	$scope.MatchModel = MatchModel;
 
 	$scope.isFormValid = false;
 
@@ -38,6 +39,12 @@ app.controller('MatchNewCtrl', function ($scope, AuthenticationModel, Geolocatio
 			$scope.match.venue = marker;
 		})
 	};
+
+	$scope.create = function (match) {
+		MatchModel.create(match).then(function () {
+			$location.path('/player/' + AuthenticationModel.player.id);
+		});
+	}
 
 	$scope.venueMaxDistance = 10; // Km
 	$scope.currentCoordinates;

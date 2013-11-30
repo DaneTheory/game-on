@@ -7,37 +7,32 @@
 
 'use strict';
 
-app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel, MatchModel, VenueModel) {
+app.controller('MatchCtrl', function ($scope, $routeParams, AuthenticationModel, MatchModel) {
 
 	$scope.MatchModel = MatchModel;
-	$scope.VenueModel = VenueModel;
 	$scope.AuthenticationModel = AuthenticationModel;
 
 	// Assign the `MatchId` from Url Param into the scope.
 	$scope.matchId = $routeParams.matchId;
 
-	$scope.getById = function () {
-		MatchModel.getById($scope.matchId);
-	};
-
-	$scope.getCollection = function () {
-		MatchModel.getCollection();
-	};
-
-	$scope.save = function (match) {
-		MatchModel.save(match);
-	};
-
 	$scope.join = function (match) {
-		MatchModel.join(match);
+		MatchModel.join(match).then(function () {
+			match.players.push(AuthenticationModel.player);
+		});
 	};
 
 	$scope.leave = function (match) {
-		MatchModel.leave(match);
-	};
+		MatchModel.leave(match).then(function () {
+			// Find signed in player within the players list.
+			var playerIndex = _.findIndex(match.players, function (player) {
+				return player.id == AuthenticationModel.player.id;
+			});
 
-	$scope.isNew = function (match) {
-		return !match.id;
+			// Remove player from players list.
+			if (playerIndex > -1) {
+				match.players.splice(playerIndex, 1);
+			}
+		});
 	};
 
 	$scope.hasJoint = function (players) {

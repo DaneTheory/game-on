@@ -1,41 +1,50 @@
-<div class="panel panel-default" ng-controller="MatchCtrl">
-	<div class="panel-body media">
-		<div class="media-body">
-			<h5 class="media-heading">
-				<strong>
-					<a href="#/match/{{ card.id }}">{{ card.description }}</a>
-				</strong>
-			</h5>
+<div class="media" ng-controller="MatchCtrl">
+	<div class="media-body">
+		<div class="col-md-8 col-sm-8">
+			<p class="media-heading lead">
+				<a href="#/match/{{ card.id }}">{{ card.description }}</a>
+			</p>
 
 			<p>
-				<a ng-repeat="player in card.players" class="btn-xs" href="#/player/{{ player.id }}" role="button">
-					<img class="img-circle" ng-src="{{ player.imageUrl }}" width="20" height="20">
+				<a ng-repeat="player in card.players" class="btn-xs player-image" href="#/player/{{ player.id }}" role="button">
+					<img class="img-circle" ng-src="{{ player.imageUrl }}" width="30" height="30">
 				</a>
 			</p>			
 
-			<p>{{card.when | date}}</p>
+			<p>
+				<strong>{{ card.when | momentRelativeFormat:'ddd, MMM D [at] h:mma' }}</strong>
+			</p>
 
 			<p>
-				<a href="#/venue/{{ card.venue.id }}">{{ card.venue.name }}</a>
-				<span>{{ card.distance | distance }}</span>
+				<strong>
+					<a href="#/venue/{{ card.venue.id }}">{{ card.venue.name }}</a>
+				</strong>
+				
+				<span class="text-muted">{{ card.distance | distance }}</span>
+			</p>
+
+			<p>
+				<strong>
+					<span>{{ card.maxPlayers / 2 }}v{{ card.maxPlayers / 2 }}</span>
+				</strong>
+				
+				<span ng-switch="card.gender">
+					<i ng-switch-when="M" class="fa fa-male"></i>
+					<i ng-switch-when="F" class="fa fa-female"></i>
+					<span ng-switch-default="">
+						<i class="fa fa-male"></i><i class="fa fa-female"></i>
+					</span>
+				</span>
+
+			</p>
+		</div>
+
+		<div class="col-md-4 col-sm-4 text-right">
+			<button ng-if="!hasJoint(card.players)" class="btn btn-success" ng-click="join(card)">
 				<span ng-show="card.price">{{card.price | currency }}</span>
 				<span ng-show="!card.price">Free</span>
-			</p>
+			</button>
 
-			<p>Attendees: {{ card.players.length }}/{{ card.maxPlayers }}</p>
-
-			<p ng-switch="card.gender">
-				Gender: 
-				<i ng-switch-when="F" class="fa fa-female"></i>
-				<i ng-switch-when="M" class="fa fa-male"></i>
-				<span ng-switch-default="">
-					<i class="fa fa-female"></i>
-					<i class="fa fa-male"></i>
-				</span>
-			</p>
-
-
-			<button ng-if="!hasJoint(card.players)" class="btn btn-success" ng-click="join(card)">Join</button>
 			<button ng-if="hasJoint(card.players)" class="btn btn-danger" ng-click="leave(card)">Leave</button>
 		</div>
 	</div>

@@ -6,7 +6,7 @@
 				<img class="media-object img-circle" ng-src="{{ AuthenticationModel.player.imageUrl }}" width="45" height="45">
 			</a>
 			<div class="pull-right">
-				<button class="btn btn-lg btn-success" ng-class="{ 'disabled': !isFormValid }">Start</button>
+				<button class="btn btn-lg btn-success" ng-click="create(match)" ng-class="{ 'disabled': !isFormValid }">Start</button>
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">{{ AuthenticationModel.player.name }}</h4>

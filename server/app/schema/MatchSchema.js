@@ -16,8 +16,8 @@ exports = module.exports = function(app, mongoose) {
 		gender: { type: String, upper: true, match: /[MFX]/ },
 		
 		meta: {
-			created: { type: Date, default: Date.now },
-			modified: { type: Date, default: Date.now }
+			createdAt: { type: Date, default: Date.now },
+			modifiedAt: { type: Date, default: Date.now }
 		}
 	},
     {

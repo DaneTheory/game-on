@@ -13,9 +13,13 @@ app.directive('map', function ($timeout) {
 			zoom: '=',
 			markers: '=',
 			coordinates: '=',
-			showCenterMarker: '='
+			showCenterMarker: '=',
+			markerClick: '&'
 		},
 		link: function (scope, elem, attrs) {
+			// Icons - for future reference.
+			// Red: http://mt.google.com/vt/icon/text=%E2%80%A2&psize=25&font=fonts/arialuni_t.ttf&color=ff330000&name=icons/spotlight/spotlight-waypoint-b.png&ax=44&ay=48&scale=1
+			// Green: http://mt.google.com/vt/icon/text=%E2%80%A2&psize=25&font=fonts/arialuni_t.ttf&color=ff330000&name=icons/spotlight/spotlight-waypoint-a.png&ax=44&ay=48&scale=1
 			var zoom = scope.$eval(attrs.zoom),
 				showCenterMarker = scope.$eval(attrs.showCenterMarker);
 			
@@ -40,10 +44,16 @@ app.directive('map', function ($timeout) {
 				angular.forEach(ms, function(m){
 					var position = new google.maps.LatLng(m.coordinates[0], m.coordinates[1]);
 
-					markers.push(new google.maps.Marker({
+					var marker = new google.maps.Marker({
 						position: position,
 						map: map
-					}));
+					});
+
+					google.maps.event.addListener(marker, 'click', function() {
+						scope.markerClick({ marker: m });
+					});
+
+					markers.push();
 				});
 			});
 

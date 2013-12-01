@@ -43,6 +43,10 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/player/PlayerDetailView.html',
 			controller: 'PlayerCtrl'
 		})
+		.when('/venue/new', {
+			templateUrl: 'views/venue/VenueNewView.html',
+			controller: 'VenueNewCtrl'
+		})
 		.when('/venue/:venueId', {
 			templateUrl: 'views/venue/VenueDetailView.html',
 			controller: 'VenueCtrl'

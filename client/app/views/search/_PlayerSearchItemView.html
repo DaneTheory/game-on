@@ -1,22 +1,23 @@
-<div class="panel panel-default">
-	<div class="panel-body media">
-		<div class="pull-left">
-			<a href="#/player/{{ card.id }}">
-				<img class="img-circle" ng-src="{{ card.imageUrl }}" width="65" height="65">
-			</a>
-		</div>
+<div class="media" ng-controller="MatchCtrl">
+	<div class="col-md-12">
+		
+	<div class="pull-left">
+		<a href="#/player/{{ card.id }}">
+			<img class="img-circle player-lg-image" ng-src="{{ card.imageUrl }}" width="85" height="85">
+		</a>
+	</div>
 
-		<div class="media-body">
-			<h5 class="media-heading"><strong>{{ card.name }}</strong></h5>
-			<p class="text-muted">@{{ card.username }}</p>
-			<p>{{ card.location }} - {{ card.distance | distance }}</p>
-			<p>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-o"></i>
-			</p>
-		</div>
+	<div class="media-body">
+		<a class="media-heading lead" href="#/player/{{ card.id }}">{{ card.name }}</a>
+		<p>{{ card.location }}</p>
+		<h4>
+			<span class="label label-primary">
+				<i ng-if="card.gender == 'M'" class="fa fa-male"></i>
+				<i ng-if="card.gender == 'F'" class="fa fa-female"></i>
+
+				<i ng-repeat="rate in card.rateArray track by $index" class="fa" ng-class="{ 'fa-star': rate, 'fa-star-o': !rate }"></i>
+			</span>
+		</h4>
+	</div>
 	</div>
 </div>

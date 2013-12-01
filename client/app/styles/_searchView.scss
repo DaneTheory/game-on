@@ -5,8 +5,13 @@
 		padding: 1px;
 	}
 
+	.player-lg-image {
+		margin-right: 15px;
+	}
+
 	.media-body {
-		p {
+		p,
+		.btn {
 			margin: 4px 0;
 		}
 	}

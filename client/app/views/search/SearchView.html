@@ -1,7 +1,7 @@
 <div class="search-view">
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="container">
-			<p class="navbar-text navbar-right"><a href="#" class="navbar-link">Searching withing {{ maxDistance | distance }}</a></p>
+			<p class="navbar-text">Searching withing {{ maxDistance | distance }}</p>
 		</div>
 	</div>
 
@@ -14,8 +14,8 @@
 		<div ng-show="searchResults.length">
 			<div class="list-group">
 				<div ng-repeat="card in searchResults" ng-switch="card.type" class="list-group-item">
-					<!-- <div ng-switch-when="player"><div ng-include="'views/search/_PlayerSearchItemView.html'"></div></div> -->
-					<!-- <div ng-switch-when="venue"><div ng-include="'views/search/_VenueSearchItemView.html'"></div></div> -->
+					<div ng-switch-when="player"><div ng-include="'views/search/_PlayerSearchItemView.html'"></div></div>
+					<div ng-switch-when="venue"><div ng-include="'views/search/_VenueSearchItemView.html'"></div></div>
 					<div ng-switch-when="match"><div ng-include="'views/search/_MatchSearchItemView.html'"></div></div>
 				</div>
 			</div>

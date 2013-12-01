@@ -152,7 +152,7 @@ exports.create = function (req, res) {
 	match.save(function(err, doc){
 		if (err) return res.send(500, err);
 
-		Player.findByIdAndUpdate(playerId, { $inc: { matchesOrganized: 1 } }, function (err) {
+		Player.findByIdAndUpdate(playerId, { $inc: { matchesOrganized: 1, matchesPlayed: 1 } }, function (err) {
 			if (err) return res.send(500, err);
 		});
 

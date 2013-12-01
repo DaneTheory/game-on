@@ -1,9 +1,10 @@
-<div class="panel panel-default">
-	<div class="panel-body media">
-		<div class="media-body">
-			<h5 class="media-heading"><strong><a href="#/venue/{{card.id}}">{{ card.name }}</a></strong></h5>
-			<p>{{ card.location }} - {{ card.distance | distance }}</p>
-			<a class="btn btn-primary">Start a game</a>
+<div class="media" ng-controller="VenueCtrl">
+	<div class="media-body">
+		<div class="col-md-12">
+			<a class="media-heading lead" href="#/venue/{{ card.id }}">{{ card.name }}</a>
+			
+			<p>{{ card.location }} <span class="text-muted">{{ card.distance | distance }}</span></p>
+
 			<a class="btn btn-primary" href="http://maps.google.com/maps?q={{ card.coordinates[0] }},{{ card.coordinates[1] }}">View map</a>
 		</div>
 	</div>

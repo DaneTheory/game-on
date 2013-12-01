@@ -2,10 +2,8 @@
 	<div class="header text-center">
 		<h3>{{PlayerModel.player.name}}</h3>
 		<img class="img-circle" ng-src="{{PlayerModel.player.imageUrl}}" width="90" height="90">
-		<p class="lead">{{ PlayerModel.player.username }}</p>
+		<p class="lead">{{ PlayerModel.player.location }}</p>
 		<p class="location">
-			{{ PlayerModel.player.location }}
-			<span class="divider">·</span>
 			<span ng-switch="PlayerModel.player.gender">
 				<i ng-switch-when="M" class="fa fa-male fa-lg"></i>
 				<i ng-switch-when="F" class="fa fa-female fa-lg"></i>

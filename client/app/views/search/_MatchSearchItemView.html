@@ -1,9 +1,7 @@
 <div class="media" ng-controller="MatchCtrl">
 	<div class="media-body">
 		<div class="col-md-8 col-sm-8">
-			<p class="media-heading lead">
-				<a href="#/match/{{ card.id }}">{{ card.description }}</a>
-			</p>
+			<a class="media-heading lead" href="#/match/{{ card.id }}">{{ card.description }}</a>
 
 			<p>
 				<a ng-repeat="player in card.players" class="btn-xs player-image" href="#/player/{{ player.id }}" role="button">
@@ -23,20 +21,21 @@
 				<span class="text-muted">{{ card.distance | distance }}</span>
 			</p>
 
-			<p>
-				<strong>
-					<span>{{ card.maxPlayers / 2 }}v{{ card.maxPlayers / 2 }}</span>
-				</strong>
-				
-				<span ng-switch="card.gender">
-					<i ng-switch-when="M" class="fa fa-male"></i>
-					<i ng-switch-when="F" class="fa fa-female"></i>
-					<span ng-switch-default="">
-						<i class="fa fa-male"></i><i class="fa fa-female"></i>
+			<h4>
+				<span class="label label-primary">
+					<span ng-switch="card.gender">
+						<i ng-switch-when="M" class="fa fa-male"></i>
+						<i ng-switch-when="F" class="fa fa-female"></i>
+						<span ng-switch-default="">
+							<i class="fa fa-male"></i><i class="fa fa-female"></i>
+						</span>
 					</span>
-				</span>
 
-			</p>
+					<strong>
+						<span>{{ card.maxPlayers / 2 }}v{{ card.maxPlayers / 2 }}</span>
+					</strong>
+				</span>
+			</h4>
 		</div>
 
 		<div class="col-md-4 col-sm-4 text-right">

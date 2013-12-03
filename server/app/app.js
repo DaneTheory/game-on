@@ -12,10 +12,10 @@ var app = express();
 // Setup mongoose
 app.set('mongodb-uri', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/footballjs94');
 app.db = mongoose.connect(app.get('mongodb-uri'));
-// app.db.on('error', console.error.bind(console, 'mongoose connection error: '));
-// app.db.once('open', function () {
-// 	console.log('mongoose open for business');
-// });
+app.db.connection.on('error', console.error.bind(console, 'mongoose connection error: '));
+app.db.connection.once('open', function () {
+	console.log('mongoose open for business');
+});
 
 // Session - mongoStore
 var sessionStore = new mongoStore({ url: app.get('mongodb-uri') });

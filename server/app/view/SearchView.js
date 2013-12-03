@@ -19,7 +19,7 @@ exports.search = function (req, res) {
     };
 
 	var findMatches = function (callback) {
-		models.Match.search(query).limit(maxResults).sort('-when').exec(function (err, matches) {
+		models.Match.search(query).limit(maxResults).sort('when').exec(function (err, matches) {
 			if (err) res.send(err);
 
 			matches = matches.map(function (match) {

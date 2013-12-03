@@ -6,7 +6,6 @@
 
 app.service('MatchModel', function ($http, $q, ApiUrl) {
 
-	this.matches = [];
 	this.match = {};
 
 	return {

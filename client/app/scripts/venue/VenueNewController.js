@@ -4,46 +4,45 @@
 
 'use strict';
 
-app.controller('VenueNewCtrl', function ($scope, $location, AuthenticationModel, GeolocationHelper, MatchModel, VenueModel) {
+app.controller('VenueNewCtrl', function ($scope, $location, AuthenticationModel, GeolocationHelper, VenueModel) {
 
 	$scope.AuthenticationModel = AuthenticationModel;
 	$scope.VenueModel = VenueModel;
-	$scope.MatchModel = MatchModel;
 
 	$scope.isFormValid = false;
 
-	$scope.match = {
-		description: null,
-		gender: null,
-		venue: null,
-		price: null,
-		when: null,
-		maxPlayers: null
+	$scope.venue = {
+		name: null,
+		coordinates: null,
+		location: null,
+		address: null
 	};
 
 	$scope.activeTab = 0;
 	$scope.tabs = [
 		{ label: 'Name', icons: [ 'fa-tag' ] },
-		{ label: 'Coordinates', icons: [ 'fa-map-marker' ] },
-		{ label: 'Location', icons: [ 'fa-globe' ] }
+		{ label: 'Location', icons: [ 'fa-map-marker' ] },
+		{ label: 'Address', icons: [ 'fa-globe' ] }
 	];
 	$scope.setActiveTab = function (index) {
 		$scope.activeTab = index;
 	};
 
-	$scope.updateVenue = function (marker) {
+	$scope.updateVenue = function (results, coordinates) {
 		$scope.$apply(function(){
-			$scope.match.venue = marker;
+			$scope.venue.coordinates = coordinates;
+
+			$scope.venue.location = results[4].formatted_address || '';
+			$scope.venue.address = results[0].formatted_address || '';
 		})
 	};
 
-	$scope.create = function (match) {
-		MatchModel.create(match).then(function () {
+	$scope.create = function (venue) {
+		VenueModel.create(venue).then(function () {
 			$location.path('/player/' + AuthenticationModel.player.id);
 		});
 	}
 
-	$scope.venueMaxDistance = 10; // Km
 	$scope.currentCoordinates;
 
 	GeolocationHelper.getGeoLocation().then(function (location) {
@@ -51,17 +50,13 @@ app.controller('VenueNewCtrl', function ($scope, $location, AuthenticationModel,
 			location.coords.latitude,
 			location.coords.longitude
 		];
-
-		VenueModel.getVenuesByCoordinates(location.coords, $scope.venueMaxDistance).then(function (data) {
-			$scope.VenueModel.venues = data;
-		});
 	});
 
-	$scope.$watch('match', function(properties) {
+	$scope.$watch('venue', function(properties) {
 		var isFormValid = true;
 
 		for (var property in properties) {
-			if ($scope.$eval('match.' + property) === null) {
+			if ($scope.$eval('venue.' + property) === null) {
 				isFormValid = false;
 			}
 		}

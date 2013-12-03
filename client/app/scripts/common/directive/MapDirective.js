@@ -12,24 +12,57 @@ app.directive('map', function ($timeout) {
 		scope: {
 			zoom: '=',
 			markers: '=',
-			coordinates: '=',
+			centerCoordinates: '=',
 			showCenterMarker: '=',
-			markerClick: '&'
+			markerClick: '&',
+			isMonoMarker: '='
 		},
 		link: function (scope, elem, attrs) {
-			// Icons - for future reference.
+			// Icons (future reference).
 			// Red: http://mt.google.com/vt/icon/text=%E2%80%A2&psize=25&font=fonts/arialuni_t.ttf&color=ff330000&name=icons/spotlight/spotlight-waypoint-b.png&ax=44&ay=48&scale=1
 			// Green: http://mt.google.com/vt/icon/text=%E2%80%A2&psize=25&font=fonts/arialuni_t.ttf&color=ff330000&name=icons/spotlight/spotlight-waypoint-a.png&ax=44&ay=48&scale=1
+			
 			var zoom = scope.$eval(attrs.zoom),
+				isMonoMarker = scope.$eval(attrs.isMonoMarker),
 				showCenterMarker = scope.$eval(attrs.showCenterMarker);
 			
 			var markers = [],
+				marker,
 				centerMarker;
 
 			var map = new google.maps.Map(elem[0], {
 				zoom: zoom || 14,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			});
+
+			if (isMonoMarker) {
+				var geocoder = new google.maps.Geocoder();
+
+				google.maps.event.addListener(map, "click", function (event) {
+					// Remove previous marker.
+					if (marker) {
+						marker.setMap(null);
+						marker = null;
+					};
+
+					// Create new marker
+					marker = new google.maps.Marker({
+						position: event.latLng,
+						map: map
+					});
+
+					// Get geocode and execute callback function
+					geocoder.geocode({'latLng': event.latLng}, function(results, status) {
+						return scope.markerClick({
+							results: results, 
+							coordinates: [
+								event.latLng.lat(),
+								event.latLng.lng()
+							]
+						});
+					});
+				}); 
+			}
 
 			scope.$watch('markers', function (ms) {
 				if (!ms) {
@@ -53,11 +86,11 @@ app.directive('map', function ($timeout) {
 						scope.markerClick({ marker: m });
 					});
 
-					markers.push();
+					markers.push(marker);
 				});
 			});
 
-            scope.$watch('coordinates', function (coordinates) {
+			scope.$watch('centerCoordinates', function (coordinates) {
 				if (!coordinates) {
 					return;
 				}

@@ -8,7 +8,12 @@ exports = module.exports = function(app, mongoose) {
         name: { type: String, required: true },
         coordinates: { type: Array },
         location: { type: String },
-        address: { type: String }
+        address: { type: String },
+
+        meta: {
+            createdBy: { type: mongoose.Schema.ObjectId, ref: 'Player' },
+            createdAt: { type: Date }
+        }
     },
     {
         toObject: { virtuals: true },

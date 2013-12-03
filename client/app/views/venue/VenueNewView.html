@@ -1,16 +1,16 @@
-<div class="match-new-view">
-	<div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+<div class="venue-new-view">
+	<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
 
 		<div class="media">
 			<a class="pull-left" href="#/player/{{ AuthenticationModel.player.id }}">
 				<img class="media-object img-circle" ng-src="{{ AuthenticationModel.player.imageUrl }}" width="45" height="45">
 			</a>
 			<div class="pull-right">
-				<button class="btn btn-lg btn-success" ng-click="create(match)" ng-class="{ 'disabled': !isFormValid }">Create</button>
+				<button class="btn btn-lg btn-success" ng-click="create(venue)" ng-class="{ 'disabled': !isFormValid }">Create</button>
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">{{ AuthenticationModel.player.name }}</h4>
-				<p class="text-muted">{{ AuthenticationModel.player.username }}</p>
+				<p class="text-muted">{{ AuthenticationModel.player.location }}</p>
 			</div>
 		</div>
 
@@ -28,52 +28,15 @@
 
 			<div ng-switch on="activeTab">
 				<div ng-switch-when="0">
-					<textarea class="form-control" rows="3" placeholder="Tell them about this game!" maxlength="180" ng-model="match.description" focus="activeTab == 0"></textarea>
+					<input type="text" class="form-control" maxlength="180" placeholder="What will you call this venue?" ng-model="venue.name" focus="activeTab == 0"/>
 				</div>
 				<div ng-switch-when="1">
-					<div class="text-center">
-						<div class="btn-group">
-							<button class="btn btn-info" ng-click="match.gender = 'M'" ng-class="{ active: match.gender == 'M' }">Male</button>
-							<button class="btn btn-info" ng-click="match.gender = 'F'" ng-class="{ active: match.gender == 'F' }">Female</button>
-							<button class="btn btn-info" ng-click="match.gender = 'X'" ng-class="{ active: match.gender == 'X' }">Mixed</button>
-						</div>
-					</div>
+					<p class="text-center">{{ venue.location | denoteNull: 'Venue':'Drop the pin where the venue is located.' }}</p>
+
+					<map center-coordinates="currentCoordinates" show-center-marker="false" zoom="14" is-mono-marker="true" marker-click="updateVenue(results, coordinates)"></map>
 				</div>
 				<div ng-switch-when="2">
-					<p class="text-center">{{ match.venue.name | denoteNull: 'Venue':'Select one of the available venues.' }}</p>
-
-					<map coordinates="currentCoordinates" show-center-marker="false" zoom="11" markers="VenueModel.venues" marker-click="updateVenue(marker)"></map>
-
-				</div>
-				<div ng-switch-when="3">
-					<div class="row">
-						<div class="col-lg-4 col-lg-offset-4">
-							<div class="input-group">
-								<span class="input-group-addon">$</span>
-								<input type="number" ng-model="match.price" class="form-control text-right">
-								<span class="input-group-addon">.00</span>
-							</div>
-						</div>
-
-						<div class="col-lg-3 col-label">
-							<p>Price per person.</p>
-						</div>
-						
-					</div>
-				</div>
-				<div ng-switch-when="4">
-					<div class="row">
-						<div class="col-lg-4 col-lg-offset-4">
-							<div datetimepicker ng-model="match.when" datetimepicker-config="{ startView: 'day', minView: 'minute' }"></div>
-						</div>
-					</div>
-				</div>
-				<div ng-switch-when="5" class="text-center">
-					<div class="btn-group">
-						<button class="btn btn-info" ng-click="match.maxPlayers = 10" ng-class="{ active: match.maxPlayers == 10 }">5v5</button>
-						<button class="btn btn-info" ng-click="match.maxPlayers = 14" ng-class="{ active: match.maxPlayers == 14 }">7v7</button>
-						<button class="btn btn-info" ng-click="match.maxPlayers = 22" ng-class="{ active: match.maxPlayers == 22 }">11v11</button>
-					</div>
+					<input type="text" class="form-control" maxlength="180" ng-model="venue.address" focus="activeTab == 2"/>
 				</div>
 			</div>
 		</div>

@@ -20,7 +20,7 @@ app.controller('SearchCtrl', function ($scope, $location, $routeParams, $http, $
 			console.log('Geolocated.');
 			console.log('Searching...');
 
-			$http.get(ApiUrl + '/search/near', {
+			$http.get(ApiUrl + '/search', {
 				params: {
 					latitude: location.coords.latitude,
 					longitude: location.coords.longitude,

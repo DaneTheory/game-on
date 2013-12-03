@@ -6,21 +6,15 @@ exports.localSignUp = function (req, res) {
 	var Player = req.app.db.base.models.Player,
 		passport = req._passport.instance;
 
-	var username = req.body.username,
-		password = req.body.password,
+	var password = req.body.password,
 		name = req.body.name,
 		email = req.body.email;
 
 	// Validate fields.
 	var validate = function() {
-		if (!username) return res.send(400, 'Username required');
 		if (!name) return res.send(400, 'Name required');
 		if (!email) return res.send(400, 'Email address required');
 		if (!password) return res.send(400, 'Password required');
-
-		if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
-			return res.send(400, 'Username only use letters, numbers, \'-\', \'_\'');
-		}
 
 		if (!/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(email)) {
 			return res.send(400, 'Invalid email address format');
@@ -31,20 +25,10 @@ exports.localSignUp = function (req, res) {
 	
 	// Validate if `Player` has already signed up. 
 	var duplicateUserCheck = function() {
-		Player.findOne({ $or: [
-			{ username: username },
-			{ email: email }
-		]}, function (err, doc) { 
+		Player.findOne({ email: email }, function (err, doc) { 
 			if (err) return res.send(500, err);
-			
-			if (doc) {
-				if (doc.username === username) {
-					return res.send(400, 'Username is already taken.');
-				} else {
-					return res.send(400, 'Email address is already taken.');
-				}
-			}
-
+			if (doc) return res.send(400, 'Email address is already taken.');
+			console.log('e1', err);
 			createUser();
 		});
 	};
@@ -52,11 +36,11 @@ exports.localSignUp = function (req, res) {
 	// Create new `Player`.
 	var createUser = function() {
 		Player.create({
-			username: username,
 			password: Player.encryptPassword(password),
 			name: name,
 			email: email
 		}, function(err, doc) {
+			console.log('e2', err);
 			if (err) return res.send(500, err);
 			
 			signIn();
@@ -66,14 +50,14 @@ exports.localSignUp = function (req, res) {
 	// Sign In.
 	var signIn = function() {
 		passport.authenticate('local', function(err, player, info) {
+			console.log('e3', err);
 			if (err) return res.send(500, err);
 			if (!player) return res.send(500, 'Sign in failed. That\'s strange.');
 
 			req.login(player, function(err) {
+				console.log('e4', err);
 				if (err) return res.send(500, err);
 		
-				player.password = undefined;
-				player.email = undefined;
 				res.send(200, { player: player });
 			});
 		})(req, res);

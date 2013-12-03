@@ -7,7 +7,8 @@ exports = module.exports = function(app, mongoose) {
     var VenueSchema = new mongoose.Schema({
         name: { type: String, required: true },
         coordinates: { type: Array },
-        location: { type: String }
+        location: { type: String },
+        address: { type: String }
     },
     {
         toObject: { virtuals: true },
@@ -27,10 +28,6 @@ exports = module.exports = function(app, mongoose) {
                 $maxDistance: q.maxDistance / 111.12
             }
         };
-
-        if (q.term) {
-            query.name = new RegExp('^' + q.term, "i");
-        }
 
         return this.find(query);
     };

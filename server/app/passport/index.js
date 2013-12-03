@@ -7,16 +7,13 @@ exports = module.exports = function(app, passport) {
 		FacebookStrategy = require('passport-facebook').Strategy;
 	
 	// Local Strategy
-	passport.use(new LocalStrategy(function(username, password, done) {
-		// Lookup conditions
-		var conditions = {};
-		if (username.indexOf('@') === -1) {
-			conditions.username = username;
-		} else {
-			conditions.email = username;
-		}
-		
-		app.db.base.models.Player.findOne(conditions, '+password', function(err, player) {
+	passport.use(new LocalStrategy({
+		usernameField: 'email',
+    	passwordField: 'password'
+  	},
+  	function(email, password, done) {
+		// Find a player with given email
+		app.db.base.models.Player.findOne({ email: email }, '+password', function(err, player) {
 			if (err) return done(err);
 			if (!player) return done(null, false, { message: 'Unknown player' });
 			

@@ -32,16 +32,19 @@ exports = module.exports = function(app, mongoose) {
     // http://localhost:3000/api/1/match/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
     // @maxDistance {number} Distance in Kms
     // 
-    MatchSchema.statics.near = function (q) {
+    MatchSchema.statics.search = function (q) {
         var query = {
             'coordinates': {
                 $near: [ Number(q.latitude), Number(q.longitude) ],
                 $maxDistance: q.maxDistance / 111.12
-            }
+            },
+            'when': {
+            	'$gte': new Date
+           	}
         };
 
         if (q.term) {
-            query.title = new RegExp('^' + q.term, "i");
+            query.description = new RegExp('^' + q.term, "i");
         }
 
        return this.find(query).populate(['venue', 'organizer', 'players']);

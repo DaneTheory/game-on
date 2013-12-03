@@ -47,17 +47,9 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			templateUrl: 'views/venue/VenueNewView.html',
 			controller: 'VenueNewCtrl'
 		})
-		.when('/venue/:venueId', {
-			templateUrl: 'views/venue/VenueDetailView.html',
-			controller: 'VenueCtrl'
-		})
 		.when('/match/new', {
 			templateUrl: 'views/match/MatchNewView.html',
 			controller: 'MatchNewCtrl'
-		})
-		.when('/match/:matchId', {
-			templateUrl: 'views/match/MatchDetailView.html',
-			controller: 'MatchCtrl'
 		})
 		.when('/search', {
 			templateUrl: 'views/search/SearchView.html',

@@ -8,29 +8,25 @@
 
 'use strict';
 
-app.controller('AuthenticationCtrl',
-	function ($scope, $http, $location, $window, AuthenticationModel, ApiUrl) {
+app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window, AuthenticationModel, ApiUrl) {
 
 	// Credentials
 	// TODO: Move this to Model?
-	$scope.username = null;
 	$scope.password = null;
 	$scope.name = null;
 	$scope.email = null;
 
 	$scope.AuthenticationModel = AuthenticationModel;
 
-
-
 	//
-	// ### function signIn (username, password)
-	// #### @username {username} Username
+	// ### function signIn (email, password)
+	// #### @email {email} Email
 	// #### @password {password} Password
 	// Sign In: Local strategy logic.
 	// 
-	$scope.signIn = function (username, password) {
+	$scope.signIn = function (email, password) {
 		return $http.post(ApiUrl + '/auth/signin', {
-			username: username,
+			email: email,
 			password: password
 		}).success(function (data) {
 			// Add signed in Player to the model and cookies.
@@ -46,19 +42,17 @@ app.controller('AuthenticationCtrl',
 	};
 
 	//
-	// ### function signUp (username, password, name, email)
-	// #### @username {username} Username
+	// ### function signUp (email, password, name)
+	// #### @email {email} Email
 	// #### @password {password} Password
 	// #### @name {name} Name
-	// #### @email {email} Email
 	// Sign Up: Local strategy logic.
 	// 
-	$scope.signUp = function (username, password, name, email) {
+	$scope.signUp = function (email, password, name) {
 		return $http.post(ApiUrl + '/auth/signup', {
-			username: username,
+			email: email,
 			password: password,
 			name: name,
-			email: email
 		}).success(function(data) {
 			AuthenticationModel.setPlayer(data.player);
 			$location.path(AuthenticationModel.getPath());
@@ -128,10 +122,9 @@ app.controller('AuthenticationCtrl',
 
 	$scope.init = function () {
 		// Development placeholders.
-		$scope.username = 'pablodenadai';
+		$scope.email = 'pablodenadai@gmail.com';
 		$scope.password = '123';
 		$scope.name = 'Pablo De Nadai';
-		$scope.email = 'pablodenadai@gmail.com';
 		AuthenticationModel.errorStatus = null;
 	};
 

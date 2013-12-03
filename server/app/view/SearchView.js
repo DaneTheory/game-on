@@ -1,77 +1,39 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+	async = require('async');
 
 //
 // Search Near.
 // Searches for Games, People and Venues within a range of Km.
 // 
-exports.searchNear = function (req, res) {
+exports.search = function (req, res) {
 
-    var models = req.app.db.base.models;
+	var models = req.app.db.base.models;
 
+	// TODO: Sanitize `query`.
+	var query = req.query,
+		maxResults = 20,
+		outcome = [];
 
-    // TODO: Sanitize `query`.
-    var query = req.query,
-        maxResults = 20;
-
-    var userLocation = {
+	var userLocation = {
         coordinates: [query.latitude, query.longitude]
     };
 
-    var outcome = [];
+	var findMatches = function (callback) {
+		models.Match.search(query).limit(maxResults).sort('-when').exec(function (err, matches) {
+			if (err) res.send(err);
 
-    var findPlayer = function (callback) {
-        models.Player.near(query).limit(maxResults).exec(function (err, players) {
-            if (err) res.send(err);
+			matches = matches.map(function (match) {
+				match = match.toObject();
+				match.distance = getDistance(userLocation.coordinates, match.coordinates);
+				return match;
+			});
 
-            // Fixes immutable results.
-            // DRY
-            players = players.map(function (player) {
-                player = player.toObject();
-                player.distance = getDistance(userLocation.coordinates, player.coordinates);
-                return player;
-            });
-
-            outcome.push.apply(outcome, players);
-            callback(null, 'done');
-        });
-    };
-
-    var findMatch = function (callback) {
-        models.Match.near(query).limit(maxResults).exec(function (err, matches) {
-            if (err) res.send(err);
-
-            // Fixes immutable results.
-            // DRY
-            matches = matches.map(function (match) {
-                match = match.toObject();
-                match.distance = getDistance(userLocation.coordinates, match.coordinates);
-                return match;
-            });
-
-            outcome.push.apply(outcome, matches);
-            callback(null, 'done');
-        });
-    };
-
-    var findVenue = function (callback) {
-        models.Venue.near(query).limit(maxResults).exec(function (err, venues) {
-            if (err) res.send(err);
-
-            // Fixes immutable results.
-            // DRY
-            venues = venues.map(function (venue) {
-                venue = venue.toObject();
-                venue.distance = getDistance(userLocation.coordinates, venue.coordinates);
-                return venue;
-            });
-
-
-            outcome.push.apply(outcome, venues);
-            callback(null, 'done');
-        });
-    };
-
-    // Move it to a helper.
+			outcome.push.apply(outcome, matches);
+			callback(null, 'done');
+		});
+	};
+	
+	// Move it to a helper.
     var getDistance = function (coordinatesFrom, coordinatesTo) {
         var r = 6371; // Radius of the earth in km
 
@@ -100,21 +62,10 @@ exports.searchNear = function (req, res) {
         return deg * (Math.PI / 180);
     };
 
-    // Move it to a helper.
-    var sortByProximity = function (baseLocation, arr) {
-        arr.sort(function (a, b) {
-            return getDistance(baseLocation.coordinates, a.coordinates) -
-                getDistance(baseLocation.coordinates, b.coordinates);
-        });
-    };
+	var asyncFinally = function (err, results) {
+		if (err) res.send(err);
+		res.send(outcome);
+	};
 
-    var asyncFinally = function (err, results) {
-        if (err) res.send(err);
-
-        sortByProximity(userLocation, outcome);
-
-        res.send(outcome);
-    };
-
-    require('async').parallel([findPlayer, findVenue, findMatch], asyncFinally);
+	async.parallel([findMatches], asyncFinally);
 };

@@ -4,12 +4,12 @@
 exports.localSignIn = function (req, res) {
 
 	var passport = req._passport.instance,
-		username = req.body.username,
+		email = req.body.email,
 		password = req.body.password;
 
-	// Validate `username` and `password`.
+	// Validate `email` and `password`.
 	var validate = function() {
-		if (!username) return res.send(400, 'Username required');
+		if (!email) return res.send(400, 'Email address required');
 		if (!password) return res.send(400, 'Password required');
 
 		attemptLogin();
@@ -19,7 +19,7 @@ exports.localSignIn = function (req, res) {
 	attemptLogin = function() {
 		passport.authenticate('local', function(err, player, info) {
 			if (err) return res.send(500, err);
-			if (!player) return res.send(400, 'Username and password combination not found.');
+			if (!player) return res.send(400, 'Email address and password combination not found.');
 
 			req.login(player, function(err) {
 				if (err) return res.send(500, err);

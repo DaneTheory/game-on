@@ -32,7 +32,7 @@ exports = module.exports = function(app) {
 	app.del(apiPath + '/match', require('./MatchView').delete);
 
 	// Search
-	app.get(apiPath + '/search/near', require('./SearchView').searchNear);
+	app.get(apiPath + '/search', require('./SearchView').search);
 
 	// Feed
 	app.post(apiPath + '/feed/markAsRead/all', require('./FeedView').markAllAsRead);

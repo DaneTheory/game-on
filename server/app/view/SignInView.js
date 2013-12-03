@@ -23,7 +23,7 @@ exports.localSignIn = function (req, res) {
 
 			req.login(player, function(err) {
 				if (err) return res.send(500, err);
-				res.send(200, { player: player });
+				return res.send(200, { player: player });
 			});
 		})(req, res);
 	};
@@ -59,7 +59,7 @@ exports.facebookSignIn = function(req, res, next){
 // 
 exports.facebookSignInCallback = function(req, res, next){
 	
-	var Player = req.app.db.base.models.Player,
+	var Player = req.app.db.models.Player,
 		passport = req._passport.instance,
 		callbackUrl = [
 			req.headers.origin,

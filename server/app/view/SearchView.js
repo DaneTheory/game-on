@@ -7,7 +7,7 @@ var _ = require('lodash'),
 // 
 exports.search = function (req, res) {
 
-	var models = req.app.db.base.models;
+	var models = req.app.db.models;
 
 	// TODO: Sanitize `query`.
 	var query = req.query,

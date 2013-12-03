@@ -13,12 +13,12 @@ exports = module.exports = function(app, passport) {
   	},
   	function(email, password, done) {
 		// Find a player with given email
-		app.db.base.models.Player.findOne({ email: email }, '+password', function(err, player) {
+		app.db.models.Player.findOne({ email: email }, '+password', function(err, player) {
 			if (err) return done(err);
 			if (!player) return done(null, false, { message: 'Unknown player' });
 			
 			// Validate password
-			var encryptedPassword = app.db.base.models.Player.encryptPassword(password);
+			var encryptedPassword = app.db.models.Player.encryptPassword(password);
 			if (player.password != encryptedPassword) {
 				return done(null, false, { message: 'Invalid password' });
 			}
@@ -51,8 +51,9 @@ exports = module.exports = function(app, passport) {
 	
 	// Deserialize
 	passport.deserializeUser(function(id, done) {
-		app.db.base.models.Player.findOne({ _id: id }).exec(function(err, player) {
-			done(err, player);
+		app.db.models.Player.find({ _id: id }).exec(function(err, player) {
+			console.log('id', id);
+			return done(err, player);
 		});
 	});
 };

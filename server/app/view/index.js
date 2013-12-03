@@ -1,5 +1,4 @@
-var mers = require('mers'),
-	passport = require('passport');
+var passport = require('passport');
 
 exports = module.exports = function(app) {
 
@@ -37,9 +36,4 @@ exports = module.exports = function(app) {
 	// Feed
 	app.post(apiPath + '/feed/markAsRead/all', require('./FeedView').markAllAsRead);
 	app.post(apiPath + '/feed/markAsRead/:feedId', require('./FeedView').markAsRead);
-
-
-	// Create API CRUD using MERS.
-	// TODO: Replace MERS with a better solution.
-	app.use(apiPath, mers({ uri: mongoDbURI }).rest());
 };

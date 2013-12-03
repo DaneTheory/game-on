@@ -7,7 +7,7 @@ var _ = require('lodash');
 exports.create = function (req, res) {
 
 	var playerId = req.session.passport.user,
-		models = req.app.db.base.models,
+		models = req.app.db.models,
 		Venue = models.Venue;
 
 	var venue = new Venue();

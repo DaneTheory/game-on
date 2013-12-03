@@ -3,7 +3,7 @@
 // 
 exports.localSignUp = function (req, res) {
 
-	var Player = req.app.db.base.models.Player,
+	var Player = req.app.db.models.Player,
 		passport = req._passport.instance;
 
 	var password = req.body.password,
@@ -75,7 +75,7 @@ exports.localSignUp = function (req, res) {
 // 
 var signUpSocial = function (req, res, username, profile) {
 
-	var Player = req.app.db.base.models.Player,
+	var Player = req.app.db.models.Player,
 		passport = req._passport.instance;
 
 	// Validate info.
@@ -149,7 +149,7 @@ exports.facebookSignUp = function(req, res, next) {
 //
 exports.facebookSignUpCallback = function(req, res, next) {
 
-	var Player = req.app.db.base.models.Player,
+	var Player = req.app.db.models.Player,
 		passport = req._passport.instance,
 		callbackUrl = [
 			req.headers.origin,

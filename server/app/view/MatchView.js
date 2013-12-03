@@ -9,7 +9,7 @@ exports.join = function (req, res) {
 	var matchId = req.route.params.matchId,
 		playerId = req.session.passport.user,
 		pushNotification = req.app.pushNotification,
-		models = req.app.db.base.models,
+		models = req.app.db.models,
 		Match = models.Match,
 		Feed = models.Feed,
 		Player = models.Player;
@@ -74,7 +74,7 @@ exports.leave = function (req, res) {
 	var matchId = req.route.params.matchId,
 		playerId = req.session.passport.user,
 		pushNotification = req.app.pushNotification,
-		models = req.app.db.base.models,
+		models = req.app.db.models,
 		Match = models.Match,
 		Feed = models.Feed,
 		Player = models.Player;
@@ -130,7 +130,7 @@ exports.leave = function (req, res) {
 exports.create = function (req, res) {
 
 	var playerId = req.session.passport.user,
-		models = req.app.db.base.models,
+		models = req.app.db.models,
 		Match = models.Match,
 		Player = models.Player;
 
@@ -169,7 +169,7 @@ exports.create = function (req, res) {
 exports.delete = function (req, res) {
 
 	var playerId = req.session.passport.user,
-		model = req.app.db.base.model,
+		model = req.app.db.model,
 		Match = maodels.Match;
 
 	var match = new Match();

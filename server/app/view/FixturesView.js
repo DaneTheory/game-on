@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 exports.init = function(req, res){
 
-	var models = req.app.db.base.models,
+	var models = req.app.db.models,
 		encryptPassword = models.Player.encryptPassword;
 
 	// Drop all documents

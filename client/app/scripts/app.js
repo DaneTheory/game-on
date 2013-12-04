@@ -39,8 +39,12 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			controller: 'MainCtrl',
 			requireAuthentication: false
 		})
+		.when('/player/edit', {
+			templateUrl: 'views/player/PlayerEditView.html',
+			controller: 'PlayerEditCtrl'
+		})
 		.when('/player/:playerId', {
-			templateUrl: 'views/player/PlayerDetailView.html',
+			templateUrl: 'views/player/PlayerView.html',
 			controller: 'PlayerCtrl'
 		})
 		.when('/venue/new', {

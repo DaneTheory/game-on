@@ -22,9 +22,23 @@ app.service('PlayerModel', function ($http, $q, CacheHelper, ApiUrl) {
 						deferred.resolve(CacheHelper.put(playerId, data));
 					})
 					.error(function () {
-						deferred.resolve(CacheHelper.remove(playerId));
+						deferred.reject(CacheHelper.remove(playerId));
 					});
 			}
+
+			return deferred.promise;
+		},
+
+		update: function (player) {
+			var deferred = $q.defer();
+
+			$http.put(ApiUrl + '/player/' + player.id, player)
+				.success(function (data){
+					deferred.resolve(data);
+				})
+				.error(function(){
+					deferred.reject();
+				});
 
 			return deferred.promise;
 		}

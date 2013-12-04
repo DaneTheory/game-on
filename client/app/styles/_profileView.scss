@@ -2,8 +2,6 @@
 	padding-top: 50px;
 		
 	.header {
-		// Implement different sizes for different resolutions.
-		background-image: url('//localhost:3000/images/background_11.jpg');
 		background-size: cover;
 		background-position: 50% 50%;
 
@@ -33,6 +31,42 @@
 			margin: 10px 0;
 			color: #fff;
 			font-weight: bold;
+		}
+
+		// TODO: 
+		// - Implement different sizes for different resolutions.
+		// - Use `img` tag instead of `div`
+		&.background-1 { background-image: url('//localhost:3000/images/background_1.jpg'); }
+		&.background-2 { background-image: url('//localhost:3000/images/background_2.jpg'); }
+		&.background-3 { background-image: url('//localhost:3000/images/background_3.jpg'); }
+		&.background-4 { background-image: url('//localhost:3000/images/background_4.jpg'); }
+		&.background-5 { background-image: url('//localhost:3000/images/background_5.jpg'); }
+		&.background-6 { background-image: url('//localhost:3000/images/background_6.jpg'); }
+		&.background-7 { background-image: url('//localhost:3000/images/background_7.jpg'); }
+		&.background-8 { background-image: url('//localhost:3000/images/background_8.jpg'); }
+		&.background-9 { background-image: url('//localhost:3000/images/background_9.jpg'); }
+		&.background-10 { background-image: url('//localhost:3000/images/background_10.jpg'); }
+	}
+
+	&.edit-view {
+		.header {
+			.form-control-name,
+			.form-control-location {
+				margin: 10px 0;
+				background-color: rgba(255, 255, 255, 0.7);
+			}
+		}
+
+		textarea {
+			resize: none;
+		}
+
+		.background-tile {
+			margin-bottom: 10px;
+		}
+
+		.skill-star-icon:hover {
+			text-decoration: none;
 		}
 	}
 }

@@ -1,10 +1,8 @@
 <div class="profile-view">
-	<div class="header text-center">
+	<div class="header text-center background-{{ PlayerModel.player.backgroundImageId }}">
 		<h3>{{PlayerModel.player.name}}</h3>
 		<img class="img-circle" ng-src="{{ PlayerModel.player.imageUrl }}" width="90" height="90">
-		<p class="lead">
-			{{ PlayerModel.player.location }}
-		</p>
+		<p class="lead">{{ PlayerModel.player.location }}</p>
 
 		<p class="location">
 			<span ng-switch="PlayerModel.player.gender">
@@ -16,8 +14,6 @@
 		</p>
 	</div>
 
-	
-	
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="container">
 			<ul class="nav navbar-nav nav-center">

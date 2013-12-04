@@ -21,7 +21,7 @@ var app = angular.module('gameOn', [
 app.constant('ServerUrl', '//localhost:3000');
 app.constant('ApiUrl', '//localhost:3000/api/1');
 
-app.config(function ($routeProvider, $httpProvider, $locationProvider) {
+app.config(function ($routeProvider, $httpProvider) {
 
 	// Add `AuthenticationInterceptor` to check if the `Player` is still Signed In.
 	$httpProvider.interceptors.push('AuthenticationInterceptor');

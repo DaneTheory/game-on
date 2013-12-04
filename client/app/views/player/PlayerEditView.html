@@ -1,14 +1,24 @@
-<div class="profile-view">
-	<div class="header text-center">
-		<input type="text" class="form-control text-center" ng-model="PlayerModel.player.name"/>
-		<img class="img-circle" ng-src="{{ PlayerModel.player.imageUrl }}" width="90" height="90">
-		<input type="text" class="form-control text-center" ng-model="PlayerModel.player.location"/>
+<div class="profile-view edit-view">
+	<div class="header text-center background-{{ player.backgroundImageId }}">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+				<input type="text" class="form-control text-center form-control-name" ng-model="player.name"/>
+			</div>
+		</div>
+
+		<img class="img-circle" ng-src="{{ player.imageUrl }}" width="90" height="90">
+		
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+				<input type="text" class="form-control text-center form-control-location" ng-model="player.location"/>
+			</div>
+		</div>
 	</div>
 	
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="container">
 			<ul class="nav navbar-nav nav-center">
-				<li><button class="btn btn-success navbar-btn">Finish editing</button></li>
+				<li><button class="btn btn-primary navbar-btn" ng-click="update(player)">Finish editing</button></li>
 			</ul>
 		</div>
 	</div>
@@ -17,28 +27,30 @@
 		<form role="form">
 			<div class="form-group">
 				<label for="inputBio">Bio</label>
-				<textarea id="inputBio" class="form-control" placeholder="Rocket ship builder, pizza expert, loves football, parent." ng-model="PlayerModel.player.bio"></textarea>
+				<textarea id="inputBio" class="form-control" rows="3" placeholder="Rocket ship builder, pizza expert, loves football, parent." ng-model="player.bio"></textarea>
 			</div>
 
 			<div class="form-group">
 				<label for="inputEmail">Email address</label>
-				<input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="PlayerModel.player.email"/>
+				<input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="player.email"/>
 			</div>
 
 			<div class="form-group">
 				<label for="inputGender">Gender</label>
 				<p>
 					<span class="btn-group">
-						<button class="btn btn-info" ng-click="gender = 'M'" ng-class="{ active: gender == 'M' }">Male</button>
-						<button class="btn btn-info" ng-click="gender = 'F'" ng-class="{ active: gender == 'F' }">Female</button>
+						<button class="btn btn-default" ng-click="player.gender = 'M'" ng-class="{ active: player.gender == 'M' }">Male</button>
+						<button class="btn btn-default" ng-click="player.gender = 'F'" ng-class="{ active: player.gender == 'F' }">Female</button>
 					</span>
 				</p>
 			</div>
 
 			<div class="form-group">
-				<label for="inputRate">Rate</label>
+				<label for="inputRate">Skills</label>
 				<p>
-					<i ng-repeat="rate in PlayerModel.player.rateArray track by $index" class="fa fa-lg" ng-class="{ 'fa-star': rate, 'fa-star-o': !rate }"></i>
+					<a href="" class="btn-link skill-star-icon" ng-repeat="rate in player.rateArray track by $index" ng-click="updateRate($index + 1)">
+						<i class="fa fa-lg" ng-class="{ 'fa-star': rate, 'fa-star-o': !rate }"></i>
+					</a>
 				</p>
 			</div>
 
@@ -46,16 +58,11 @@
 			<div class="form-group">
 				<label>Background</label>
 				<div class="row">
-					<div class="col-sm-6 col-xs-6"><img src="//localhost:3000/images/background_01.jpg" width="100%"/></div>
-					<div class="col-sm-6 col-xs-6"><img src="//localhost:3000/images/background_02.jpg" width="100%"/></div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6"><img src="//localhost:3000/images/background_03.jpg" width="100%"/></div>
-					<div class="col-sm-6 col-xs-6"><img src="//localhost:3000/images/background_04.jpg" width="100%"/></div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6"><img src="//localhost:3000/images/background_07.jpg" width="100%"/></div>
-					<div class="col-sm-6 col-xs-6"><img src="//localhost:3000/images/background_06.jpg" width="100%"/></div>
+					<div class="col-sm-4 col-xs-6 background-tile" ng-repeat="id in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" >
+						<a href="" ng-click="updateBackgroundImageId(id)" >
+							<img class="img-thumbnail" ng-src="{{ ServerUrl }}/images/background_{{ id }}.jpg" width="100%"/>
+						</a>
+					</div>
 				</div>
 			</div>	
 		</form>

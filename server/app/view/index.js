@@ -34,6 +34,7 @@ exports = module.exports = function(app) {
 
 	// Player
 	app.get(apiPath + '/player/:playerId',			playerView.getById);
+	app.put(apiPath + '/player/:playerId',			playerView.update);
 
 	// Match
 	app.post(apiPath + '/match/:matchId/join', 		matchView.join);
@@ -41,7 +42,7 @@ exports = module.exports = function(app) {
 	app.post(apiPath + '/match', 					matchView.create);
 	app.del(apiPath + '/match', 					matchView.delete);
 
-	// Player
+	// Venue
 	app.post(apiPath + '/venue',					venueView.create);
 	app.get(apiPath + '/venue/near',				venueView.near);
 

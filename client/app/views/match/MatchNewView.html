@@ -43,11 +43,10 @@
 					<p class="text-center">{{ match.venue.name | denoteNull: 'Venue':'Select one of the available venues.' }}</p>
 
 					<map center-coordinates="currentCoordinates" show-center-marker="false" zoom="11" markers="VenueModel.venues" marker-click="updateVenue(marker)"></map>
-
 				</div>
 				<div ng-switch-when="3">
 					<div class="row">
-						<div class="col-lg-4 col-lg-offset-4">
+						<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
 							<div class="input-group">
 								<span class="input-group-addon">$</span>
 								<input type="number" ng-model="match.price" class="form-control text-right">

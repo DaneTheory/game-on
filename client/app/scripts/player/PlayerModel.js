@@ -4,53 +4,30 @@
 
 'use strict';
 
-app.factory('PlayerModel', function ($http, ApiUrl, TokenMatcherHelper) {
+app.service('PlayerModel', function ($http, $q, CacheHelper, ApiUrl) {
 
-	this.collection = null;
-	this.player = {
-		username: null,
-        password: null, // TODO: Remove this field from response.
-        email: null, // TODO: Remove this field from response.
-        name: null,
-        location: null,
-        rate: null,
-        gender: null,
-        birthday: null,
-        city: null,
+	this.player = {};
 
-        // Calculated properties
-        age: null,
-        imageUrl: null
-	};
+	return {
+		player: this.player,
 
-	var processPlayers = function (players) {
-		_.each(players, function (player) {
-			player.id = player._id;
-		});
+		getById: function (playerId) {
+			var deferred = $q.defer();
 
-		return players;
-	};
+			if (CacheHelper.get(playerId)) {
+				deferred.resolve(CacheHelper.get(playerId));
+			} else {
+				$http.get(ApiUrl + '/player/' + playerId)
+					.success(function (data) {
+						deferred.resolve(CacheHelper.put(playerId, data));
+					})
+					.error(function () {
+						deferred.resolve(CacheHelper.remove(playerId));
+					});
+			}
 
-	this.getById = function (playerId) {
-		return $http.get(ApiUrl + '/player/' + playerId)
-			.success(angular.bind(this, function (data) {
-				this.player = _.first(processPlayers(data.payload));
-			}))
-			.error(angular.bind(this, function() {
-				this.player = null;
-			}));
-	};
-
-	this.getCollection = function () {
-		return $http.get(ApiUrl + '/player')
-			.success(angular.bind(this, function (data){
-				this.collection = processPlayers(data.payload);
-			}))
-			.error(angular.bind(this, function(){
-				this.collection = null;
-			}));
-	};
-
-	return this;
+			return deferred.promise;
+		}
+	}
 
 });

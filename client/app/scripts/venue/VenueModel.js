@@ -17,7 +17,7 @@ app.service('VenueModel', function ($http, $q, CacheHelper, ApiUrl) {
 			if (CacheHelper.get('venuesByCoordinates')) {
 				deferred.resolve(CacheHelper.get('venuesByCoordinates'));
 			} else {
-				$http.get(ApiUrl + '/venue/finder/near', {
+				$http.get(ApiUrl + '/venue/near', {
 					params: {
 						latitude: coordinates.latitude,
 						longitude: coordinates.longitude,
@@ -25,7 +25,7 @@ app.service('VenueModel', function ($http, $q, CacheHelper, ApiUrl) {
 					}
 				})
 				.success(function (data) {
-					deferred.resolve(CacheHelper.put('venuesByCoordinates', data.payload));
+					deferred.resolve(CacheHelper.put('venuesByCoordinates', data));
 				})
 				.error(function () {
 					deferred.resolve(CacheHelper.remove('venuesByCoordinates'));

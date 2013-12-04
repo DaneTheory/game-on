@@ -30,3 +30,20 @@ exports.create = function (req, res) {
 
 };
 
+//
+//
+//
+exports.near = function (req, res) {
+
+	var playerId = req.session.passport.user,
+		models = req.app.db.models,
+		query = req.query,
+		Venue = models.Venue;
+
+	Venue.near(query).exec(function (err, venues) {
+		if (err) return res.send(500, err);
+
+		return res.send(200, venues);
+	});
+
+};

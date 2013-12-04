@@ -18,7 +18,6 @@ exports.init = function(req, res){
 			name: 'Pablo De Nadai',
 			email: 'pablodenadai@gmail.com',
 			gender: 'M',
-			birthday: new Date('04/16/1988'),
 			location: 'Melbourne, Australia',
 			rate: 4
 		},
@@ -26,7 +25,6 @@ exports.init = function(req, res){
 			password: encryptPassword('123'),
 			name: 'Tamati Mikaere',
 			email: 'tamati.mikaere@gmail.com',
-			birthday: new Date('02/16/1992'),
 			gender: 'M',
 			location: 'Wellington, New Zealand',
 			rate: 2
@@ -35,7 +33,6 @@ exports.init = function(req, res){
 			password: encryptPassword('123'),
 			name: 'Anahera Hine',
 			email: 'anahera.hine@gmail.com',
-			birthday: new Date('02/16/1992'),
 			gender: 'F',
 			location: 'Wellington, New Zealand',
 			rate: 4
@@ -44,7 +41,6 @@ exports.init = function(req, res){
 			password: encryptPassword('123'),
 			name: 'Ibrahim Malik',
 			email: 'ibrahim.malik@gmail.com',
-			birthday: new Date('02/20/1982'),
 			gender: 'M',
 			location: 'Cairo, Egypt',
 			rate: 3
@@ -53,82 +49,9 @@ exports.init = function(req, res){
 			password: encryptPassword('123'),
 			name: 'Farah Fawziya',
 			email: 'farah.fawziya@gmail.com',
-			birthday: new Date('02/20/1985'),
 			gender: 'F',
 			location: 'Cairo, Egypt',
 			rate: 5
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Merrill Hatfield',
-			email: 'Praesent.interdum@lectusquismassa.co.uk',
-			birthday: new Date('04/16/1995'),
-			gender: 'M',
-			location: 'Seattle',
-			rate: 3
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Declan Stuart',
-			email: 'nisi@dignissimMaecenas.edu',
-			birthday: new Date('02/21/1986'),
-			gender: 'M',
-			location: 'Notre-Dame-du-Nord',
-			rate: 3
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Fritz Guerra',
-			email: 'nec.cursus@Fuscemollis.edu',
-			birthday: new Date('10/18/1998'),
-			gender: 'M',
-			location: 'Pero',
-			rate: 2
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Fitzgerald Downs',
-			email: 'arcu@pretiumaliquetmetus.net',
-			birthday: new Date('04/28/1983'),
-			gender: 'M',
-			location: 'Saint Eugine-de-Ladrire',
-			rate: 3
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Dale Houston',
-			email: 'ornare.egestas.ligula@loremeumetus.ca',
-			birthday: new Date('01/18/1994'),
-			gender: 'M',
-			location: 'Kessel',
-			rate: 4
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Tyler Salas',
-			email: 'Sed.malesuada.augue@aliquet.co.uk',
-			birthday: new Date('08/25/1998'),
-			gender: 'M',
-			location: 'Carleton',
-			rate: 2
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Baxter Harrington',
-			email: 'Nunc.quis.arcu@ipsumdolorsit.co.uk',
-			birthday: new Date('05/21/1987'),
-			gender: 'M',
-			location: 'Alva',
-			rate: 1
-		},
-		{
-			password: encryptPassword('123'),
-			name: 'Kamal Alston',
-			email: 'purus.sapien@erat.co.uk',
-			birthday: new Date('01/26/1996'),
-			gender: 'M',
-			location: 'Lauregno',
-			rate: 4
 		}
 	];
 

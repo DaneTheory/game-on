@@ -52,7 +52,6 @@ exports = module.exports = function(app, passport) {
 	// Deserialize
 	passport.deserializeUser(function(id, done) {
 		app.db.models.Player.find({ _id: id }).exec(function(err, player) {
-			console.log('id', id);
 			return done(err, player);
 		});
 	});

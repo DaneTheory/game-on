@@ -28,7 +28,6 @@ exports.localSignUp = function (req, res) {
 		Player.findOne({ email: email }, function (err, doc) { 
 			if (err) return res.send(500, err);
 			if (doc) return res.send(400, 'Email address is already taken.');
-			console.log('e1', err);
 			createUser();
 		});
 	};
@@ -40,7 +39,6 @@ exports.localSignUp = function (req, res) {
 			name: name,
 			email: email
 		}, function(err, doc) {
-			console.log('e2', err);
 			if (err) return res.send(500, err);
 			
 			signIn();
@@ -50,12 +48,10 @@ exports.localSignUp = function (req, res) {
 	// Sign In.
 	var signIn = function() {
 		passport.authenticate('local', function(err, player, info) {
-			console.log('e3', err);
 			if (err) return res.send(500, err);
 			if (!player) return res.send(500, 'Sign in failed. That\'s strange.');
 
 			req.login(player, function(err) {
-				console.log('e4', err);
 				if (err) return res.send(500, err);
 		
 				res.send(200, { player: player });

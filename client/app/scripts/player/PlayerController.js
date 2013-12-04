@@ -13,16 +13,6 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedMo
 	$scope.playerId = $routeParams.playerId;
 	$scope.tab = 0;
 
-	// TODO: Review this code.
-	$scope.getById = function () {
-		PlayerModel.getById($scope.playerId);
-	};
-
-	// TODO: Review this code.
-	$scope.isMe = function () {
-		return PlayerHelper.isMe(PlayerModel.player.id);
-	};
-
 	$scope.loadFeeds = function () {
 		CacheHelper.remove('feed');
 
@@ -35,8 +25,11 @@ app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedMo
 
 	PushNotificationHelper.on('feed', function () {
 		VibrationHelper.vibrate();
-
 		$scope.loadFeeds();
+	});
+
+	PlayerModel.getById($scope.playerId).then(function (data) {
+		PlayerModel.player = data;
 	});
 
 	// Pre-load Geolocation.

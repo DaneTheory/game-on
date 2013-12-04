@@ -7,7 +7,8 @@ var _ = require('lodash'),
 // 
 exports.search = function (req, res) {
 
-	var models = req.app.db.models;
+	var models = req.app.db.models,
+		Match = models.Match;
 
 	// TODO: Sanitize `query`.
 	var query = req.query,
@@ -19,7 +20,7 @@ exports.search = function (req, res) {
     };
 
 	var findMatches = function (callback) {
-		models.Match.search(query).limit(maxResults).sort('when').exec(function (err, matches) {
+		Match.search(query).limit(maxResults).sort('when').exec(function (err, matches) {
 			if (err) res.send(err);
 
 			matches = matches.map(function (match) {

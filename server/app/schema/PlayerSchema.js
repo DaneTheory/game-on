@@ -13,7 +13,6 @@ exports = module.exports = function(app, mongoose) {
         password: { type: String, select: false },
         name: { type: String },
         gender: { type: String, upper: true, match: /[MF]/ },
-        birthday: { type: Date },
         location: { type: String },
         rate: { type: Number, min: 1, max: 5 },
         matchesPlayed: { type: Number, default: 0 },
@@ -63,14 +62,6 @@ exports = module.exports = function(app, mongoose) {
             hash = email ? crypto.createHash('md5').update(email.toLowerCase()).digest('hex') : '';
 
         return tokenMatcherHelper.replaceNumberedTokens(gravatar, [hash]);
-    });
-
-    PlayerSchema.virtual('age').get(function () {
-        if (!this.birthday) {
-            return;
-        }
-        
-        return dateHelper.getAgeFromBirthday(this.birthday);
     });
 
     mongoose.model('Player', PlayerSchema);

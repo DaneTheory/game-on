@@ -13,9 +13,7 @@
 
 		<div class="list-group">
 			<div ng-repeat="feed in FeedModel.feeds" ng-switch="feed.type" class="list-group-item" ng-class="{ 'list-group-item-unread': !feed.meta.readAt }">
-				<div ng-switch-when="player"><div ng-include="'views/feed/_PlayerFeedItemView.html'"></div></div>
 				<div ng-switch-when="match"><div ng-include="'views/feed/_MatchFeedItemView.html'"></div></div>
-				<div ng-switch-when="venue"><div ng-include="'views/feed/_VenueFeedItemView.html'"></div></div>
 			</div>
 		</div>
 	</div>

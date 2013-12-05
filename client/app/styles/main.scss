@@ -26,3 +26,9 @@ $fa-font-path: "/components/font-awesome/fonts/";
 * {
 	outline: none !important;
 }
+
+// https://github.com/twbs/bootstrap/issues/10711
+// http://stackoverflow.com/questions/17988242/twitter-bootstrap-3-rc1-horizontal-scroll-issue
+@media (max-width: 768px) {
+	.row { margin-right: 0; margin-left: 0; }
+}

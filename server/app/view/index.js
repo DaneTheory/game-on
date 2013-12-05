@@ -34,6 +34,8 @@ exports = module.exports = function(app) {
 
 	app.get(authPath + '/signin/facebook',			signInView.facebookSignIn);
 	app.get(authPath + '/signin/facebook/callback', signInView.facebookSignInCallback);
+	app.get(authPath + '/signin/twitter',			signInView.twitterSignIn);
+	app.get(authPath + '/signin/twitter/callback',  signInView.twitterSignInCallback);
 
 	// Player
 	app.get(apiPath + '/player/:playerId',			playerView.getById);

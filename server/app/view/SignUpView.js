@@ -74,38 +74,32 @@ exports.localSignUp = function (req, res) {
 // 
 // Social Sign Up workflow.
 // 
-var signUpSocial = function (req, res, username, profile) {
+var signUpSocial = function (req, res, profile) {
 
 	var Player = req.app.db.models.Player,
 		passport = req._passport.instance;
 
-	// // Validate info.
-	// var validate = function() {
-	// 	if (!username) return res.send(400, 'Username required');
-		
-	// 	if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
-	// 		return res.send(400, 'Username only use letters, numbers, \'-\', \'_\'');
-	// 	}
-
-	// 	duplicateUserCheck();
-	// };
-	
-	// // Validade duplicate.
-	// var duplicateUserCheck = function() {
-	// 	Player.findOne({ username: username }, function (err, doc) {
-	// 		if (err) return res.send(500, err);
-	// 		if (doc) return res.send(400, 'Username is already taken.');
-
-	// 		createUser();
-	// 	});
-	// };
-	
 	// Create new `Player`.
-	var createUser = function() {
-		Player.create({
-			// username: username,
-			profile: profile,
-		}, function(err, doc) {
+	var createPlayer = function() {
+		var player = {
+			name: profile.displayName,
+			profile: profile
+		};
+
+		if (profile.provider == 'facebook') {
+			player.location = profile._json.location.name;
+
+			if (profile._json.gender == 'male') {
+				player.gender = 'M';
+			} else if (profile._json.gender == 'female') {
+				player.gender = 'F';
+			}
+		} else if (profile.provider == 'twitter') {
+			player.location = profile._json.location;
+			player.bio = profile._json.description;
+		}
+
+		Player.create(player, function(err, doc) {
 			if (err) return res.send(500, err);
 			
 			signIn(doc);
@@ -122,8 +116,11 @@ var signUpSocial = function (req, res, username, profile) {
 	};
 	
 	// Start the flow...
-	createUser();
+	createPlayer();
 };
+
+
+
 
 //
 // Facebook Sign Up (Step 1)
@@ -137,7 +134,6 @@ exports.facebookSignUp = function(req, res, next) {
 	})(req, res, next);
 
 };
-
 
 //
 // Facebook Sign Up (Step 2)
@@ -172,6 +168,8 @@ exports.facebookSignUpCallback = function(req, res, next) {
 };
 
 
+
+
 //
 // Twitter Sign Up (Step 1)
 // Request token.
@@ -181,7 +179,6 @@ exports.twitterSignUp = function(req, res, next) {
 		callbackURL: req.headers.origin + req.app.get('twitter-signup-callback')
 	})(req, res, next);
 };
-
 
 //
 // Twitter Sign Up (Step 2)
@@ -198,7 +195,7 @@ exports.twitterSignUpCallback = function(req, res, next) {
 
 		Player.findOne({ 'profile.id': profile.id }, function(err, player) {
 			if (err) return next(err);
-			if (player) return res.send(400, 'We found a player linked to your Facebook account. Please try signing in.');
+			if (player) return res.send(400, 'We found a player linked to your Twitter account. Please try signing in.');
 
 			// var username = profile.provider + profile.id;
 			// signUpSocial(req, res, username, profile);

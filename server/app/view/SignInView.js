@@ -44,17 +44,11 @@ exports.localSignIn = function (req, res) {
 // Request token.
 // 
 exports.facebookSignIn = function(req, res, next){
-	
-	var passport = req._passport.instance,
-		callbackUrl = [
-			req.headers.origin,
-			req.app.get('facebook-signin-callback')
-		].join('');
-	
+
 	// Attempt Facebook login
-	passport.authenticate('facebook', {
+	req._passport.instance.authenticate('facebook', {
 		display: 'touch', 
-		callbackURL: callbackUrl
+		callbackURL: req.headers.origin + req.app.get('facebook-signin-callback')
 	})(req, res, next);
 
 };
@@ -65,12 +59,7 @@ exports.facebookSignIn = function(req, res, next){
 // 
 exports.facebookSignInCallback = function(req, res, next){
 	
-	var Player = req.app.db.models.Player,
-		passport = req._passport.instance,
-		callbackUrl = [
-			req.headers.origin,
-			req.app.get('facebook-signin-callback')
-		].join('');
+	var Player = req.app.db.models.Player;
 	
 	var facebookSignIn = function (err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
@@ -83,6 +72,49 @@ exports.facebookSignInCallback = function(req, res, next){
 
 			req.login(player, function(err) {
 				if (err) return res.send(500, err);
+				res.send(200, { player: player });
+			});
+		});
+	}
+
+	req._passport.instance.authenticate('facebook', { callbackURL: req.headers.origin + req.app.get('facebook-signin-callback') }, facebookSignIn)(req, res, next);
+};
+
+
+
+// 
+// Twitter Sign In (Step 1)
+// Request token.
+// 
+exports.twitterSignIn = function(req, res, next){
+
+	// Attempt Twitter login
+	req._passport.instance.authenticate('twitter', {
+		display: 'touch', 
+		callbackURL: req.headers.origin + req.app.get('twitter-signin-callback')
+	})(req, res, next);
+
+};
+
+// 
+// Twitter Sign In (Step 2)
+// Validate token.
+// 
+exports.twitterSignInCallback = function(req, res, next){
+	
+	var Player = req.app.db.models.Player;
+	
+	var twitterSignIn = function (err, player, info) {
+		if (!info || !info.profile) return res.send(400, 'Profile not available.');
+		
+		var profile = info.profile;
+
+		Player.findOne({ 'profile.id': profile.id }, function(err, player) {
+			if (err) return next(err);
+			if (!player) return res.send(400, 'No players found linked to your Twitter account. You may need to create an account first.');
+
+			req.login(player, function(err) {
+				if (err) return res.send(500, err);
 				
 				player.password = undefined;
 				res.send(200, { player: player });
@@ -90,5 +122,5 @@ exports.facebookSignInCallback = function(req, res, next){
 		});
 	}
 
-	passport.authenticate('facebook', { callbackURL: callbackUrl }, facebookSignIn)(req, res, next);
+	req._passport.instance.authenticate('twitter', { callbackURL: req.headers.origin + req.app.get('twitter-signin-callback') }, twitterSignIn)(req, res, next);
 };

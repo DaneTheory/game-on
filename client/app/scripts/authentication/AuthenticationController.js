@@ -133,8 +133,29 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 			});
 	};
 
+	$scope.signInTwitterRequestToken = function () {
+		return $http.get(ApiUrl + '/auth/signin/twitter')
+			.success(function(url) {
+				$window.location.href = url;
+			});
+	};
+
 	$scope.signInFacebook = function () {
 		return $http.get(ApiUrl + '/auth/signin/facebook/callback', {
+				params: $location.search()
+			}).success(function(data) {
+				$scope.removeUrlParams();
+				AuthenticationService.setPlayer(data.player);
+				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
+			}).error(function(data) {
+				$scope.removeUrlParams();
+				AuthenticationService.errorMessage = data;
+				$location.path('/auth/signin'); // Redirect to the sign in page.
+			});
+	};
+
+	$scope.signInTwitter = function () {
+		return $http.get(ApiUrl + '/auth/signin/twitter/callback', {
 				params: $location.search()
 			}).success(function(data) {
 				$scope.removeUrlParams();
@@ -160,6 +181,6 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 		AuthenticationService.errorMessage = null;
 	};
 
-	$scope.init();
+	//$scope.init();
 
 });

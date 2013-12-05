@@ -8,15 +8,15 @@
 
 'use strict';
 
-app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window, AuthenticationModel, ApiUrl) {
+app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window, AuthenticationService, ApiUrl) {
 
 	// Credentials
-	// TODO: Move this to Model?
+	// TODO: Move this to the service?
 	$scope.password = null;
 	$scope.name = null;
 	$scope.email = null;
 
-	$scope.AuthenticationModel = AuthenticationModel;
+	$scope.AuthenticationService = AuthenticationService;
 
 	//
 	// ### function signIn (email, password)
@@ -29,15 +29,15 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 			email: email,
 			password: password
 		}).success(function (data) {
-			// Add signed in Player to the model and cookies.
-			AuthenticationModel.setPlayer(data.player);
+			// Add signed in Player to the service and cookies.
+			AuthenticationService.setPlayer(data.player);
 			// Redicted route to default route.
-			$location.path(AuthenticationModel.getPath());
+			$location.path(AuthenticationService.getPath());
 		}).error(function (data) {
-			// Remove signed in Player from the model and clean the cookies.
-			AuthenticationModel.removePlayer();
+			// Remove signed in Player from the service and clean the cookies.
+			AuthenticationService.removePlayer();
 			// Display error message.
-			AuthenticationModel.errorMessage = data;
+			AuthenticationService.errorMessage = data;
 		});
 	};
 
@@ -54,11 +54,11 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 			password: password,
 			name: name,
 		}).success(function(data) {
-			AuthenticationModel.setPlayer(data.player);
-			$location.path(AuthenticationModel.getPath());
+			AuthenticationService.setPlayer(data.player);
+			$location.path(AuthenticationService.getPath());
 		}).error(function (data) {
-			AuthenticationModel.removePlayer();
-			AuthenticationModel.errorMessage = data;
+			AuthenticationService.removePlayer();
+			AuthenticationService.errorMessage = data;
 		});
 	};
 
@@ -85,11 +85,11 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 				params: $location.search()
 			}).success(function(data) {
 				$scope.removeUrlParams();
-				AuthenticationModel.setPlayer(data.player);
-				$location.path(AuthenticationModel.getPath()); // Redirect to the private page.
+				AuthenticationService.setPlayer(data.player);
+				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
 			}).error(function(data) {
 				$scope.removeUrlParams();
-				AuthenticationModel.errorMessage = data;
+				AuthenticationService.errorMessage = data;
 				$location.path('/auth/signup'); // Redirect to sign up page.
 			});
 	};
@@ -106,11 +106,11 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 				params: $location.search()
 			}).success(function(data) {
 				$scope.removeUrlParams();
-				AuthenticationModel.setPlayer(data.player);
-				$location.path(AuthenticationModel.getPath()); // Redirect to the private page.
+				AuthenticationService.setPlayer(data.player);
+				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
 			}).error(function(data) {
 				$scope.removeUrlParams();
-				AuthenticationModel.errorMessage = data;
+				AuthenticationService.errorMessage = data;
 				$location.path('/auth/signin'); // Redirect to the sign in page.
 			});
 	};
@@ -125,7 +125,7 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 		$scope.email = 'pablodenadai@gmail.com';
 		$scope.password = '123';
 		$scope.name = 'Pablo De Nadai';
-		AuthenticationModel.errorStatus = null;
+		AuthenticationService.errorStatus = null;
 	};
 
 	$scope.init();

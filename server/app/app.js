@@ -10,7 +10,7 @@ var express = require('express'),
 var app = express();
 
 // Setup mongoose
-app.set('mongodb-uri', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/footballjs94');
+app.set('mongodb-uri', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gameon');
 app.db = mongoose.connect(app.get('mongodb-uri'));
 app.db.connection.on('error', console.error.bind(console, 'mongoose connection error: '));
 app.db.connection.once('open', function () {

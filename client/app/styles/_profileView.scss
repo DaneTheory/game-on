@@ -45,10 +45,9 @@
 		&.background-7 { background-image: url('//localhost:3000/images/background_7.jpg'); }
 		&.background-8 { background-image: url('//localhost:3000/images/background_8.jpg'); }
 		&.background-9 { background-image: url('//localhost:3000/images/background_9.jpg'); }
-		&.background-10 { background-image: url('//localhost:3000/images/background_10.jpg'); }
 	}
 
-	&.edit-view {
+	&.profile-update-view {
 		.header {
 			.form-control-name,
 			.form-control-location {

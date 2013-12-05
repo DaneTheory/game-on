@@ -10,7 +10,7 @@ exports = module.exports = function(app, mongoose) {
 
 		action: { type: String },
 		venue: { type: mongoose.Schema.ObjectId, ref: 'Venue' },
-		match: { type: mongoose.Schema.ObjectId, ref: 'Match' },
+		game: { type: mongoose.Schema.ObjectId, ref: 'Game' },
 		
 		meta: {
 			createdBy: { type: mongoose.Schema.ObjectId, ref: 'Player' },

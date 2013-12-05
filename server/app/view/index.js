@@ -3,7 +3,7 @@ var passport = require('passport'),
 	signInView = require('./SignInView'),
 	signUpView = require('./SignUpView'),
 	signOutView = require('./SignOutView'),
-	matchView = require('./MatchView'),
+	gameView = require('./GameView'),
 	venueView = require('./VenueView'),
 	playerView = require('./PlayerView'),
 	searchView = require('./SearchView'),
@@ -36,11 +36,10 @@ exports = module.exports = function(app) {
 	app.get(apiPath + '/player/:playerId',			playerView.getById);
 	app.put(apiPath + '/player/:playerId',			playerView.update);
 
-	// Match
-	app.post(apiPath + '/match/:matchId/join', 		matchView.join);
-	app.post(apiPath + '/match/:matchId/leave', 	matchView.leave);
-	app.post(apiPath + '/match', 					matchView.create);
-	app.del(apiPath + '/match', 					matchView.delete);
+	// Game
+	app.post(apiPath + '/game/:gameId/join', 		gameView.join);
+	app.post(apiPath + '/game/:gameId/leave', 		gameView.leave);
+	app.post(apiPath + '/game', 					gameView.create);
 
 	// Venue
 	app.post(apiPath + '/venue',					venueView.create);

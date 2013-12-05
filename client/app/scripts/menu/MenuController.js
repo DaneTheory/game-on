@@ -4,12 +4,12 @@
 
 'use strict';
 
-app.controller('MenuCtrl', function ($scope, $location, $http, ApiUrl, AuthenticationModel) {
+app.controller('MenuCtrl', function ($scope, $location, $http, ApiUrl, AuthenticationService) {
 
-	$scope.AuthenticationModel = AuthenticationModel;
+	$scope.AuthenticationService = AuthenticationService;
 
 	$scope.signOut = function () {
-		AuthenticationModel.removePlayer();
+		AuthenticationService.removePlayer();
 		$location.path('/');
 		return $http.get(ApiUrl + '/auth/signout');
 	};

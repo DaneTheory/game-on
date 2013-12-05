@@ -39,21 +39,21 @@ app.config(function ($routeProvider, $httpProvider) {
 			controller: 'MainCtrl',
 			requireAuthentication: false
 		})
-		.when('/player/edit', {
-			templateUrl: 'views/player/PlayerEditView.html',
-			controller: 'PlayerEditCtrl'
+		.when('/player/update', {
+			templateUrl: 'views/player/PlayerUpdateView.html',
+			controller: 'PlayerUpdateCtrl'
 		})
 		.when('/player/:playerId', {
 			templateUrl: 'views/player/PlayerView.html',
-			controller: 'PlayerCtrl'
+			controller: 'PlayerReadCtrl'
 		})
-		.when('/venue/new', {
-			templateUrl: 'views/venue/VenueNewView.html',
-			controller: 'VenueNewCtrl'
+		.when('/venue/create', {
+			templateUrl: 'views/venue/VenueCreateView.html',
+			controller: 'VenueCreateCtrl'
 		})
-		.when('/match/new', {
-			templateUrl: 'views/match/MatchNewView.html',
-			controller: 'MatchNewCtrl'
+		.when('/game/create', {
+			templateUrl: 'views/game/GameCreateView.html',
+			controller: 'GameCreateCtrl'
 		})
 		.when('/search', {
 			templateUrl: 'views/search/SearchView.html',
@@ -82,12 +82,12 @@ app.config(function ($routeProvider, $httpProvider) {
 
 });
 
-app.run(function ($rootScope, $location, AuthenticationModel) {
+app.run(function ($rootScope, $location, AuthenticationService) {
 
 	// Register listener to watch route changes.
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 
-		if (!AuthenticationModel.isSignedIn()) {
+		if (!AuthenticationService.isSignedIn()) {
 			// If not Signed In yet, but it's trying to access a private page, then redirect it to the `Sign In` page.
 			if (next.redirectTo === undefined && next.requireAuthentication === undefined) {
 				$location.path('/signin');
@@ -95,7 +95,7 @@ app.run(function ($rootScope, $location, AuthenticationModel) {
 		} else {
 			// If already Signed In, but it's trying to access a public page, then redirect it to the `defaultRoute`.
 			if (next.requireAuthentication === false) {
-				$location.path('/player/' + AuthenticationModel.player.id);
+				$location.path('/player/' + AuthenticationService.player.id);
 			}
 		}
 	});

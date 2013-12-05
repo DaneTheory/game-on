@@ -1,16 +1,16 @@
 <div class="profile-view">
-	<div class="header text-center background-{{ PlayerModel.player.backgroundImageId }}">
-		<h3>{{PlayerModel.player.name}}</h3>
-		<img class="img-circle" ng-src="{{ PlayerModel.player.imageUrl }}" width="90" height="90">
-		<p class="lead">{{ PlayerModel.player.location }}</p>
+	<div class="header text-center background-{{ PlayerService.player.backgroundImageId }}">
+		<h3>{{PlayerService.player.name}}</h3>
+		<img class="img-circle" ng-src="{{ PlayerService.player.imageUrl }}" width="90" height="90">
+		<p class="lead">{{ PlayerService.player.location }}</p>
 
 		<p class="location">
-			<span ng-switch="PlayerModel.player.gender">
+			<span ng-switch="PlayerService.player.gender">
 				<i ng-switch-when="M" class="fa fa-male fa-lg"></i>
 				<i ng-switch-when="F" class="fa fa-female fa-lg"></i>
 			</span>
 			<span class="divider">·</span>
-			<i ng-repeat="rate in PlayerModel.player.rateArray track by $index" class="fa fa-lg" ng-class="{ 'fa-star': rate, 'fa-star-o': !rate }"></i>
+			<i ng-repeat="rate in PlayerService.player.rateArray track by $index" class="fa fa-lg" ng-class="{ 'fa-star': rate, 'fa-star-o': !rate }"></i>
 		</p>
 	</div>
 
@@ -18,7 +18,7 @@
 		<div class="container">
 			<ul class="nav navbar-nav nav-center">
 				<li ng-class="{active: tab == 0}"><a href="" ng-click="tab = 0">Profile</a></li>
-				<li ng-class="{active: tab == 1}"><a href="" ng-click="tab = 1" ng-show="PlayerModel.player.isMe">Feeds <span ng-if="FeedModel.feeds" class="badge badge-danger">{{ ( FeedModel.feeds | filter: { 'meta.readAt': null } ).length }}</span></a></li>
+				<li ng-class="{active: tab == 1}"><a href="" ng-click="tab = 1" ng-show="PlayerService.player.isMe">Feeds <span ng-if="FeedService.feeds" class="badge badge-danger">{{ ( FeedService.feeds | filter: { 'meta.readAt': null } ).length }}</span></a></li>
 			</ul>
 		</div>
 	</div>

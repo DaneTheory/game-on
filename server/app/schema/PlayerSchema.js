@@ -15,8 +15,8 @@ exports = module.exports = function(app, mongoose) {
         gender: { type: String, upper: true, match: /[MF]/ },
         location: { type: String },
         rate: { type: Number, min: 1, max: 5 },
-        matchesPlayed: { type: Number, default: 0 },
-        matchesOrganized: { type: Number, default: 0 },
+        gamesPlayed: { type: Number, default: 0 },
+        gamesOrganized: { type: Number, default: 0 },
         bio: { type: String, default: '' },
         backgroundImageId: { type: Number, default: 1 },
         profile: {

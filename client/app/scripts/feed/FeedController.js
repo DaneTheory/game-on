@@ -4,14 +4,14 @@
 
 'use strict';
 
-app.controller('FeedCtrl', function ($scope, FeedModel) {
+app.controller('FeedCtrl', function ($scope, FeedService) {
 
 	$scope.markAsRead = function (feed) {
-		FeedModel.markAsRead(feed);
+		FeedService.markAsRead(feed);
 	};
 
 	$scope.markAllAsRead = function () {
-		FeedModel.markAllAsRead();
+		FeedService.markAllAsRead();
 	};
 
 });

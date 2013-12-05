@@ -8,7 +8,7 @@ var _ = require('lodash'),
 exports.search = function (req, res) {
 
 	var models = req.app.db.models,
-		Match = models.Match;
+		Game = models.Game;
 
 	// TODO: Sanitize `query`.
 	var query = req.query,
@@ -19,17 +19,17 @@ exports.search = function (req, res) {
         coordinates: [query.latitude, query.longitude]
     };
 
-	var findMatches = function (callback) {
-		Match.search(query).limit(maxResults).sort('when').exec(function (err, matches) {
+	var findGames = function (callback) {
+		Game.search(query).limit(maxResults).sort('when').exec(function (err, games) {
 			if (err) res.send(err);
 
-			matches = matches.map(function (match) {
-				match = match.toObject();
-				match.distance = getDistance(userLocation.coordinates, match.coordinates);
-				return match;
+			games = games.map(function (game) {
+				game = game.toObject();
+				game.distance = getDistance(userLocation.coordinates, game.coordinates);
+				return game;
 			});
 
-			outcome.push.apply(outcome, matches);
+			outcome.push.apply(outcome, games);
 			callback(null, 'done');
 		});
 	};
@@ -68,5 +68,5 @@ exports.search = function (req, res) {
 		res.send(outcome);
 	};
 
-	async.parallel([findMatches], asyncFinally);
+	async.parallel([findGames], asyncFinally);
 };

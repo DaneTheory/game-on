@@ -8,7 +8,7 @@ exports.init = function(req, res){
 	// Drop all documents
 	models.Player.remove({}, function(err){});
 	models.Venue.remove({}, function(err){});
-	models.Match.remove({}, function(err){});
+	models.Game.remove({}, function(err){});
 	models.Feed.remove({}, function(err){});
 
 	// Player
@@ -94,8 +94,8 @@ exports.init = function(req, res){
 		vs.push(v);
 	});
 
-	// Match
-	var matches = [
+	// Game
+	var games = [
 		{
 			description: 'South-Americans Friendly',
 	        venue: vs[0].id,
@@ -144,8 +144,8 @@ exports.init = function(req, res){
 	];
 
 	var ms = [];
-	_.each(matches, function (match) {
-		var m = new models.Match(match);
+	_.each(games, function (game) {
+		var m = new models.Game(game);
 		m.save();
 		ms.push(m);
 	});
@@ -154,10 +154,10 @@ exports.init = function(req, res){
 	var feeds = [
 		{
 			player: ps[0].id,
-			type: 'match',
+			type: 'game',
 			action: 'joined',
 			venue: vs[0].id,
-			match: ms[0].id,
+			game: ms[0].id,
 			meta: {
 				createdBy: ps[1].id,
 				createdAt: new Date

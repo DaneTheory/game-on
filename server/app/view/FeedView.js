@@ -6,7 +6,7 @@ exports.getFeeds = function (req, res) {
         models = req.app.db.models,
         Feed = models.Feed;
 
-    Feed.find({ 'player': playerId }).limit(10).sort('-meta.createdBy').populate(['match', 'meta.createdBy']).exec(function (err, feeds) {
+    Feed.find({ 'player': playerId }).limit(10).sort('-meta.createdBy').populate(['game', 'meta.createdBy']).exec(function (err, feeds) {
         if (err) return res.send(500, err);
         return res.send(200, feeds);
     });

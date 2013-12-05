@@ -79,31 +79,31 @@ var signUpSocial = function (req, res, username, profile) {
 	var Player = req.app.db.models.Player,
 		passport = req._passport.instance;
 
-	// Validate info.
-	var validate = function() {
-		if (!username) return res.send(400, 'Username required');
+	// // Validate info.
+	// var validate = function() {
+	// 	if (!username) return res.send(400, 'Username required');
 		
-		if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
-			return res.send(400, 'Username only use letters, numbers, \'-\', \'_\'');
-		}
+	// 	if (!/^[a-zA-Z0-9\-\_]+$/.test(username)) {
+	// 		return res.send(400, 'Username only use letters, numbers, \'-\', \'_\'');
+	// 	}
 
-		duplicateUserCheck();
-	};
+	// 	duplicateUserCheck();
+	// };
 	
-	// Validade duplicate.
-	var duplicateUserCheck = function() {
-		Player.findOne({ username: username }, function (err, doc) {
-			if (err) return res.send(500, err);
-			if (doc) return res.send(400, 'Username is already taken.');
+	// // Validade duplicate.
+	// var duplicateUserCheck = function() {
+	// 	Player.findOne({ username: username }, function (err, doc) {
+	// 		if (err) return res.send(500, err);
+	// 		if (doc) return res.send(400, 'Username is already taken.');
 
-			createUser();
-		});
-	};
+	// 		createUser();
+	// 	});
+	// };
 	
 	// Create new `Player`.
 	var createUser = function() {
 		Player.create({
-			username: username,
+			// username: username,
 			profile: profile,
 		}, function(err, doc) {
 			if (err) return res.send(500, err);
@@ -122,7 +122,7 @@ var signUpSocial = function (req, res, username, profile) {
 	};
 	
 	// Start the flow...
-	validate();
+	createUser();
 };
 
 //
@@ -130,19 +130,14 @@ var signUpSocial = function (req, res, username, profile) {
 // Request token.
 //
 exports.facebookSignUp = function(req, res, next) {
-	
-	var passport = req._passport.instance,
-		callbackUrl = [
-			req.headers.origin,
-			req.app.get('facebook-signup-callback')
-		].join('');
 
-	passport.authenticate('facebook', {
+	req._passport.instance.authenticate('facebook', {
 		display: 'touch', 
-		callbackURL: callbackUrl
+		callbackURL: req.headers.origin + req.app.get('facebook-signup-callback')
 	})(req, res, next);
 
 };
+
 
 //
 // Facebook Sign Up (Step 2)
@@ -166,11 +161,52 @@ exports.facebookSignUpCallback = function(req, res, next) {
 			if (err) return next(err);
 			if (player) return res.send(400, 'We found a player linked to your Facebook account. Please try signing in.');
 
-			var username = profile.provider + profile.id;
-			signUpSocial(req, res, username, profile);
+			// var username = profile.provider + profile.id;
+			// signUpSocial(req, res, username, profile);
+			signUpSocial(req, res, profile);
 		});
 	};
 
 	passport.authenticate('facebook', { callbackURL: callbackUrl }, facebookSignUp)(req, res, next);
 
 };
+
+
+//
+// Twitter Sign Up (Step 1)
+// Request token.
+//
+exports.twitterSignUp = function(req, res, next) {
+	req._passport.instance.authenticate('twitter', {
+		callbackURL: req.headers.origin + req.app.get('twitter-signup-callback')
+	})(req, res, next);
+};
+
+
+//
+// Twitter Sign Up (Step 2)
+// Validate token.
+//
+exports.twitterSignUpCallback = function(req, res, next) {
+
+	var Player = req.app.db.models.Player;
+
+	var twitterSignUp = function(err, player, info) {
+		if (!info || !info.profile) return res.send(400, 'Profile not available.');
+
+		var profile = info.profile;
+
+		Player.findOne({ 'profile.id': profile.id }, function(err, player) {
+			if (err) return next(err);
+			if (player) return res.send(400, 'We found a player linked to your Facebook account. Please try signing in.');
+
+			// var username = profile.provider + profile.id;
+			// signUpSocial(req, res, username, profile);
+			signUpSocial(req, res, profile);
+		});
+	};
+
+	req._passport.instance.authenticate('twitter', { callbackURL: req.headers.origin + req.app.get('twitter-signup-callback') }, twitterSignUp)(req, res, next);
+
+};
+

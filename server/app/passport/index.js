@@ -5,6 +5,7 @@ exports = module.exports = function(app, passport) {
 	var env = require('./../env')(),
 		LocalStrategy = require('passport-local').Strategy,
 		FacebookStrategy = require('passport-facebook').Strategy;
+		TwitterStrategy = require('passport-twitter').Strategy;
 	
 	// Local Strategy
 	passport.use(new LocalStrategy({
@@ -43,6 +44,21 @@ exports = module.exports = function(app, passport) {
 			});
 		}));
 	}
+
+	// Twitter Strategy
+ 	if (env['twitter-oauth-key']) {
+    	passport.use(new TwitterStrategy({
+        	consumerKey: env['twitter-oauth-key'],
+        	consumerSecret: env['twitter-oauth-secret']
+      	},
+      	function(token, tokenSecret, profile, done) {
+        	done(null, false, {
+          		token: token,
+          		tokenSecret: tokenSecret,
+          		profile: profile
+        	});
+      	}));
+  	}
 	
 	// Serialize
 	passport.serializeUser(function(player, done) {

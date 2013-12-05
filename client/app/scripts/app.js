@@ -21,13 +21,15 @@ var app = angular.module('gameOn', [
 app.constant('ServerUrl', '//localhost:3000');
 app.constant('ApiUrl', '//localhost:3000/api/1');
 
-app.config(function ($routeProvider, $httpProvider) {
+app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
 	// Add `AuthenticationInterceptor` to check if the `Player` is still Signed In.
 	$httpProvider.interceptors.push('AuthenticationInterceptor');
 
 	// Add `withCredentials` header to requests. (CORS requirement)
 	$httpProvider.defaults.withCredentials = true;
+
+	$locationProvider.html5Mode(true);
 
 	// Google Maps Style
 	google.maps.visualRefresh = true;
@@ -72,6 +74,11 @@ app.config(function ($routeProvider, $httpProvider) {
 		})
 		.when('/auth/facebook', {
 			templateUrl: 'views/authentication/FacebookView.html',
+			controller: 'AuthenticationCtrl',
+			requireAuthentication: false
+		})
+		.when('/auth/twitter', {
+			templateUrl: 'views/authentication/TwitterView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})

@@ -1,0 +1,25 @@
+.game-create-view,
+.venue-create-view {
+	padding-top: 70px;
+
+	textarea {
+	    resize: none;
+	}
+
+	map {
+		height: 250px;
+	}
+
+	.navbar {
+		margin-top: 0;
+		margin-bottom: 10px;
+	}
+
+	.media {
+		margin-bottom: 5px;
+	}
+
+	.col-label {
+		padding-top: 7px;
+	}	
+}

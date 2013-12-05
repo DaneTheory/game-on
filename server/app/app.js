@@ -32,6 +32,8 @@ app.configure(function () {
 	// Facebook authentication callback path.
 	app.set('facebook-signup-callback', '/auth/facebook?action=signup');
 	app.set('facebook-signin-callback', '/auth/facebook?action=signin');
+	app.set('twitter-signup-callback', '/auth/twitter?action=signup');
+	app.set('twitter-signin-callback', '/auth/twitter?action=signin');
 
 	// Password encryption
 	app.set('crypto-key', 'k3yb0ardc4t');

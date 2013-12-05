@@ -29,6 +29,9 @@ exports = module.exports = function(app) {
 	// Facebook Authentication
 	app.get(authPath + '/signup/facebook', 			signUpView.facebookSignUp);
 	app.get(authPath + '/signup/facebook/callback', signUpView.facebookSignUpCallback);
+	app.get(authPath + '/signup/twitter', 			signUpView.twitterSignUp);
+	app.get(authPath + '/signup/twitter/callback', 	signUpView.twitterSignUpCallback);
+
 	app.get(authPath + '/signin/facebook',			signInView.facebookSignIn);
 	app.get(authPath + '/signin/facebook/callback', signInView.facebookSignInCallback);
 

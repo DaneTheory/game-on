@@ -73,6 +73,17 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 		}
 	};
 
+	$scope.signTwitter = function () {
+		var search = $location.search(),
+			action = search.action;
+
+		if (action === 'signin') {
+			$scope.signInTwitter();
+		} else if (action === 'signup') {
+			$scope.signUpTwitter();
+		}
+	};
+
 	$scope.signUpFacebookRequestToken = function () {
 		return $http.get(ApiUrl + '/auth/signup/facebook')
 			.success(function(url) {
@@ -93,6 +104,27 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 				$location.path('/auth/signup'); // Redirect to sign up page.
 			});
 	};
+
+	$scope.signUpTwitter = function () {
+		return $http.get(ApiUrl + '/auth/signup/twitter/callback', {
+				params: $location.search()
+			}).success(function(data) {
+				$scope.removeUrlParams();
+				AuthenticationService.setPlayer(data.player);
+				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
+			}).error(function(data) {
+				$scope.removeUrlParams();
+				AuthenticationService.errorMessage = data;
+				$location.path('/auth/signup'); // Redirect to sign up page.
+			});
+	};	
+
+	$scope.signUpTwitterRequestToken = function () {
+		return $http.get(ApiUrl + '/auth/signup/twitter')
+			.success(function(url) {
+				$window.location.href = url;
+			});
+	};	
 
 	$scope.signInFacebookRequestToken = function () {
 		return $http.get(ApiUrl + '/auth/signin/facebook')
@@ -116,7 +148,7 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 	};
 
 	$scope.removeUrlParams = function () {
-		$location.search(null); // Remove params from url.
+		$location.search({}); // Remove params from url.
 		$location.hash(null); // Remove Facebook `#_=_` buggy hash.
 	};
 
@@ -125,7 +157,7 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 		$scope.email = 'pablodenadai@gmail.com';
 		$scope.password = '123';
 		$scope.name = 'Pablo De Nadai';
-		AuthenticationService.errorStatus = null;
+		AuthenticationService.errorMessage = null;
 	};
 
 	$scope.init();

@@ -30,6 +30,9 @@ exports.markAsRead = function (req, res) {
 
 };
 
+//
+//
+//
 exports.markAllAsRead = function (req, res) {
 
     var playerId = req.session.passport.user,
@@ -42,6 +45,3 @@ exports.markAllAsRead = function (req, res) {
     });
 
 };
-
-
-

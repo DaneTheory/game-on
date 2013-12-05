@@ -160,10 +160,10 @@ module.exports = function (grunt) {
 		// not used since Uglify task does concat,
 		// but still available if needed
 		concat: {
-			 addTemplate: {
-                src: [ '.tmp/concat/scripts/scripts.js', '.tmp/templates.js' ],
-                dest: '.tmp/concat/scripts/scripts.js'
-            }
+			addTemplate: {
+				src: [ '.tmp/concat/scripts/scripts.js', '.tmp/templates.js' ],
+				dest: '.tmp/concat/scripts/scripts.js'
+			}
 		},
 		rev: {
 			dist: {
@@ -331,11 +331,11 @@ module.exports = function (grunt) {
 				src: [ 'views/**/*.html' ],
 				dest: '.tmp/templates.js',
 				options: {
-			    	htmlmin: {
-			    		collapseWhitespace: false, 
-			    		collapseBooleanAttributes: true
-			    	}
-			    }
+					htmlmin: {
+						collapseWhitespace: false,
+						collapseBooleanAttributes: true
+					}
+				}
 			}
 		}
 	});

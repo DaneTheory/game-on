@@ -29,7 +29,7 @@ app.service('VenueModel', function ($http, $q, CacheHelper, ApiUrl) {
 				})
 				.error(function () {
 					deferred.resolve(CacheHelper.remove('venuesByCoordinates'));
-				})
+				});
 			}
 
 			return deferred.promise;
@@ -44,10 +44,10 @@ app.service('VenueModel', function ($http, $q, CacheHelper, ApiUrl) {
 				})
 				.error(function () {
 					deferred.reject();
-				})
+				});
 
 			return deferred.promise;
 		}
-	}
+	};
 
 });

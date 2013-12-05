@@ -34,14 +34,14 @@ app.controller('VenueNewCtrl', function ($scope, $location, AuthenticationModel,
 
 			$scope.venue.location = results[4].formatted_address || '';
 			$scope.venue.address = results[0].formatted_address || '';
-		})
+		});
 	};
 
 	$scope.create = function (venue) {
 		VenueModel.create(venue).then(function () {
 			$location.path('/player/' + AuthenticationModel.player.id);
 		});
-	}
+	};
 
 	$scope.currentCoordinates;
 

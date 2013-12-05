@@ -16,6 +16,10 @@ exports.getById = function (req, res) {
 		if (player) {
 			player = player.toObject();
 			player.isMe = playerId == authPlayerId;
+
+			if (!player.isMe) {
+				delete player.email;
+			}
 		}
 
 		return res.send(200, player);
@@ -36,12 +40,10 @@ exports.update = function (req, res) {
 		gender: req.body.gender,
 		email: req.body.email,
 		backgroundImageId: req.body.backgroundImageId
-	}
+	};
 
 	models.Player.findByIdAndUpdate(playerId, player).exec(function (err, doc) {
 		if (err) return res.send(500, err);
-
 		return res.send(200, doc);
 	});
 };
-

@@ -53,8 +53,13 @@ exports.localSignUp = function (req, res) {
 
 			req.login(player, function(err) {
 				if (err) return res.send(500, err);
+
+				if (player) {
+					player = player.toObject();
+					delete player.password;
+				}
 		
-				res.send(200, { player: player });
+				return res.send(200, { player: player });
 			});
 		})(req, res);
 	};

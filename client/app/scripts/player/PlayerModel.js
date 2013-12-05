@@ -42,6 +42,6 @@ app.service('PlayerModel', function ($http, $q, CacheHelper, ApiUrl) {
 
 			return deferred.promise;
 		}
-	}
+	};
 
 });

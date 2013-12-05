@@ -4,7 +4,8 @@
 
 'use strict';
 
-app.controller('PlayerEditCtrl', function ($scope, $location, PlayerModel, ServerUrl, AuthenticationModel, CacheHelper) {
+app.controller('PlayerEditCtrl',
+	function ($scope, $location, PlayerModel, ServerUrl, AuthenticationModel, CacheHelper) {
 
 	$scope.ServerUrl = ServerUrl;
 	$scope.PlayerModel = PlayerModel;

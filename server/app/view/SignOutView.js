@@ -3,5 +3,5 @@
 //
 exports.signOut = function (req, res) {
     req.logout();
-    res.send(200);
+    return res.send(200);
 };

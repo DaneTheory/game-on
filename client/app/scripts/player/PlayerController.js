@@ -4,7 +4,9 @@
 
 'use strict';
 
-app.controller('PlayerCtrl', function ($scope, $routeParams, PlayerModel, FeedModel, VibrationHelper, PushNotificationHelper, GeolocationHelper, CacheHelper) {
+app.controller('PlayerCtrl',
+	function ($scope, $routeParams, PlayerModel, FeedModel, VibrationHelper,
+		PushNotificationHelper, GeolocationHelper, CacheHelper) {
 
 	$scope.PlayerModel = PlayerModel;
 	$scope.FeedModel = FeedModel;

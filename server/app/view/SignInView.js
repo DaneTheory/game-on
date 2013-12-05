@@ -23,6 +23,12 @@ exports.localSignIn = function (req, res) {
 
 			req.login(player, function(err) {
 				if (err) return res.send(500, err);
+
+				if (player) {
+					player = player.toObject();
+					delete player.password;
+				}
+
 				return res.send(200, { player: player });
 			});
 		})(req, res);

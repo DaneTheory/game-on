@@ -48,9 +48,9 @@ app.service('MatchModel', function ($http, $q, ApiUrl) {
 				})
 				.error(function () {
 					deferred.reject();
-				})
+				});
 
 			return deferred.promise;
 		}
-	}
+	};
 });

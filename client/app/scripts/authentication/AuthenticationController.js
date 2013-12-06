@@ -8,7 +8,7 @@
 
 'use strict';
 
-app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window, AuthenticationService, ApiUrl) {
+app.controller('AuthenticationCtrl', function ($scope, $location, $window, AuthenticationService) {
 
 	// Credentials
 	$scope.password = null;
@@ -24,20 +24,9 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 	// Sign In: Local strategy logic.
 	// 
 	$scope.signIn = function (email, password) {
-		return $http.post(ApiUrl + '/auth/signin', {
-			email: email,
-			password: password
-		}).success(function (data) {
-			// Add signed in Player to the service and cookies.
-			AuthenticationService.setPlayer(data.player);
-			// Redicted route to default route.
-			$location.path(AuthenticationService.getPath());
-		}).error(function (data) {
-			// Remove signed in Player from the service and clean the cookies.
-			AuthenticationService.removePlayer();
-			// Display error message.
-			AuthenticationService.errorMessage = data;
-		});
+		AuthenticationService.signIn(email, password)
+			.success($scope.signSuccess)
+			.error($scope.signError);
 	};
 
 	//
@@ -48,47 +37,53 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 	// Sign Up: Local strategy logic.
 	// 
 	$scope.signUp = function (email, password, name) {
-		return $http.post(ApiUrl + '/auth/signup', {
-			email: email,
-			password: password,
-			name: name,
-		}).success(function(data) {
-			AuthenticationService.setPlayer(data.player);
-			$location.path(AuthenticationService.getPath());
-		}).error(function (data) {
-			AuthenticationService.removePlayer();
-			AuthenticationService.errorMessage = data;
-		});
+		AuthenticationService.signIn(email, password, name)
+			.success($scope.signSuccess)
+			.error($scope.signError);
+	};	
+
+	//
+	//
+	//
+	$scope.signSuccess = function (data) {
+		AuthenticationService.setPlayer(data.player); // Add signed in Player to the service and cookies.
+		$location.path(AuthenticationService.getPath()); // Redicted route to default route.
 	};
 
 	//
-	// ### function authSocialRequestToken (action, provider)
+	//
+	//
+	$scope.signError = function (data) {
+		AuthenticationService.removePlayer(); // Remove signed in Player from the service and clean the cookies.
+		AuthenticationService.errorMessage = data; // Display error message.
+	};
+
+
+
+	//
+	// ### function requestToken (action, provider)
 	// #### @action {string} Accepts `signin` or `signup`
 	// #### @provider {string} Accepts `facebook` or `twitter`
 	// 1st step when authenticating with a social account (request token)
 	//
-	$scope.authSocialRequestToken = function (action, provider) {
-		return $http.get(ApiUrl + '/auth/' + action + '/' + provider)
+	$scope.requestToken = function (action, provider) {
+		AuthenticationService.requestToken(action, provider)
 			.success(function(url) {
 				$window.location.href = url;
 			});
 	};
 
 	//
-	// ### function authSocialValidateToken (action, provider)
+	// ### function validateToken ()
 	// 2nd step when authenticating with a social account (validate token)
 	// Requires the following Url search properties:
 	// - @action {string} Accepts `signin` or `signup`
 	// - @provider {string} Accepts `facebook` or `twitter`
 	//
-	$scope.authSocialValidateToken = function () {
-		var search = $location.search(),
-			action = search.action,
-			provider = search.provider;
-
-		return $http.get(ApiUrl + '/auth/' + action + '/' + provider + '/callback', {
-				params: $location.search()
-			})
+	$scope.validateToken = function () {
+		var search = $location.search();
+		
+		AuthenticationService.validateToken(search)
 			.success(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationService.setPlayer(data.player);
@@ -98,7 +93,7 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 				$scope.removeUrlParams();
 				AuthenticationService.errorMessage = data;
 				$location.path('/auth/signin'); // Redirect to the sign in page.
-			});		
+			});
 	};
 
 	$scope.removeUrlParams = function () {

@@ -73,7 +73,7 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 			requireAuthentication: false
 		})
 		.when('/auth/social', {
-			templateUrl: 'views/authentication/AuthSocialView.html',
+			templateUrl: 'views/authentication/SocialView.html',
 			controller: 'AuthenticationCtrl',
 			requireAuthentication: false
 		})

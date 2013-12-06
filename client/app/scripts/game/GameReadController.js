@@ -1,5 +1,5 @@
 //
-// # GameController.js  
+// # Game Controller  
 // Game business logic.
 //
 // 2013 Pablo De Nadai

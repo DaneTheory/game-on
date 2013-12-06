@@ -1,7 +1,7 @@
 //
-// # AuthenticationController.js  
-// App authentication business logic.
-// It handles Local and Social (Facebook) strategies.
+// # Authentication Controller
+// Authentication business logic.
+// It handles Local and Social (Facebook and Twitter) strategies.
 //
 // 2013 Pablo De Nadai
 //
@@ -19,8 +19,8 @@ app.controller('AuthenticationCtrl', function ($scope, $location, $window, Authe
 
 	//
 	// ### function signIn (email, password)
-	// #### @email {email} Email
-	// #### @password {password} Password
+	// #### @email {string} Email
+	// #### @password {string} Password
 	// Sign In: Local strategy logic.
 	// 
 	$scope.signIn = function (email, password) {
@@ -31,9 +31,9 @@ app.controller('AuthenticationCtrl', function ($scope, $location, $window, Authe
 
 	//
 	// ### function signUp (email, password, name)
-	// #### @email {email} Email
-	// #### @password {password} Password
-	// #### @name {name} Name
+	// #### @email {string} Email
+	// #### @password {string} Password
+	// #### @name {string} Name
 	// Sign Up: Local strategy logic.
 	// 
 	$scope.signUp = function (email, password, name) {
@@ -43,7 +43,11 @@ app.controller('AuthenticationCtrl', function ($scope, $location, $window, Authe
 	};	
 
 	//
-	//
+	// ### function signSucess (data)
+	// #### @data {object} Player's information.
+	// Handler for `sign in` and `sign up` success callback.
+	// Stores the player information in the `AuthenticationService`
+	// And redirects the app to the profile page.
 	//
 	$scope.signSuccess = function (data) {
 		AuthenticationService.setPlayer(data.player); // Add signed in Player to the service and cookies.
@@ -51,7 +55,11 @@ app.controller('AuthenticationCtrl', function ($scope, $location, $window, Authe
 	};
 
 	//
-	//
+	// ### function signError (data)
+	// #### @data {object} Error information.
+	// Handler for `sign in` and `sign up` error callback.
+	// Removes the player information from the `AuthenticationService`
+	// And displays the authentication error message.
 	//
 	$scope.signError = function (data) {
 		AuthenticationService.removePlayer(); // Remove signed in Player from the service and clean the cookies.
@@ -96,6 +104,11 @@ app.controller('AuthenticationCtrl', function ($scope, $location, $window, Authe
 			});
 	};
 
+	//
+	// ### function removeUrlParams ()
+	// Removes the tokens from the Url search params.
+	// And cleans the hash params when authenticating with Facebook.
+	//
 	$scope.removeUrlParams = function () {
 		$location.search({}); // Remove params from url.
 		$location.hash(null); // Remove Facebook `#_=_` buggy hash.

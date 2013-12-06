@@ -1,6 +1,13 @@
 //
-// # MapDirective.js
-// Directive that renders a map with a marker on the given coordinate
+// # Map Directive
+// Renders a Google Map widget with the given `zoom` level and `centerCoordinates`.
+// Options:
+// - @showCenterMarker {boolean} Adds a marker to the center of the map if set to `true`.
+// - @markers {array} List of coordinates. Adds a marker for each item in the list.
+// - @markerClick {function} Callback function for when a marker is clicked.
+// - @isMonoMarker {boolean} Whether user can add a new marker to the map. (and only the lastest stays).
+// 
+// 2013 Pablo De Nadai
 //
 
 'use strict';
@@ -30,6 +37,7 @@ app.directive('map', function ($timeout) {
 				marker,
 				centerMarker;
 
+			// Instanciate the map
 			var map = new google.maps.Map(elem[0], {
 				zoom: zoom || 14,
 				mapTypeId: google.maps.MapTypeId.ROADMAP

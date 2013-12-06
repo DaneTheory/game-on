@@ -1,13 +1,14 @@
 //
 //
 //
+// 2013 Pablo De Nadai
+//
 
 'use strict';
 
 app.controller('PlayerUpdateCtrl',
-	function ($scope, $location, PlayerService, ServerUrl, AuthenticationService, CacheHelper) {
+	function ($scope, $location, PlayerService, AuthenticationService, CacheHelper) {
 
-	$scope.ServerUrl = ServerUrl;
 	$scope.PlayerService = PlayerService;
 
 	$scope.playerId = AuthenticationService.player.id;

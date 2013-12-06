@@ -1,5 +1,8 @@
 //
+// # Vibration Helper
+// Executes HTML5 `vibrate` API
 //
+// 2013 Pablo De Nadai
 //
 
 'use strict';

@@ -1,7 +1,9 @@
 //
-// # BlurDirective.js
+// # Blur Directive
 // Directive that executes an expression 
 // when the element it is applied to loses focus.
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

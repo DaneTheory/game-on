@@ -1,12 +1,17 @@
 //
-//
+// # Authentication Service
+// Stores the current session information.
+// Uses Angular's `$cookieStore` to remember the session.
+// 
+// 2013 Pablo De Nadai
 //
 
 'use strict';
 
 app.service('AuthenticationService', function ($http, $cookieStore, ApiUrl) {
 
-	this.player = $cookieStore.get('player');
+	// Retrive Player's information from the cookies - if available.
+	this.player = $cookieStore.get('player'); 
 	this.errorMessage = null;
 
 	return {
@@ -45,6 +50,10 @@ app.service('AuthenticationService', function ($http, $cookieStore, ApiUrl) {
 			return !!this.player;
 		},
 
+		//
+		// ### function getPath ()
+		// Returns the main route for the current player.
+		//
 		getPath: function() {
 			return '/player/' + this.player.id;
 		},

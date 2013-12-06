@@ -1,5 +1,10 @@
 //
+// # Geolocation Helper
+// Returns the current user's coordinates.
+// Uses the HTML5 `geolocation` API.
+// Returns a promise and the result will be cached for perfomance reasons.
 //
+// 2013 Pablo De Nadai
 //
 
 'use strict';

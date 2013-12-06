@@ -1,3 +1,11 @@
+//
+// # Datetime-picker Directive
+// Renders a calendar with `year`, `month`, `day`, `hour` and `minute` views.
+// Allow user to select a specific time and applies it to the model.
+//
+// Third party code.
+//
+
 'use strict';
 
 app.directive('datetimepicker', function () {
@@ -60,22 +68,22 @@ app.directive('datetimepicker', function () {
 				var validViews = ['minute', 'hour', 'day', 'month', 'year'];
 
 				if (validViews.indexOf(configuration.startView) < 0) {
-					throw ('invalid startView value: ' + configuration.startView);
+					throw ('Invalid `startView` value: ' + configuration.startView);
 				}
 
 				if (validViews.indexOf(configuration.minView) < 0) {
-					throw ('invalid minView value: ' + configuration.minView);
+					throw ('Invalid `minView` value: ' + configuration.minView);
 				}
 
 				if (validViews.indexOf(configuration.minView) > validViews.indexOf(configuration.startView)) {
-					throw ('startView must be greater than minView');
+					throw ('The `startView` must be greater than minView');
 				}
 
 				if (!angular.isNumber(configuration.minuteStep)) {
-					throw ('minuteStep must be numeric');
+					throw ('The `minuteStep` must be numeric');
 				}
 				if (configuration.minuteStep <= 0 || configuration.minuteStep >= 60) {
-					throw ('minuteStep must be greater than zero and less than 60');
+					throw ('The `minuteStep` must be greater than zero and less than 60');
 				}
 			}
 

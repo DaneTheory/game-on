@@ -1,6 +1,8 @@
 //
-// # FallbackSrcDirective.js
-// Replace the element src attr with a placeholder in case it fails to load the resource.
+// # Fallback Src Directive
+// Replace the element's `src` attr with a placeholder in case it fails to load the resource.
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

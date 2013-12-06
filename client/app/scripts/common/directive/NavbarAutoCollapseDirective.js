@@ -1,5 +1,9 @@
 //
+// # Navbar Auto Collapse
+// Directive for Twitter Bootstrap 3
+// Collapses the `navbar` whenever the route has changed or been updated.
 //
+// 2013 Pablo De Nadai
 //
 
 'use strict';

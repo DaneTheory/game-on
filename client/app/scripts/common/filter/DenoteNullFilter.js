@@ -1,8 +1,6 @@
 //
-// # DenoteNullFilter.js  
+// # Denote Null Filter
 // Output text when an object is null
-//
-
 //
 // ### filter denoteNull (item, name, placeholder)
 // #### @item {object} Required. Object to be tested for null-ness.
@@ -11,6 +9,8 @@
 // Either returns the original object, or a string noting that the object is null-like.
 // @placeholder accepts strings with `%%name%%` in them, like this;
 // `%%name%% is empty!`
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

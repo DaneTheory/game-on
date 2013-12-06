@@ -1,5 +1,10 @@
 //
+// # Distance Filter
+// Formats distance in Kms.
+// Transforms it to metres if less than 1.
+// Eg. distance(0.95) ==> '950 m'
 //
+// 2013 Pablo De Nadai
 //
 
 app.filter('distance', function ($filter) {

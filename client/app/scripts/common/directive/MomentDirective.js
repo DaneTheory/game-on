@@ -1,6 +1,8 @@
 //
-// # MomentDirective.js
+// # Moment Directive
 // Render a relative date string, with a title showing the absolute date.
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

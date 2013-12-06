@@ -1,6 +1,13 @@
 //
+// # Search Directive
+// Creates a search widget with input field and search button.
+// The input field is hidden by default and it slides to the right as the user hits the search button.
+// 
+// When the search is done (user hits enter in the input field) it automatically 
+// redirects to `/search` route passing the term as a parameter.
 //
-//
+// 2013 Pablo De Nadai
+// 
 
 'use strict';
 
@@ -26,14 +33,17 @@ app.directive('search', function () {
 			scope.term = '';
 			scope.isSearchOpen = false;
 
+			// Used to manage the input visibility
 			scope.openSearch = function () {
 				scope.isSearchOpen = true;
 			};
 
+			// Used to manage the input visibility
 			scope.closeSearch = function () {
 				scope.isSearchOpen = false;
 			};
 
+			// Redirects the `route` to `/search` passing the `term` as query param.
 			scope.search = function (term) {
 				var query = { 'term': term };
 				if (!term) query = '';
@@ -44,16 +54,18 @@ app.directive('search', function () {
 				scope.closeSearch();
 			});
 
+			// Listens to the `routeUpdate` to update the term.
 			scope.$on('$routeUpdate', function () {
-				scope.init();
+				scope.updateTerm();
 			});
 
-			scope.init = function () {
+			// Update the scope in case the `term` query param has changed.
+			scope.updateTerm = function () {
 				var search = scope.location.search();
 				scope.term = search ? search.term : null;
 			};
 
-			scope.init();
+			scope.updateTerm();
 		}
 	};
 

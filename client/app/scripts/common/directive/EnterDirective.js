@@ -1,7 +1,9 @@
 // 
-// # EnterDirective.js
+// # Enter Directive
 // Directive that executes an expression when the element it is applied to gets 
 // an `enter` keydown event.
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

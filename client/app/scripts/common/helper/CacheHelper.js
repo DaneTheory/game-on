@@ -1,5 +1,9 @@
 //
+// # Cache Helper
+// Manages the app cache.
+// Extends the Angular native `cacheFactory`.
 //
+// 2013 Pablo De Nadai
 //
 
 'use strict';

@@ -1,7 +1,9 @@
 //
-// # FocusDirective.js
+// # Focus Directive
 // Directive that places focus on the element it is applied 
 // to when the expression it binds to evaluates to true
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

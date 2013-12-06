@@ -1,6 +1,8 @@
 //
-// # MomentFilter.js  
+// # Moment Filter
 // Converts a timestamp to a human-readable date and time string.
+//
+// 2013 Pablo De Nadai
 //
 
 'use strict';

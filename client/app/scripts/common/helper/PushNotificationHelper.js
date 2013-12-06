@@ -1,5 +1,8 @@
 //
+// # Push Notification Helper 
+// Listens and emits notification from/to the server.
 //
+// 2013 Pablo De Nadai
 //
 
 'use strict';

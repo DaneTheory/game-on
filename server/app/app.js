@@ -30,10 +30,10 @@ app.configure(function () {
 	app.set('dev-path', app.get('api-path') + '/dev'); // Auth-free.
 
 	// Facebook authentication callback path.
-	app.set('facebook-signup-callback', '/auth/facebook?action=signup');
-	app.set('facebook-signin-callback', '/auth/facebook?action=signin');
-	app.set('twitter-signup-callback', '/auth/twitter?action=signup');
-	app.set('twitter-signin-callback', '/auth/twitter?action=signin');
+	app.set('facebook-signup-callback', '/auth/social?action=signup&provider=facebook');
+	app.set('facebook-signin-callback', '/auth/social?action=signin&provider=facebook');
+	app.set('twitter-signup-callback', '/auth/social?action=signup&provider=twitter');
+	app.set('twitter-signin-callback', '/auth/social?action=signin&provider=twitter');
 
 	// Password encryption
 	app.set('crypto-key', 'k3yb0ardc4t');

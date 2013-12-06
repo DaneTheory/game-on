@@ -11,7 +11,6 @@
 app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window, AuthenticationService, ApiUrl) {
 
 	// Credentials
-	// TODO: Move this to the service?
 	$scope.password = null;
 	$scope.name = null;
 	$scope.email = null;
@@ -62,125 +61,49 @@ app.controller('AuthenticationCtrl', function ($scope, $http, $location, $window
 		});
 	};
 
-	$scope.signFacebook = function () {
+	//
+	// ### function authSocialRequestToken (action, provider)
+	// #### @action {string} Accepts `signin` or `signup`
+	// #### @provider {string} Accepts `facebook` or `twitter`
+	// 1st step when authenticating with a social account (request token)
+	//
+	$scope.authSocialRequestToken = function (action, provider) {
+		return $http.get(ApiUrl + '/auth/' + action + '/' + provider)
+			.success(function(url) {
+				$window.location.href = url;
+			});
+	};
+
+	//
+	// ### function authSocialValidateToken (action, provider)
+	// 2nd step when authenticating with a social account (validate token)
+	// Requires the following Url search properties:
+	// - @action {string} Accepts `signin` or `signup`
+	// - @provider {string} Accepts `facebook` or `twitter`
+	//
+	$scope.authSocialValidateToken = function () {
 		var search = $location.search(),
-			action = search.action;
+			action = search.action,
+			provider = search.provider;
 
-		if (action === 'signin') {
-			$scope.signInFacebook();
-		} else if (action === 'signup') {
-			$scope.signUpFacebook();
-		}
-	};
-
-	$scope.signTwitter = function () {
-		var search = $location.search(),
-			action = search.action;
-
-		if (action === 'signin') {
-			$scope.signInTwitter();
-		} else if (action === 'signup') {
-			$scope.signUpTwitter();
-		}
-	};
-
-	$scope.signUpFacebookRequestToken = function () {
-		return $http.get(ApiUrl + '/auth/signup/facebook')
-			.success(function(url) {
-				$window.location.href = url;
-			});
-	};
-
-	$scope.signUpFacebook = function () {
-		return $http.get(ApiUrl + '/auth/signup/facebook/callback', {
+		return $http.get(ApiUrl + '/auth/' + action + '/' + provider + '/callback', {
 				params: $location.search()
-			}).success(function(data) {
+			})
+			.success(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationService.setPlayer(data.player);
 				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
-			}).error(function(data) {
-				$scope.removeUrlParams();
-				AuthenticationService.errorMessage = data;
-				$location.path('/auth/signup'); // Redirect to sign up page.
-			});
-	};
-
-	$scope.signUpTwitter = function () {
-		return $http.get(ApiUrl + '/auth/signup/twitter/callback', {
-				params: $location.search()
-			}).success(function(data) {
-				$scope.removeUrlParams();
-				AuthenticationService.setPlayer(data.player);
-				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
-			}).error(function(data) {
-				$scope.removeUrlParams();
-				AuthenticationService.errorMessage = data;
-				$location.path('/auth/signup'); // Redirect to sign up page.
-			});
-	};	
-
-	$scope.signUpTwitterRequestToken = function () {
-		return $http.get(ApiUrl + '/auth/signup/twitter')
-			.success(function(url) {
-				$window.location.href = url;
-			});
-	};	
-
-	$scope.signInFacebookRequestToken = function () {
-		return $http.get(ApiUrl + '/auth/signin/facebook')
-			.success(function(url) {
-				$window.location.href = url;
-			});
-	};
-
-	$scope.signInTwitterRequestToken = function () {
-		return $http.get(ApiUrl + '/auth/signin/twitter')
-			.success(function(url) {
-				$window.location.href = url;
-			});
-	};
-
-	$scope.signInFacebook = function () {
-		return $http.get(ApiUrl + '/auth/signin/facebook/callback', {
-				params: $location.search()
-			}).success(function(data) {
-				$scope.removeUrlParams();
-				AuthenticationService.setPlayer(data.player);
-				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
-			}).error(function(data) {
+			})
+			.error(function(data) {
 				$scope.removeUrlParams();
 				AuthenticationService.errorMessage = data;
 				$location.path('/auth/signin'); // Redirect to the sign in page.
-			});
-	};
-
-	$scope.signInTwitter = function () {
-		return $http.get(ApiUrl + '/auth/signin/twitter/callback', {
-				params: $location.search()
-			}).success(function(data) {
-				$scope.removeUrlParams();
-				AuthenticationService.setPlayer(data.player);
-				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
-			}).error(function(data) {
-				$scope.removeUrlParams();
-				AuthenticationService.errorMessage = data;
-				$location.path('/auth/signin'); // Redirect to the sign in page.
-			});
+			});		
 	};
 
 	$scope.removeUrlParams = function () {
 		$location.search({}); // Remove params from url.
 		$location.hash(null); // Remove Facebook `#_=_` buggy hash.
 	};
-
-	$scope.init = function () {
-		// Development placeholders.
-		$scope.email = 'pablodenadai@gmail.com';
-		$scope.password = '123';
-		$scope.name = 'Pablo De Nadai';
-		AuthenticationService.errorMessage = null;
-	};
-
-	//$scope.init();
 
 });

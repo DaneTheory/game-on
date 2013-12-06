@@ -27,7 +27,7 @@ app.controller('PlayerUpdateCtrl',
 	// Make sure the `$scope` has the current signed in player.
 	//
 	PlayerService.getById($scope.playerId).then(function (data) {
-		$scope.player = data;
+		angular.extend($scope.player, data);
 	});
 
 	$scope.update = function (player) {

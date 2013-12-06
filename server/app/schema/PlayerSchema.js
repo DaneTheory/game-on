@@ -18,7 +18,7 @@ exports = module.exports = function(app, mongoose) {
         gamesPlayed: { type: Number, default: 0 },
         gamesOrganized: { type: Number, default: 0 },
         bio: { type: String, default: '' },
-        backgroundImageId: { type: Number, default: 1 },
+        backgroundImageId: { type: Number, default: 0 },
         profile: {
             id: { type: Number }
             // TODO: Merge profile and player data.

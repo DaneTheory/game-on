@@ -1,15 +1,22 @@
 <div class="profile-view profile-update-view">
-	<div class="header text-center background-{{ player.backgroundImageId }}">
-		<div class="row">
-			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
-				<input type="text" class="form-control text-center form-control-name" ng-model="player.name"/>
+	<div id="carousel" class="carousel slide" data-ride="carousel" carousel>
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<div ng-repeat="id in [0, 1, 2, 3, 4, 5, 6, 7, 8]" class="item" ng-class="{ active: id == player.backgroundImageId }">
+				<div class="background background-{{ id }}"/>
 			</div>
 		</div>
 
-		<img class="img-circle" ng-src="{{ player.imageUrl }}" width="90" height="90">
-		
+		<!-- Controls -->
+		<a class="left carousel-control" href="" data-slide="prev"><span class="fa fa-chevron-left"></span></a>
+		<a class="right carousel-control" href="" data-slide="next"><span class="fa fa-chevron-right"></span></a>
+	</div>
+
+	<div class="header text-center">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+				<input type="text" class="form-control text-center form-control-name" ng-model="player.name"/>
+				<img class="img-circle" ng-src="{{ player.imageUrl }}" width="90" height="90">
 				<input type="text" class="form-control text-center form-control-location" ng-model="player.location"/>
 			</div>
 		</div>
@@ -53,18 +60,6 @@
 					</a>
 				</p>
 			</div>
-
-
-			<div class="form-group">
-				<label>Background</label>
-				<div class="row">
-					<div class="col-sm-4 col-xs-6 background-tile" ng-repeat="id in [1, 2, 3, 4, 5, 6, 7, 8, 9]" >
-						<a href="" ng-click="updateBackgroundImageId(id)" >
-							<img class="img-thumbnail" ng-src="{{ ServerUrl }}/images/background_{{ id }}.jpg" width="100%"/>
-						</a>
-					</div>
-				</div>
-			</div>	
 		</form>
 	</div>
 </div>

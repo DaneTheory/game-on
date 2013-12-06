@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.directive('navbarAutoCollapse', ['$rootScope', function ($rootScope) {
+app.directive('navbarAutoCollapse', function ($rootScope) {
     return {
         restrict: 'C',
         link: function (scope, element) {
@@ -22,4 +22,4 @@ app.directive('navbarAutoCollapse', ['$rootScope', function ($rootScope) {
             $rootScope.$on('$routeUpdate', scope.collapse);
         }
     };
-}]);
+});

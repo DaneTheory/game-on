@@ -1,0 +1,31 @@
+.carousel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin-top: 50px;
+
+	.carousel-control {
+		.fa-chevron-left {
+			left: 50%;
+		}
+		
+		.fa-chevron-right {
+			right: 50%;
+		}
+
+		.fa-chevron-left, 
+		.fa-chevron-right {
+			position: absolute;
+			top: 50%;
+			z-index: 5;
+			display: inline-block;
+		}
+	}
+
+	.background {
+		height: 210px;
+		background-size: cover;
+		background-position: 50% 50%;
+	}
+}

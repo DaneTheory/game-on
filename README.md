@@ -1,10 +1,16 @@
 GameOn
 ------
 
-### Find games in your city
+### Find soccer games in your city
 GameOn connects you with the players in your city and allows you to find, organize and share games effortlessly.
 
 ![Screenshot](/screenshot.png)
+
+## Technology
+
+| On The Server  | On The Client | Development |
+| -------------- |---------------| ------------|
+| NodeJS | AngularJS | Grunt |
 
 Work in progress.
 

@@ -11,6 +11,10 @@ GameOn connects you with the players in your city and allows you to find, organi
 | On The Server  | On The Client | Development |
 | -------------- |---------------| ------------|
 | NodeJS | AngularJS | Grunt |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
 
 Work in progress.
 

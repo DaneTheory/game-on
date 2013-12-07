@@ -68,6 +68,12 @@ var middlewares = require('./middleware/index')(app),
 	schemas = require('./schema/index')(app, mongoose),
 	strategies = require('./passport/index')(app, passport);
 
+// If none of the views handle the request, then fallback to `public/index.html`
+app.use(function(req, res) {
+	// Use res.sendfile, as it streams instead of reading the file into memory.
+  	res.sendfile(__dirname + '/public/index.html');
+});
+
 // Start it all up
 var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));

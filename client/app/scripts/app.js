@@ -38,7 +38,6 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/main/MainView.html',
-			controller: 'MainCtrl',
 			requireAuthentication: false
 		})
 		.when('/player/update', {

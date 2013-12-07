@@ -49,12 +49,14 @@ exports.localSignIn = function (req, res) {
 // Facebook Sign In (Step 1)
 // Request token.
 // 
-exports.facebookSignIn = function(req, res, next){
+exports.facebookSignIn = function(req, res, next) {
+
+	var origin = req.headers.origin ? req.headers.origin : '';
 
 	// Attempt Facebook login
 	req._passport.instance.authenticate('facebook', {
 		display: 'touch', 
-		callbackURL: req.headers.origin + req.app.get('facebook-signin-callback')
+		callbackURL: origin + req.app.get('facebook-signin-callback')
 	})(req, res, next);
 
 };
@@ -65,7 +67,8 @@ exports.facebookSignIn = function(req, res, next){
 // 
 exports.facebookSignInCallback = function(req, res, next){
 	
-	var Player = req.app.db.models.Player;
+	var Player = req.app.db.models.Player,
+		origin = req.headers.origin ? req.headers.origin : '';
 	
 	var facebookSignIn = function (err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
@@ -83,7 +86,7 @@ exports.facebookSignInCallback = function(req, res, next){
 		});
 	}
 
-	req._passport.instance.authenticate('facebook', { callbackURL: req.headers.origin + req.app.get('facebook-signin-callback') }, facebookSignIn)(req, res, next);
+	req._passport.instance.authenticate('facebook', { callbackURL: origin + req.app.get('facebook-signin-callback') }, facebookSignIn)(req, res, next);
 };
 
 
@@ -94,10 +97,12 @@ exports.facebookSignInCallback = function(req, res, next){
 // 
 exports.twitterSignIn = function(req, res, next){
 
+	var origin = req.headers.origin ? req.headers.origin : '';
+
 	// Attempt Twitter login
 	req._passport.instance.authenticate('twitter', {
 		display: 'touch', 
-		callbackURL: req.headers.origin + req.app.get('twitter-signin-callback')
+		callbackURL: origin + req.app.get('twitter-signin-callback')
 	})(req, res, next);
 
 };
@@ -108,7 +113,8 @@ exports.twitterSignIn = function(req, res, next){
 // 
 exports.twitterSignInCallback = function(req, res, next){
 	
-	var Player = req.app.db.models.Player;
+	var Player = req.app.db.models.Player,
+		origin = req.headers.origin ? req.headers.origin : '';
 	
 	var twitterSignIn = function (err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
@@ -128,5 +134,5 @@ exports.twitterSignInCallback = function(req, res, next){
 		});
 	}
 
-	req._passport.instance.authenticate('twitter', { callbackURL: req.headers.origin + req.app.get('twitter-signin-callback') }, twitterSignIn)(req, res, next);
+	req._passport.instance.authenticate('twitter', { callbackURL: origin + req.app.get('twitter-signin-callback') }, twitterSignIn)(req, res, next);
 };

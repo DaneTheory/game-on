@@ -28,7 +28,8 @@
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "~0.2.0",
     "grunt-angular-templates": "~0.4.7",
-    "connect-modrewrite": "~0.5.11"
+    "connect-modrewrite": "~0.5.11",
+    "grunt-docco2": "0.1.1"
   },
   "engines": {
     "node": ">=0.8.0"

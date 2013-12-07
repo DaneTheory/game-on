@@ -342,7 +342,17 @@ module.exports = function (grunt) {
 					}
 				}
 			}
-		}
+		},
+		docco: {
+            src: {
+                src: ['<%= yeoman.app %>/**/*.js',
+                '!<%= yeoman.app %>/components/**/*.js'],
+                options: {
+                    output: 'docs/',
+                    layout: 'classic'
+                }
+            }
+        }
 	});
 
 	grunt.registerTask('server', function (target) {
@@ -389,4 +399,6 @@ module.exports = function (grunt) {
 		'test',
 		'build'
 	]);
+
+	grunt.registerTask('docs', ['docco']);
 };

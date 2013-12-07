@@ -6,15 +6,22 @@ GameOn connects you with the players in your city and allows you to find, organi
 
 ![Screenshot](/screenshot.png)
 
-## Technology
+## Technologies
 
 | On The Server  | On The Client | Development |
 | -------------- |---------------| ------------|
 | NodeJS | AngularJS | Grunt |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
+| Express | Twitter Bootstrap | Docco |
+| MongoDB | SASS | Bower |
+| Mongoose | SocketIO | Angular Templates |
+| SocketIO | MomentJS | Live Reload |
+| PassportJS | Google Maps API | JSHint |
+| Crypto | jQuery | Compass |
+| Async | Lodash | Concat |
+|  | Font Awesome | CSS Min |
+|  | HTML5 Route Mode | HTML Min |
+|  |  | Auto Prefixer |
+|  |  | Uglify |
 
 Work in progress.
 

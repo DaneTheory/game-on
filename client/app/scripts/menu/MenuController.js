@@ -1,5 +1,5 @@
 //
-//
+// # Menu Controller
 //
 // 2013 Pablo De Nadai
 //
@@ -10,6 +10,10 @@ app.controller('MenuCtrl', function ($scope, $location, $http, ApiUrl, Authentic
 
 	$scope.AuthenticationService = AuthenticationService;
 
+	//
+	// ### function signOut ()
+	// Closes the session and remove the player from the cookies.
+	//
 	$scope.signOut = function () {
 		AuthenticationService.removePlayer();
 		$location.path('/');

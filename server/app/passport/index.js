@@ -1,6 +1,9 @@
 //
-// ### Passport Authentication
+// # Passport Authentication
+//
+// 2013 Pablo De Nadai
 // 
+
 exports = module.exports = function(app, passport) {
 	var env = require('./../env')(),
 		LocalStrategy = require('passport-local').Strategy,

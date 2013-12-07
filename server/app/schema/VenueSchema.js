@@ -1,7 +1,9 @@
 // 
-// ### Venue Schema
-// Endpoint: http://localhost:3000/api/1/venue/
-// 
+// # Venue Schema
+//
+// 2013 Pablo De Nadai
+//
+
 exports = module.exports = function(app, mongoose) {
 
     var VenueSchema = new mongoose.Schema({
@@ -23,7 +25,7 @@ exports = module.exports = function(app, mongoose) {
 
     // 
     // Example:
-    // http://localhost:3000/api/1/venue/finder/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
+    // http://localhost:3000/api/1/venue/near?latitude=-37.648792&longitude=145.19104&maxDistance=100
     // @maxDistance {number} Distance in Kms
     // 
     VenueSchema.statics.near = function (q) {

@@ -1,10 +1,12 @@
-exports = module.exports = function() {
-	return {
+//
+// # Date Helper
+//
+// 2013 Pablo De Nadai
+//
 
-		//
-		//
-		//
-		getAgeFromBirthday: function(birthday) {
+exports = module.exports = function () {
+	return {
+		getAgeFromBirthday: function (birthday) {
 			var today = new Date(),
 				age = today.getFullYear() - birthday.getFullYear(),
 	 			months = today.getMonth() - birthday.getMonth();
@@ -15,5 +17,5 @@ exports = module.exports = function() {
 
 		    return age;
 		}
-	}
-};
+	};
+}

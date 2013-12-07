@@ -1,4 +1,7 @@
 //
+// Game Create Controller
+// Controller for the `Start a game` view.
+//
 // 2013 Pablo De Nadai
 //
 
@@ -11,8 +14,11 @@ app.controller('GameCreateCtrl',
 	$scope.VenueService = VenueService;
 	$scope.GameService = GameService;
 
+	// Used to enable/disable the "Start" button.
+	// Returns `true` if all fields have been filled.
 	$scope.isFormValid = false;
 
+	// Holds the game information.
 	$scope.game = {
 		description: null,
 		gender: null,
@@ -35,21 +41,25 @@ app.controller('GameCreateCtrl',
 		$scope.activeTab = index;
 	};
 
+	// Map marker click handler.
 	$scope.setVenue = function (marker) {
 		$scope.$apply(function(){
 			$scope.game.venue = marker;
 		});
 	};
 
+	// `Start` button click handler.
 	$scope.create = function (game) {
 		GameService.create(game).then(function () {
 			$location.path('/player/' + AuthenticationService.player.id);
 		});
 	};
 
+	// Search for venues within 10 km distance.
 	$scope.venueMaxDistance = 10; // Km
 	$scope.currentCoordinates;
 
+	// Load the current location and populate the venues.
 	GeolocationHelper.getGeoLocation().then(function (location) {
 		$scope.currentCoordinates = [
 			location.coords.latitude,
@@ -61,6 +71,7 @@ app.controller('GameCreateCtrl',
 		});
 	});
 
+	// Update the `isFormValid` value as the user inputs values.
 	$scope.$watch('game', function(properties) {
 		var isFormValid = true;
 

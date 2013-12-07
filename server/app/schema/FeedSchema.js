@@ -1,7 +1,9 @@
 // 
-// ### Feed Schema
-// Endpoint: http://localhost:3000/api/1/feed/
+// # Feed Schema
+//
+// 2013 Pablo De Nadai
 // 
+
 exports = module.exports = function(app, mongoose) {
 
 	var FeedSchema = new mongoose.Schema({

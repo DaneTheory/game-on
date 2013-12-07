@@ -1,3 +1,9 @@
+//
+// # Redirect Middleware
+//
+// 2013 Pablo De Nadai
+//
+
 exports = module.exports = function(app) {
 	
 	// 

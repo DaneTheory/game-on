@@ -1,3 +1,9 @@
+//
+// # Search View
+//
+// 2013 Pablo De Nadai
+//
+
 var _ = require('lodash'),
 	async = require('async');
 

@@ -1,7 +1,9 @@
 // 
-// ### Game Schema
-// Endpoint: http://localhost:3000/api/1/game/
-// 
+// # Game Schema
+//
+// 2013 Pablo De Nadai
+//
+
 exports = module.exports = function(app, mongoose) {
 
 	var GameSchema = new mongoose.Schema({

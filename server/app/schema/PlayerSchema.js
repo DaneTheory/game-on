@@ -1,11 +1,13 @@
+// 
+// # Player Schema
+// 
+// 2013 Pablo De Nadai
+//
+
 var crypto = require('crypto'),
     dateHelper = require('./../helper/DateHelper')(),
     tokenMatcherHelper = require('./../helper/TokenMatcherHelper')();
-        
-// 
-// ### Player Schema
-// Endpoint: http://localhost:3000/api/1/player/
-// 
+
 exports = module.exports = function(app, mongoose) {
 
     var PlayerSchema = new mongoose.Schema({

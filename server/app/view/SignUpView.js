@@ -1,3 +1,9 @@
+//
+// # Sign Up View
+//
+// 2013 Pablo De Nadai
+//
+
 // 
 // Local Sign Up workflow.
 // 

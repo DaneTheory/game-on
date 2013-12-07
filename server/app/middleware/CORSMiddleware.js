@@ -1,3 +1,9 @@
+//
+// # CORS Middleware
+//
+// 2013 Pablo De Nadai
+//
+
 var env = require('./../env')();
 
 exports = module.exports = function(app) {

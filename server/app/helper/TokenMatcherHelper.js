@@ -1,3 +1,9 @@
+//
+// # Token Mather Helper
+//
+// 2013 Pablo De Nadai
+//
+
 exports = module.exports = function() {
 	return {
 		//
@@ -15,7 +21,7 @@ exports = module.exports = function() {
 		// console.log(replaced); // Hello world, foo!
 		// ```
 		// 
-		replaceNamedTokens: function(template, data) {
+		replaceNamedTokens: function (template, data) {
 			var pattern = new RegExp('{([^}]+)}', 'gi');
 
 			return template.replace(pattern, function(match, $1) {
@@ -43,7 +49,7 @@ exports = module.exports = function() {
 		// console.log(replaced); // I heard you like cats, but pocket raptors are better!
 		// ```
 		// 
-		replaceNumberedTokens: function(template, replacements) {
+		replaceNumberedTokens: function (template, replacements) {
 			var tokenizer = new RegExp('{[^}]*}', 'ig');
 			var result = template.replace(tokenizer, function(token) {
 				var key = token.substr(1, token.indexOf('}') - 1);
@@ -53,5 +59,5 @@ exports = module.exports = function() {
 
 			return result;
 		}
-	}
+	};
 }

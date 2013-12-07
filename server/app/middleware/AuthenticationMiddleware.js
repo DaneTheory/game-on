@@ -1,6 +1,8 @@
 //
-// ### Authentication Middleware
+// # Authentication Middleware
 // Validade if user has access to the API.
+//
+// 2013 Pablo De Nadai
 //
 
 var _ = require('lodash');
@@ -8,6 +10,7 @@ var _ = require('lodash');
 exports = module.exports = function(app) {
 	
 	app.use(function (req, res, next) {
+		
 		// 
 		// Ignore preflight CORS calls.
 		// 

@@ -1,50 +1,49 @@
-<div class="media" ng-controller="GameReadCtrl">
-	<div class="media-body">
-		<div class="col-md-8 col-sm-8">
-			<a class="media-heading lead" href="/game/{{ card.id }}">{{ card.description }}</a>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="media" ng-controller="GameReadCtrl">
+			<div class="media-body">
+				<h4 class="media-heading">{{ card.description }}</h4>
 
-			<p>
-				<a ng-repeat="player in card.players" class="btn-xs player-image" href="/player/{{ player.id }}" role="button">
-					<img class="img-circle" ng-src="{{ player.imageUrl }}" width="30" height="30">
-				</a>
-			</p>			
-
-			<p>
-				<strong>{{ card.when | momentRelativeFormat:'ddd, MMM D [at] h:mma' }}</strong>
-			</p>
-
-			<p>
-				<strong>
-					<a href="/venue/{{ card.venue.id }}">{{ card.venue.name }}</a>
-				</strong>
+				<p>
+					<a ng-repeat="player in card.players" class="btn-xs player-image" href="/player/{{ player.id }}" role="button">
+						<img class="img-circle" ng-src="{{ player.imageUrl }}" width="30" height="30">
+					</a>
+				</p>			
 				
-				<span class="text-muted">{{ card.distance | distance }}</span>
-			</p>
+				<div class="pull-right">
+					<button ng-if="!hasJoint(card.players)" class="btn btn-success btn-join" ng-click="join(card)">
+						<span ng-show="card.price">{{card.price | currency }}</span>
+						<span ng-show="!card.price">Free</span>
+					</button>
+					<button ng-if="hasJoint(card.players)" class="btn btn-danger btn-leave" ng-click="leave(card)">Leave</button>
+				</div>
 
-			<h4>
-				<span class="label label-primary">
-					<span ng-switch="card.gender">
-						<i ng-switch-when="M" class="fa fa-male"></i>
-						<i ng-switch-when="F" class="fa fa-female"></i>
-						<span ng-switch-default="">
-							<i class="fa fa-male"></i><i class="fa fa-female"></i>
+				<p>{{ card.when | momentRelativeFormat:'ddd, MMM D [at] h:mma' }}</p>
+
+
+				<p>
+					<strong>{{ card.venue.name }}</strong>
+					<span class="text-muted">{{ card.distance | distance }}</span>
+				</p>
+
+
+				<h4>
+					<span class="label label-primary">
+						<span ng-switch="card.gender">
+							<i ng-switch-when="M" class="fa fa-male"></i>
+							<i ng-switch-when="F" class="fa fa-female"></i>
+							<span ng-switch-default="">
+								<i class="fa fa-male"></i><i class="fa fa-female"></i>
+							</span>
 						</span>
+
+						<strong>
+							<span>{{ card.maxPlayers / 2 }}v{{ card.maxPlayers / 2 }}</span>
+						</strong>
 					</span>
-
-					<strong>
-						<span>{{ card.maxPlayers / 2 }}v{{ card.maxPlayers / 2 }}</span>
-					</strong>
-				</span>
-			</h4>
-		</div>
-
-		<div class="col-md-4 col-sm-4 text-right">
-			<button ng-if="!hasJoint(card.players)" class="btn btn-success" ng-click="join(card)">
-				<span ng-show="card.price">{{card.price | currency }}</span>
-				<span ng-show="!card.price">Free</span>
-			</button>
-
-			<button ng-if="hasJoint(card.players)" class="btn btn-danger" ng-click="leave(card)">Leave</button>
+				</h4>
+			
+			</div>
 		</div>
 	</div>
 </div>

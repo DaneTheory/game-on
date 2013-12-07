@@ -12,8 +12,8 @@
 		</div>
 
 		<div ng-show="searchResults.length">
-			<div class="list-group">
-				<div ng-repeat="card in searchResults" ng-switch="card.type" class="list-group-item">
+			<div class="row">
+				<div ng-repeat="card in searchResults" ng-switch="card.type" class="col-sm-6">
 					<div ng-switch-when="game"><div ng-include="'views/search/_GameSearchItemView.html'"></div></div>
 				</div>
 			</div>

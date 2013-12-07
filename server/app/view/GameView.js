@@ -145,7 +145,7 @@ exports.create = function (req, res) {
 	// TODO: Validate data.
 	game.organizer = playerId;
 	game.description = req.body.description;
-	game.venue = req.body.venue.id;
+	game.venue = req.body.venue._id;
 	game.coordinates = req.body.venue.coordinates;
 	game.players = [ playerId ];
 	game.when = req.body.when;

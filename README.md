@@ -29,7 +29,7 @@ Technologies
 Live Demo
 ---------
 
-- [http://gameon.jit.su/](http://gameon.jit.su/)
+- [https://gameon.jit.su/](https://gameon.jit.su/)
 
 Requirements
 ------------

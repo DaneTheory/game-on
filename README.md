@@ -29,7 +29,6 @@ Technologies
 Live Demo
 ---------
 
-- [http://thegameon.herokuapp.com/](http://thegameon.herokuapp.com/)
 - [http://gameon.jit.su/](http://gameon.jit.su/)
 
 Requirements

@@ -37,7 +37,7 @@ app.controller('AuthenticationCtrl', function ($scope, $location, $window, Authe
 	// Sign Up: Local strategy logic.
 	// 
 	$scope.signUp = function (email, password, name) {
-		AuthenticationService.signIn(email, password, name)
+		AuthenticationService.signUp(email, password, name)
 			.success($scope.signSuccess)
 			.error($scope.signError);
 	};	

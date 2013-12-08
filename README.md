@@ -19,10 +19,10 @@ Technologies
 | Mongoose | SocketIO | Angular Templates |
 | SocketIO | MomentJS | Live Reload |
 | PassportJS | Google Maps API | JSHint |
-| Crypto | jQuery | Compass |
+| Crypto | HTML5 Route Mode | Compass |
 | Async | Lodash | Concat |
 |  | Font Awesome | CSS Min |
-|  | HTML5 Route Mode | HTML Min |
+|  |  | HTML Min |
 |  |  | Auto Prefixer |
 |  |  | Uglify |
 

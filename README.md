@@ -29,7 +29,7 @@ Technologies
 Live Demo
 ---------
 
-[Work in progress](http://www.wip.com)
+[http://thegameon.herokuapp.com/](http://thegameon.herokuapp.com/)
 
 Requirements
 ------------

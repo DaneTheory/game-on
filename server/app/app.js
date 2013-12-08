@@ -68,6 +68,12 @@ var middlewares = require('./middleware/index')(app),
 	schemas = require('./schema/index')(app, mongoose),
 	strategies = require('./passport/index')(app, passport);
 
+// If none of the views handle the request, then fallback to `public/index.html`
+app.use(function(req, res) {
+	// Use res.sendfile, as it streams instead of reading the file into memory.
+  	res.sendfile(__dirname + '/public/index.html');
+});
+
 // Start it all up
 var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
@@ -76,6 +82,11 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 // Socket IO (Push Notification)
 var socketIo = require('socket.io').listen(server),
 	passportSocketIo = require('passport.socketio');
+
+socketIo.configure(function () { 
+	socketIo.set('transports', ['xhr-polling']); 
+	socketIo.set('polling duration', 10); 
+});
 
 // Except for the optional fail and success the parameter object has the 
 // Same attribute than the session middleware http://www.senchalabs.org/connect/middleware-session.html

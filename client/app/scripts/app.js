@@ -17,9 +17,15 @@ var app = angular.module('gameOn', [
 	'ngTouch'
 ]);
 
-// TODO: Use Grunt to set this values depending on build profile.
+// devcode: development
 app.constant('ServerUrl', '//localhost:3000');
 app.constant('ApiUrl', '//localhost:3000/api/1');
+// endcode
+
+// devcode: production
+app.constant('ServerUrl', '/');
+app.constant('ApiUrl', '/api/1');
+// endcode
 
 app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 
@@ -38,7 +44,6 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/main/MainView.html',
-			controller: 'MainCtrl',
 			requireAuthentication: false
 		})
 		.when('/player/update', {

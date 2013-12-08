@@ -35,7 +35,8 @@ module.exports = function (grunt) {
 					'.tmp/styles/{,*/}*.css',
 					'{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
 					'<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-				]
+				],
+				tasks: ['devcode:server', 'livereload']
 			}
 		},
 		autoprefixer: {
@@ -309,15 +310,38 @@ module.exports = function (grunt) {
 			}
 		},
 		docco: {
-            src: {
-                src: ['<%= yeoman.app %>/**/*.js',
-                '!<%= yeoman.app %>/components/**/*.js'],
-                options: {
-                    output: 'docs/',
-                    layout: 'classic'
-                }
-            }
-        }
+			src: {
+				src: ['<%= yeoman.app %>/**/*.js',
+				'!<%= yeoman.app %>/components/**/*.js'],
+				options: {
+					output: 'docs/',
+					layout: 'classic'
+				}
+			}
+		},
+		devcode: {
+			options: {
+				js: true,          		// javascript files parsing?
+				block: {
+					open: 'devcode', 	// with this string we open a block of code
+					close: 'endcode' 	// with this string we close a block of code
+				}
+			},
+			server: {           		// settings for task used with 'devcode:server'
+				options: {
+					source: '<%= yeoman.app %>/',
+					dest: '.tmp/',
+					env: 'development'
+				}
+			},
+			dist: {             		// settings for task used with 'devcode:dist'
+				options: {
+					source: 'dist/',
+					dest: 'dist/',
+					env: 'production'
+				}
+			}
+		}
 	});
 
 	grunt.registerTask('server', function (target) {
@@ -327,6 +351,7 @@ module.exports = function (grunt) {
 
 		grunt.task.run([
 			'clean:server',
+			'devcode:server',
 			'concurrent:server',
 			'autoprefixer',
 			'connect:livereload',
@@ -352,6 +377,7 @@ module.exports = function (grunt) {
 		'concat:addTemplate',
 		'ngmin',
 		'copy:dist',
+		'devcode:dist',
 		'cdnify',
 		'cssmin',
 		'uglify',

@@ -28,7 +28,8 @@
     "time-grunt": "~0.2.0",
     "grunt-angular-templates": "~0.4.7",
     "connect-modrewrite": "~0.5.11",
-    "grunt-docco2": "0.1.1"
+    "grunt-docco2": "0.1.1",
+    "grunt-devcode": "0.0.4-c"
   },
   "engines": {
     "node": ">=0.8.0"

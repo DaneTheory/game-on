@@ -64,14 +64,14 @@
 	// - Implement different sizes for different resolutions.
 	// - Use `img` tag instead of `div`
 	.background {
-		&.background-0 { background-image: url('//localhost:3000/images/background_0.jpg'); }
-		&.background-1 { background-image: url('//localhost:3000/images/background_1.jpg'); }
-		&.background-2 { background-image: url('//localhost:3000/images/background_2.jpg'); }
-		&.background-3 { background-image: url('//localhost:3000/images/background_3.jpg'); }
-		&.background-4 { background-image: url('//localhost:3000/images/background_4.jpg'); }
-		&.background-5 { background-image: url('//localhost:3000/images/background_5.jpg'); }
-		&.background-6 { background-image: url('//localhost:3000/images/background_6.jpg'); }
-		&.background-7 { background-image: url('//localhost:3000/images/background_7.jpg'); }
-		&.background-8 { background-image: url('//localhost:3000/images/background_8.jpg'); }
+		&.background-0 { background-image: url('/images/background_0.jpg'); }
+		&.background-1 { background-image: url('/images/background_1.jpg'); }
+		&.background-2 { background-image: url('/images/background_2.jpg'); }
+		&.background-3 { background-image: url('/images/background_3.jpg'); }
+		&.background-4 { background-image: url('/images/background_4.jpg'); }
+		&.background-5 { background-image: url('/images/background_5.jpg'); }
+		&.background-6 { background-image: url('/images/background_6.jpg'); }
+		&.background-7 { background-image: url('/images/background_7.jpg'); }
+		&.background-8 { background-image: url('/images/background_8.jpg'); }
 	}
 }

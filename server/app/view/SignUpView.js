@@ -134,9 +134,11 @@ var signUpSocial = function (req, res, profile) {
 //
 exports.facebookSignUp = function(req, res, next) {
 
+	var origin = req.headers.origin ? req.headers.origin : '';
+
 	req._passport.instance.authenticate('facebook', {
 		display: 'touch', 
-		callbackURL: req.headers.origin + req.app.get('facebook-signup-callback')
+		callbackURL: origin + req.app.get('facebook-signup-callback')
 	})(req, res, next);
 
 };
@@ -148,11 +150,7 @@ exports.facebookSignUp = function(req, res, next) {
 exports.facebookSignUpCallback = function(req, res, next) {
 
 	var Player = req.app.db.models.Player,
-		passport = req._passport.instance,
-		callbackUrl = [
-			req.headers.origin,
-			req.app.get('facebook-signup-callback')
-		].join('');
+		origin = req.headers.origin ? req.headers.origin : '';
 
 	var facebookSignUp = function(err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
@@ -169,7 +167,7 @@ exports.facebookSignUpCallback = function(req, res, next) {
 		});
 	};
 
-	passport.authenticate('facebook', { callbackURL: callbackUrl }, facebookSignUp)(req, res, next);
+	req._passport.instance.authenticate('facebook', { callbackURL: origin + req.app.get('facebook-signup-callback') }, facebookSignUp)(req, res, next);
 
 };
 
@@ -181,9 +179,13 @@ exports.facebookSignUpCallback = function(req, res, next) {
 // Request token.
 //
 exports.twitterSignUp = function(req, res, next) {
+
+	var origin = req.headers.origin ? req.headers.origin : '';
+
 	req._passport.instance.authenticate('twitter', {
-		callbackURL: req.headers.origin + req.app.get('twitter-signup-callback')
+		callbackURL: origin + req.app.get('twitter-signup-callback')
 	})(req, res, next);
+
 };
 
 //
@@ -192,7 +194,8 @@ exports.twitterSignUp = function(req, res, next) {
 //
 exports.twitterSignUpCallback = function(req, res, next) {
 
-	var Player = req.app.db.models.Player;
+	var Player = req.app.db.models.Player,
+		origin = req.headers.origin ? req.headers.origin : '';
 
 	var twitterSignUp = function(err, player, info) {
 		if (!info || !info.profile) return res.send(400, 'Profile not available.');
@@ -209,7 +212,7 @@ exports.twitterSignUpCallback = function(req, res, next) {
 		});
 	};
 
-	req._passport.instance.authenticate('twitter', { callbackURL: req.headers.origin + req.app.get('twitter-signup-callback') }, twitterSignUp)(req, res, next);
+	req._passport.instance.authenticate('twitter', { callbackURL: origin + req.app.get('twitter-signup-callback') }, twitterSignUp)(req, res, next);
 
 };
 

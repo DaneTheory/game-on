@@ -25,8 +25,8 @@ Technologies
 |  |  | Auto Prefixer |  |
 |  |  | Uglify |  |
 
-Live Demo
----------
+Live
+----
 - [https://gameon.jit.su/](https://gameon.jit.su/)
 
 Annotated Source

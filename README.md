@@ -15,7 +15,7 @@ Technologies
 | NodeJS | AngularJS | Grunt | Jasmine |
 | Express | Twitter Bootstrap | Docco | Karma |
 | MongoDB | SASS | Bower | Istanbul (Coverage)
-| Mongoose | SocketIO (Push Notification) | Angular Templates (Cache) | PhantomJS |
+| Mongoose | SocketIO | Angular Templates | PhantomJS |
 | SocketIO (Push Notification) | MomentJS | Live Reload |  |
 | PassportJS | Google Maps API | JSHint |  |
 | Crypto | HTML5 Route Mode | Compass |  |

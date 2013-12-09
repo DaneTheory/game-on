@@ -29,6 +29,9 @@ app.directive('map', function ($timeout) {
 			// Red: http://mt.google.com/vt/icon/text=%E2%80%A2&psize=25&font=fonts/arialuni_t.ttf&color=ff330000&name=icons/spotlight/spotlight-waypoint-b.png&ax=44&ay=48&scale=1
 			// Green: http://mt.google.com/vt/icon/text=%E2%80%A2&psize=25&font=fonts/arialuni_t.ttf&color=ff330000&name=icons/spotlight/spotlight-waypoint-a.png&ax=44&ay=48&scale=1
 			
+			// Google Maps Style
+			google.maps.visualRefresh = true;
+
 			var zoom = scope.$eval(attrs.zoom),
 				isMonoMarker = scope.$eval(attrs.isMonoMarker),
 				showCenterMarker = scope.$eval(attrs.showCenterMarker);

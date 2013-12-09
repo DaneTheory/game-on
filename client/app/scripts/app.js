@@ -35,10 +35,8 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
 	// Add `withCredentials` header to requests. (CORS requirement)
 	$httpProvider.defaults.withCredentials = true;
 
+	// Enable HTML5 mode. (Remove the `#` from Url)
 	$locationProvider.html5Mode(true);
-
-	// Google Maps Style
-	google.maps.visualRefresh = true;
 
 	// Routing.
 	$routeProvider

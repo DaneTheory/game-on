@@ -20,6 +20,6 @@
     "passport-facebook": "~1.0.2",
     "passport-github": "~0.1.5",
     
-    "passport.socketio": "~1.2.1"
+    "passport.socketio": "~2.2.0"
   }
 }

@@ -62,8 +62,8 @@ $ bower install
 $ grunt server
 ```
 
-Documentation
--------------
+Annotated Source
+----------------
 
 [Work in progress](http://www.wip.com)
 

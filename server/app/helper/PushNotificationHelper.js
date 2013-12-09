@@ -16,7 +16,7 @@ exports = module.exports = function(socketIo) {
 		// 
 		emitTo: function (playerId, eventName, data) {
 			passportSocketIo.filterSocketsByUser(socketIo, function (player) {
-				return _.isEqual(player._id, playerId);
+				return _.isEqual(player[0]._id, playerId);
 			}).forEach(function (s) {
 				s.emit(eventName, data);
 			});

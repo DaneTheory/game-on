@@ -83,10 +83,10 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 var socketIo = require('socket.io').listen(server),
 	passportSocketIo = require('passport.socketio');
 
-socketIo.configure(function () { 
-	socketIo.set('transports', ['xhr-polling']); 
-	socketIo.set('polling duration', 10); 
-});
+// socketIo.configure(function () { 
+// 	socketIo.set('transports', ['xhr-polling']); 
+// 	socketIo.set('polling duration', 10); 
+// });
 
 // Except for the optional fail and success the parameter object has the 
 // Same attribute than the session middleware http://www.senchalabs.org/connect/middleware-session.html

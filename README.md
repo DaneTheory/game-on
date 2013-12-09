@@ -16,8 +16,8 @@ Technologies
 | NodeJS | AngularJS | Grunt |
 | Express | Twitter Bootstrap | Docco |
 | MongoDB | SASS | Bower |
-| Mongoose | SocketIO | Angular Templates |
-| SocketIO | MomentJS | Live Reload |
+| Mongoose | SocketIO (Push Notification) | Angular Templates (Cache) |
+| SocketIO (Push Notification) | MomentJS | Live Reload |
 | PassportJS | Google Maps API | JSHint |
 | Crypto | HTML5 Route Mode | Compass |
 | Async | Lodash | Concat |
@@ -65,7 +65,7 @@ $ grunt server
 Annotated Source
 ----------------
 
-[Work in progress](http://www.wip.com)
+- [http://pablodenadai.github.io/GameOn/docs/app.html](http://pablodenadai.github.io/GameOn/docs/app.html)
 
 Code Coverage
 -------------

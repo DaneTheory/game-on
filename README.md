@@ -13,7 +13,7 @@ Technologies
 | On The Server  | On The Client | Development | Unit Tests |
 | -------------- |---------------| ------------| ---------- |
 | NodeJS | AngularJS | Grunt | Jasmine |
-| Express | Twitter Bootstrap | Docco (Annotated source) | Karma |
+| Express | Twitter Bootstrap | Docco (Documentation) | Karma |
 | MongoDB | SASS | Bower | Istanbul (Test coverage)
 | Mongoose | SocketIO (Push Notification) | Angular Templates (Cache) | PhantomJS |
 | SocketIO (Push Notification) | MomentJS | Live Reload |  |

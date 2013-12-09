@@ -1,3 +1,4 @@
 .DS_Store
-nodejitsu
-docs
+/nodejitsu
+client/docs
+client/coverage

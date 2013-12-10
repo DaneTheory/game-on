@@ -17,12 +17,12 @@ Technologies
 | MongoDB                       | SASS                    | Bower                 | Istanbul (Coverage) |
 | Mongoose                      | SocketIO                | Plato (Analysis)      | PhantomJS           |
 | SocketIO (Push Notification)  | MomentJS                | JSHint                |                     |
-| PassportJS                    | Google Maps API         | Live Reload           |                     |  
-| Crypto                        | HTML5 Route Mode        | Compass               |                     |
-| Async                         | Lodash                  | Concat                |                     |
-|                               | Font Awesome            | HTML/CSS Min          |                     |
-|                               |                         | Uglify                |                     |
-|                               |                         | Auto Prefixer         |                     |
+| PassportJS                    | HTML5 Vibration API     | Live Reload           |                     |  
+| Crypto                        | HTML5 Geolocation API   | Compass               |                     |
+| Async                         | HTML5 Routing           | Concat                |                     |
+|                               | Google Maps API         | HTML/CSS Min          |                     |
+|                               | Lodash                  | Uglify                |                     |
+|                               | Font Awesome            | Auto Prefixer         |                     |
 |                               |                         | Angular Templates     |                     |
 
 Live

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>authentication/AuthenticationController.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">137.63</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">109</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">10.70</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">0.42</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">//
+// # Authentication Controller
+// Authentication business logic.
+// It handles Local and Social (Facebook and Twitter) strategies.
+//
+// 2013 Pablo De Nadai
+//
+
+&#039;use strict&#039;;
+
+app.controller(&#039;AuthenticationCtrl&#039;, function ($scope, $location, $window, AuthenticationService) {
+
+	// Credentials
+	$scope.password = null;
+	$scope.name = null;
+	$scope.email = null;
+
+	$scope.AuthenticationService = AuthenticationService;
+
+	//
+	// ### function signIn (email, password)
+	// #### @email {string} Email
+	// #### @password {string} Password
+	// Sign In: Local strategy logic.
+	// 
+	$scope.signIn = function (email, password) {
+		AuthenticationService.signIn(email, password)
+			.success($scope.signSuccess)
+			.error($scope.signError);
+	};
+
+	//
+	// ### function signUp (email, password, name)
+	// #### @email {string} Email
+	// #### @password {string} Password
+	// #### @name {string} Name
+	// Sign Up: Local strategy logic.
+	// 
+	$scope.signUp = function (email, password, name) {
+		AuthenticationService.signUp(email, password, name)
+			.success($scope.signSuccess)
+			.error($scope.signError);
+	};	
+
+	//
+	// ### function signSucess (data)
+	// #### @data {object} Player&#039;s information.
+	// Handler for `sign in` and `sign up` success callback.
+	// Stores the player information in the `AuthenticationService`
+	// And redirects the app to the profile page.
+	//
+	$scope.signSuccess = function (data) {
+		AuthenticationService.setPlayer(data.player); // Add signed in Player to the service and cookies.
+		$location.path(AuthenticationService.getPath()); // Redicted route to default route.
+	};
+
+	//
+	// ### function signError (data)
+	// #### @data {object} Error information.
+	// Handler for `sign in` and `sign up` error callback.
+	// Removes the player information from the `AuthenticationService`
+	// And displays the authentication error message.
+	//
+	$scope.signError = function (data) {
+		AuthenticationService.removePlayer(); // Remove signed in Player from the service and clean the cookies.
+		AuthenticationService.errorMessage = data; // Display error message.
+	};
+
+
+
+	//
+	// ### function requestToken (action, provider)
+	// #### @action {string} Accepts `signin` or `signup`
+	// #### @provider {string} Accepts `facebook` or `twitter`
+	// 1st step when authenticating with a social account (request token)
+	//
+	$scope.requestToken = function (action, provider) {
+		AuthenticationService.requestToken(action, provider)
+			.success(function(url) {
+				$window.location.href = url;
+			});
+	};
+
+	//
+	// ### function validateToken ()
+	// 2nd step when authenticating with a social account (validate token)
+	// Requires the following Url search properties:
+	// - @action {string} Accepts `signin` or `signup`
+	// - @provider {string} Accepts `facebook` or `twitter`
+	//
+	$scope.validateToken = function () {
+		var search = $location.search();
+		
+		AuthenticationService.validateToken(search)
+			.success(function(data) {
+				$scope.removeUrlParams();
+				AuthenticationService.setPlayer(data.player);
+				$location.path(AuthenticationService.getPath()); // Redirect to the private page.
+			})
+			.error(function(data) {
+				$scope.removeUrlParams();
+				AuthenticationService.errorMessage = data;
+				$location.path(&#039;/auth/signin&#039;); // Redirect to the sign in page.
+			});
+	};
+
+	//
+	// ### function removeUrlParams ()
+	// Removes the tokens from the Url search params.
+	// And cleans the hash params when authenticating with Facebook.
+	//
+	$scope.removeUrlParams = function () {
+		$location.search({}); // Remove params from url.
+		$location.hash(null); // Remove Facebook `#_=_` buggy hash.
+	};
+
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

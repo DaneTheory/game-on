@@ -15,7 +15,8 @@ module.exports = function (grunt) {
 		yeoman: {
 			// configurable paths
 			app: require('./bower.json').appPath || 'app',
-			dist: 'dist'
+			dist: 'dist',
+			test: 'test'
 		},
 		watch: {
 			compass: {
@@ -341,6 +342,25 @@ module.exports = function (grunt) {
 					env: 'production'
 				}
 			}
+		},
+		plato: {
+			options: {
+				jshint: grunt.file.readJSON('.jshintrc'),
+				complexity: {
+					logicalor: false,
+					switchcase: false,
+					forin: true,
+					trycatch: true
+				}
+			},
+			server: {
+				files: {
+					'analysis': [
+						'<%= yeoman.app %>/scripts/**/*.js', 
+						'<%= yeoman.app %>/spec/**/*.js'
+					]
+				}
+			}
 		}
 	});
 
@@ -392,4 +412,6 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('docs', ['docco']);
+
+	grunt.registerTask('analysis', ['plato']);
 };

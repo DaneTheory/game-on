@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>common/directive/DatetimePickerDirective.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">96.05</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">303</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">59.53</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">3.60</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">//
+// # Datetime-picker Directive
+// Renders a calendar with `year`, `month`, `day`, `hour` and `minute` views.
+// Allow user to select a specific time and applies it to the model.
+//
+// Third party code.
+//
+
+&#039;use strict&#039;;
+
+app.directive(&#039;datetimepicker&#039;, function () {
+
+	return {
+		restrict: &#039;A&#039;,
+		require: &#039;ngModel&#039;,
+		template: 
+			&#039;&lt;div class=&quot;datetimepicker&quot;&gt;&#039; +
+				&#039;&lt;table class=&quot;table-condensed&quot;&gt;&#039; +
+					&#039;&lt;thead&gt;&#039; +
+			        	&#039;&lt;tr&gt;&#039; +
+			            	&#039;&lt;th class=&quot;left&quot; data-ng-click=&quot;changeView(data.currentView, data.leftDate, $event)&quot;&gt;&#039; +
+			            		&#039;&lt;i class=&quot;fa fa-arrow-left&quot;/&gt;&#039; +
+			            	&#039;&lt;/th&gt;&#039; +
+				           	&#039;&lt;th class=&quot;switch&quot; colspan=&quot;5&quot; data-ng-click=&quot;changeView(data.previousView, data.currentDate, $event)&quot;&gt;{{ data.title }}&lt;/th&gt;&#039; +
+				            &#039;&lt;th class=&quot;right&quot; data-ng-click=&quot;changeView(data.currentView, data.rightDate, $event)&quot;&gt;&#039; +
+				            	&#039;&lt;i class=&quot;fa fa-arrow-right&quot;/&gt;&#039; +
+				            &#039;&lt;/th&gt;&#039; +
+			       		&#039;&lt;/tr&gt;&#039; +
+			       		&#039;&lt;tr&gt;&#039; +
+			           		&#039;&lt;th class=&quot;dow&quot; data-ng-repeat=&quot;day in data.dayNames&quot;&gt;{{ day }}&lt;/th&gt;&#039; +
+			       		&#039;&lt;/tr&gt;&#039; +
+			   		&#039;&lt;/thead&gt;&#039; +
+			  		&#039;&lt;tbody&gt;&#039; +
+			      	&#039;&lt;tr data-ng-class=&quot;{ hide: data.currentView == \&#039;day\&#039; }&quot;&gt;&#039; +
+			        	&#039;&lt;td colspan=&quot;7&quot;&gt;&#039; +
+			             	&#039;&lt;span class=&quot;{{ data.currentView }}&quot; data-ng-repeat=&quot;dateValue in data.dates&quot; &#039; +
+			                    &#039;data-ng-class=&quot;{ active: dateValue.active, past: dateValue.past, future: dateValue.future}&quot; &#039; +
+			                    &#039;data-ng-click=&quot;changeView(data.nextView, dateValue.date, $event)&quot;&gt;{{ dateValue.display }}&lt;/span&gt;&#039; +
+			           	&#039;&lt;/td&gt;&#039; +
+			       	&#039;&lt;/tr&gt;&#039; +
+			        &#039;&lt;tr data-ng-show=&quot;data.currentView == \&#039;day\&#039;&quot; data-ng-repeat=&quot;week in data.weeks&quot;&gt;&#039; +
+			           	&#039;&lt;td data-ng-repeat=&quot;dateValue in week.dates&quot; data-ng-click=&quot;changeView(data.nextView, dateValue.date, $event)&quot; &#039; +
+			               	&#039;class=&quot;day&quot; data-ng-class=&quot;{ active: dateValue.active, past: dateValue.past, future: dateValue.future}&quot;&gt;{{ dateValue.display }}&#039; +
+			            &#039;&lt;/td&gt;&#039; +
+			      	&#039;&lt;/tr&gt;&#039; +
+			    &#039;&lt;/tbody&gt;&#039; +
+			&#039;&lt;/table&gt;&#039; +
+			&#039;&lt;/div&gt;&#039;,
+		scope: {
+			ngModel: &#039;=&#039;,
+			onSetTime: &#039;=&#039;
+		},
+		replace: true,
+		link: function (scope, element, attrs) {
+
+			scope.validateConfiguration = function (configuration) {
+				var validOptions = [&#039;startView&#039;, &#039;minView&#039;, &#039;minuteStep&#039;];
+
+				for (var prop in configuration) {
+					if (configuration.hasOwnProperty(prop)) {
+						if (validOptions.indexOf(prop) &lt; 0) {
+							throw (&#039;invalid option: &#039; + prop);
+						}
+					}
+				}
+
+				// Order of the elements in the validViews array is significant.
+				var validViews = [&#039;minute&#039;, &#039;hour&#039;, &#039;day&#039;, &#039;month&#039;, &#039;year&#039;];
+
+				if (validViews.indexOf(configuration.startView) &lt; 0) {
+					throw (&#039;Invalid `startView` value: &#039; + configuration.startView);
+				}
+
+				if (validViews.indexOf(configuration.minView) &lt; 0) {
+					throw (&#039;Invalid `minView` value: &#039; + configuration.minView);
+				}
+
+				if (validViews.indexOf(configuration.minView) &gt; validViews.indexOf(configuration.startView)) {
+					throw (&#039;The `startView` must be greater than minView&#039;);
+				}
+
+				if (!angular.isNumber(configuration.minuteStep)) {
+					throw (&#039;The `minuteStep` must be numeric&#039;);
+				}
+				if (configuration.minuteStep &lt;= 0 || configuration.minuteStep &gt;= 60) {
+					throw (&#039;The `minuteStep` must be greater than zero and less than 60&#039;);
+				}
+			}
+
+			var directiveConfig = scope.$eval(attrs.datetimepickerConfig);
+
+			var defaultConfig = {
+				startView: &#039;day&#039;,
+				minView: &#039;minute&#039;,
+				minuteStep: 5
+			};
+
+			var configuration = angular.extend({}, defaultConfig, directiveConfig);
+
+			scope.validateConfiguration(configuration);
+
+			var dataFactory = {
+				year: function (unixDate) {
+					var selectedDate = moment.utc(unixDate).startOf(&#039;year&#039;);
+					
+					// View starts one year before the decade starts and ends one year after the decade ends
+					// i.e. passing in a date of 1/1/2013 will give a range of 2009 to 2020
+					// Truncate the last digit from the current year and subtract 1 to get the start of the decade
+					var startDecade = (parseInt(selectedDate.year() / 10, 10) * 10);
+					var startDate = moment.utc(selectedDate).year(startDecade - 1).startOf(&#039;year&#039;);
+					var activeYear = scope.ngModel ? moment(scope.ngModel).year() : 0;
+
+					var result = {
+						&#039;currentView&#039;: &#039;year&#039;,
+						&#039;nextView&#039;: configuration.minView === &#039;year&#039; ? &#039;setTime&#039; : &#039;month&#039;,
+						&#039;title&#039;: startDecade + &#039;-&#039; + (startDecade + 9),
+						&#039;leftDate&#039;: moment.utc(startDate).subtract(9, &#039;year&#039;).valueOf(),
+						&#039;rightDate&#039;: moment.utc(startDate).add(11, &#039;year&#039;).valueOf(),
+						&#039;dates&#039;: []
+					};
+
+					for (var i = 0; i &lt; 12; i++) {
+						var yearMoment = moment.utc(startDate).add(i, &#039;years&#039;);
+						var dateValue = {
+							&#039;date&#039;: yearMoment.valueOf(),
+							&#039;display&#039;: yearMoment.format(&#039;YYYY&#039;),
+							&#039;past&#039;: yearMoment.year() &lt; startDecade,
+							&#039;future&#039;: yearMoment.year() &gt; startDecade + 9,
+							&#039;active&#039;: yearMoment.year() === activeYear
+						};
+
+						result.dates.push(dateValue);
+					}
+
+					return result;
+				},
+
+				month: function (unixDate) {
+
+					var startDate = moment.utc(unixDate).startOf(&#039;year&#039;);
+
+					var activeDate = scope.ngModel ? moment(scope.ngModel).format(&#039;YYYY-MMM&#039;) : 0;
+
+					var result = {
+						&#039;previousView&#039;: &#039;year&#039;,
+						&#039;currentView&#039;: &#039;month&#039;,
+						&#039;nextView&#039;: configuration.minView === &#039;month&#039; ? &#039;setTime&#039; : &#039;day&#039;,
+						&#039;currentDate&#039;: startDate.valueOf(),
+						&#039;title&#039;: startDate.format(&#039;YYYY&#039;),
+						&#039;leftDate&#039;: moment.utc(startDate).subtract(1, &#039;year&#039;).valueOf(),
+						&#039;rightDate&#039;: moment.utc(startDate).add(1, &#039;year&#039;).valueOf(),
+						&#039;dates&#039;: []
+					};
+
+					for (var i = 0; i &lt; 12; i++) {
+						var monthMoment = moment.utc(startDate).add(i, &#039;months&#039;);
+						var dateValue = {
+							&#039;date&#039;: monthMoment.valueOf(),
+							&#039;display&#039;: monthMoment.format(&#039;MMM&#039;),
+							&#039;active&#039;: monthMoment.format(&#039;YYYY-MMM&#039;) === activeDate
+						};
+
+						result.dates.push(dateValue);
+					}
+
+					return result;
+				},
+
+				day: function (unixDate) {
+
+					var selectedDate = moment.utc(unixDate);
+					var startOfMonth = moment.utc(selectedDate).startOf(&#039;month&#039;);
+					var endOfMonth = moment.utc(selectedDate).endOf(&#039;month&#039;);
+
+					// TODO: Update to account for starting on days other than Sunday.
+					var startDate = moment.utc(startOfMonth).subtract(startOfMonth.day(), &#039;days&#039;);
+
+					var activeDate = scope.ngModel ? moment(scope.ngModel).format(&#039;YYYY-MMM-DD&#039;) : &#039;&#039;;
+
+					var result = {
+						&#039;previousView&#039;: &#039;month&#039;,
+						&#039;currentView&#039;: &#039;day&#039;,
+						&#039;nextView&#039;: configuration.minView === &#039;day&#039; ? &#039;setTime&#039; : &#039;hour&#039;,
+						&#039;currentDate&#039;: selectedDate.valueOf(),
+						&#039;title&#039;: selectedDate.format(&#039;YYYY-MMM&#039;),
+						&#039;leftDate&#039;: moment.utc(startOfMonth).subtract(1, &#039;months&#039;).valueOf(),
+						&#039;rightDate&#039;: moment.utc(startOfMonth).add(1, &#039;months&#039;).valueOf(),
+						&#039;dayNames&#039;: [],
+						&#039;weeks&#039;: []
+					};
+
+					for (var dayNumber = 0; dayNumber &lt; 7; dayNumber++) {
+						result.dayNames.push(moment.utc().day(dayNumber).format(&#039;dd&#039;));
+					}
+
+					for (var i = 0; i &lt; 6; i++) {
+						var week = { dates: [] };
+						for (var j = 0; j &lt; 7; j++) {
+							var monthMoment = moment.utc(startDate).add((i * 7) + j, &#039;days&#039;);
+							var dateValue = {
+								&#039;date&#039;: monthMoment.valueOf(),
+								&#039;display&#039;: monthMoment.format(&#039;D&#039;),
+								&#039;active&#039;: monthMoment.format(&#039;YYYY-MMM-DD&#039;) === activeDate,
+								&#039;past&#039;: monthMoment.isBefore(startOfMonth),
+								&#039;future&#039;: monthMoment.isAfter(endOfMonth)
+							};
+							week.dates.push(dateValue);
+						}
+						result.weeks.push(week);
+					}
+
+					return result;
+				},
+
+				hour: function (unixDate) {
+					var selectedDate = moment.utc(unixDate).hour(0).minute(0).second(0);
+
+					var activeFormat = scope.ngModel ? moment(scope.ngModel).format(&#039;YYYY-MM-DD H&#039;) : &#039;&#039;;
+
+					var result = {
+						&#039;previousView&#039;: &#039;day&#039;,
+						&#039;currentView&#039;: &#039;hour&#039;,
+						&#039;nextView&#039;: configuration.minView === &#039;hour&#039; ? &#039;setTime&#039; : &#039;minute&#039;,
+						&#039;currentDate&#039;: selectedDate.valueOf(),
+						&#039;title&#039;: selectedDate.format(&#039;YYYY-MMM-DD&#039;),
+						&#039;leftDate&#039;: moment.utc(selectedDate).subtract(1, &#039;days&#039;).valueOf(),
+						&#039;rightDate&#039;: moment.utc(selectedDate).add(1, &#039;days&#039;).valueOf(),
+						&#039;dates&#039;: []
+					};
+
+					for (var i = 0; i &lt; 24; i++) {
+						var hourMoment = moment.utc(selectedDate).add(i, &#039;hours&#039;);
+						var dateValue = {
+							&#039;date&#039;: hourMoment.valueOf(),
+							&#039;display&#039;: hourMoment.format(&#039;H:00&#039;),
+							&#039;active&#039;: hourMoment.format(&#039;YYYY-MM-DD H&#039;) === activeFormat
+						};
+
+						result.dates.push(dateValue);
+					}
+
+					return result;
+				},
+
+				minute: function (unixDate) {
+					var selectedDate = moment.utc(unixDate).minute(0).second(0);
+
+					var activeFormat = scope.ngModel ? moment(scope.ngModel).format(&#039;YYYY-MM-DD H:mm&#039;) : &#039;&#039;;
+
+					var result = {
+						&#039;previousView&#039;: &#039;hour&#039;,
+						&#039;currentView&#039;: &#039;minute&#039;,
+						&#039;nextView&#039;: &#039;setTime&#039;,
+						&#039;currentDate&#039;: selectedDate.valueOf(),
+						&#039;title&#039;: selectedDate.format(&#039;YYYY-MMM-DD H:mm&#039;),
+						&#039;leftDate&#039;: moment.utc(selectedDate).subtract(1, &#039;hours&#039;).valueOf(),
+						&#039;rightDate&#039;: moment.utc(selectedDate).add(1, &#039;hours&#039;).valueOf(),
+						&#039;dates&#039;: []
+					};
+
+					var limit = 60 / configuration.minuteStep;
+
+					for (var i = 0; i &lt; limit; i++) {
+						var hourMoment = moment.utc(selectedDate).add(i * configuration.minuteStep, &#039;minute&#039;);
+						var dateValue = {
+							&#039;date&#039;: hourMoment.valueOf(),
+							&#039;display&#039;: hourMoment.format(&#039;H:mm&#039;),
+							&#039;active&#039;: hourMoment.format(&#039;YYYY-MM-DD H:mm&#039;) === activeFormat
+						};
+
+						result.dates.push(dateValue);
+					}
+
+					return result;
+				},
+
+				setTime: function (unixDate) {
+					var tempDate = new Date(unixDate);
+					var newDate = new Date(tempDate.getTime() + (tempDate.getTimezoneOffset() * 60000));
+					if (angular.isFunction(scope.onSetTime)) {
+						scope.onSetTime(newDate, scope.ngModel);
+					}
+					scope.ngModel = newDate;
+					return dataFactory[scope.data.currentView](unixDate);
+				}
+			};
+
+			var getUTCTime = function () {
+				var tempDate = (scope.ngModel ? moment(scope.ngModel).toDate() : new Date());
+				return tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000);
+			};
+
+			scope.changeView = function (viewName, unixDate, event) {
+				if (event) {
+					event.stopPropagation();
+					event.preventDefault();
+				}
+
+				if (viewName &amp;&amp; (unixDate &gt; -Infinity) &amp;&amp; dataFactory[viewName]) {
+					scope.data = dataFactory[viewName](unixDate);
+				}
+			};
+
+			scope.changeView(configuration.startView, getUTCTime());
+
+			scope.$watch(&#039;ngModel&#039;, function () {
+				scope.changeView(scope.data.currentView, getUTCTime());
+			});
+		}
+	};
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

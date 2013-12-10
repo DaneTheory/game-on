@@ -10,20 +10,20 @@ GameOn connects you with the players in your city and allows you to find, organi
 
 Technologies
 ------------
-| On The Server  | On The Client | Development | Unit Tests |
-| -------------- |---------------| ------------| ---------- |
-| NodeJS | AngularJS | Grunt | Jasmine |
-| Express | Twitter Bootstrap | Docco | Karma |
-| MongoDB | SASS | Bower | Istanbul (Coverage)
-| Mongoose | SocketIO | Angular Templates | PhantomJS |
-| SocketIO (Push Notification) | MomentJS | Live Reload |  |
-| PassportJS | Google Maps API | JSHint |  |
-| Crypto | HTML5 Route Mode | Compass |  |
-| Async | Lodash | Concat |  |
-|  | Font Awesome | CSS Min |  |
-|  |  | HTML Min |  |
-|  |  | Auto Prefixer |  |
-|  |  | Uglify |  |
+| On The Server                 | On The Client           | Development           | Unit Tests          |
+| ----------------------------- | ----------------------- | --------------------- | ------------------- |
+| NodeJS                        | AngularJS               | Grunt                 | Jasmine             |
+| Express                       | Twitter Bootstrap       | Docco                 | Karma               |
+| MongoDB                       | SASS                    | Bower                 | Istanbul (Coverage) |
+| Mongoose                      | SocketIO                | Plato (Analysis)      | PhantomJS           |
+| SocketIO (Push Notification)  | MomentJS                | JSHint                |                     |
+| PassportJS                    | Google Maps API         | Live Reload           |                     |  
+| Crypto                        | HTML5 Route Mode        | Compass               |                     |
+| Async                         | Lodash                  | Concat                |                     |
+|                               | Font Awesome            | HTML/CSS Min          |                     |
+|                               |                         | Uglify                |                     |
+|                               |                         | Auto Prefixer         |                     |
+|                               |                         | Angular Templates     |                     |
 
 Live
 ----
@@ -33,9 +33,13 @@ Annotated Source
 ----------------
 - [http://pablodenadai.github.io/GameOn/docs/app.html](http://pablodenadai.github.io/GameOn/docs/app.html)
 
-Code Coverage (WIP)
--------------------
-- [http://pablodenadai.github.io/GameOn/coverage/index.html](http://pablodenadai.github.io/GameOn/coverage/index.html)
+Code Coverage
+-------------
+- [http://pablodenadai.github.io/GameOn/coverage/](http://pablodenadai.github.io/GameOn/coverage/)
+
+Code Analysis
+-------------
+- [http://pablodenadai.github.io/GameOn/analysis/](http://pablodenadai.github.io/GameOn/analysis/)
 
 Dev Requirements
 ------------

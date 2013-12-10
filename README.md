@@ -32,14 +32,17 @@ Live
 Annotated Source
 ----------------
 - [http://pablodenadai.github.io/GameOn/docs/app.html](http://pablodenadai.github.io/GameOn/docs/app.html)
+![Annotated Source](/annotated-source.png)
 
 Code Coverage
 -------------
 - [http://pablodenadai.github.io/GameOn/coverage/](http://pablodenadai.github.io/GameOn/coverage/)
+![Code Coverage](/code-coverage.png)
 
 Code Analysis
 -------------
 - [http://pablodenadai.github.io/GameOn/analysis/](http://pablodenadai.github.io/GameOn/analysis/)
+![Code Analysis](/code-analysis.png)
 
 Dev Requirements
 ------------

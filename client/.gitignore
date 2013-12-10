@@ -1,7 +1,11 @@
-node_modules
-dist
+.DS_STORE
 .tmp
 .sass-cache
-.DS_STORE
+
+node_modules
 app/components
+
+dist
 docs
+coverage
+analysis

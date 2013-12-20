@@ -1,6 +1,10 @@
 GameOn
 ======
 
+Happy Holidays :santa:
+----------------------
+This project will be on hold until I return from my holiday break around mid Jan. Thanks :-)
+
 ### Find soccer games in your city
 GameOn connects you with the players in your city and allows you to find, organize and share games effortlessly.
 
